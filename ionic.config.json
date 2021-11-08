@@ -1,0 +1,7 @@
+{
+  "name": "Parkour",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
