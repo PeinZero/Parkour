@@ -57,6 +57,12 @@ const appPages: AppPage[] = [
     url: '/page/Spam',
     iosIcon: warningOutline,
     mdIcon: warningSharp
+  },
+  {
+    title: 'ParkerHome',
+    url: '/page/parkerhome',
+    iosIcon: warningOutline,
+    mdIcon: warningSharp
   }
 ];
 
