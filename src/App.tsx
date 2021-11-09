@@ -22,7 +22,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import ParkerHome from './pages/Parker/ParkerHome';
-import MapContainer from './components/GMap';
 
 const App: React.FC = () => {
 
@@ -36,7 +35,7 @@ const App: React.FC = () => {
               <Redirect to="/page/Inbox" />
             </Route>
             <Route path= "/page/parkerhome"  exact={true}>
-              <MapContainer />
+              <ParkerHome />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
