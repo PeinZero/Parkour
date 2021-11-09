@@ -6,7 +6,7 @@ const ParkerHome: React.FC = () => {
         <div>
             <ParkerMap />
         </div>
-    )
+    );
 }
 
-export default ParkerHome
+export default ParkerHome;
