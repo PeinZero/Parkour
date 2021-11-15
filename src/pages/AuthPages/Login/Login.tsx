@@ -8,7 +8,6 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = (props): JSX.Element => {
   const phoneInputRef = useRef<HTMLInputElement>();
   const passwordInputRef = useRef<HTMLInputElement>();
-  const [formIsValid, setFormIsValid] = useState(false);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
