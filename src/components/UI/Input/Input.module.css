@@ -1,0 +1,34 @@
+.formControl{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formControl label{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.formControl input{
+    padding: 8px 10px;
+    background-color: white;
+    border: 2px solid black;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+}
+
+.formControl input::placeholder{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.formControl input:focus{
+    outline: None;
+}
+
+.formControl input:-webkit-autofill,
+.formControl input:-webkit-autofill:hover, 
+.formControl input:-webkit-autofill:focus{
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: black !important;
+}

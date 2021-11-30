@@ -1,46 +1,63 @@
-import { useState, useRef, Fragment } from 'react'
+import { Fragment } from 'react';
+import { Link } from "react-router-dom";
+import { useAppDispatch } from '../../store/hooks';
+import { sendSignupData } from '../../store/authenticationActions';
 
-interface SignupProps {
-    onSignup: (event: React.FormEvent<HTMLInputElement>, authData: {}) => void
-}
+import styles from './Signup.module.css'
 
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 
-const Signup: React.FC<SignupProps> = (props):JSX.Element => {
-    const usernameInputRef = useRef<HTMLInputElement>()
-    const phoneInputRef = useRef<HTMLInputElement>()
-    const emailInputRef = useRef<HTMLInputElement>()
-    const passwordInputRef = useRef<HTMLInputElement>()
-    const [formIsValid, setFormIsValid] = useState(false)
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+
+const Signup: React.FC = ()=> {
+    const dispatch = useAppDispatch();
 
     const formSubmitHandler = (e) => {
         e.preventDefault();
-
-        // frontend validations here
-
-        props.onSignup(e, {
-            username: usernameInputRef.current.value,
-            phone: phoneInputRef.current.value,
-            email: emailInputRef.current.value,
-            password: passwordInputRef.current.value
-        })
         
-        usernameInputRef.current.value = ''
-        phoneInputRef.current.value = ''
-        emailInputRef.current.value = ''
-        passwordInputRef.current.value = ''
+        dispatch(sendSignupData({
+            name: e.target.name.value,
+            phone: e.target.phone.value,
+            email: e.target.email.value,
+            password: e.target.password.value,
+            confirmPassword: e.target.confirmPassword.value,
+        })) 
     }
     
     return (
         <Fragment>
-            <form onSubmit = {formSubmitHandler}>
-                <input type="text" name="username" id="username" ref={usernameInputRef} />
-                <input type="text" name="phone" id="phone" ref={phoneInputRef} />
-                <input type="text" name="email" id="email" ref={emailInputRef} />
-                <input type="text" name="password" id="password" ref={passwordInputRef} />
-                <button type="submit">Signup</button>
-            </form>
+            <div className={styles['wrapper']}>
+                <form onSubmit={formSubmitHandler} className={styles['form']}> 
+                    <Link to="/" className={styles['backLink']}>
+                        <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
+                    </Link>
+                    <h1>Register</h1>
+
+                    <Input label="Full Name" name="name" type="text" 
+                        placeholder="Mahad Khalid"
+                    />
+                    <Input label="Phone Number" name="phone" type="text" 
+                        placeholder="03158542543"
+                    />
+                    <Input label="Email" name="email" type="email" 
+                        placeholder="mahadzx@gmail.com"
+                    />
+                    <Input label="Password" name="password" type="password" />
+                    <Input label="Confirm Password" name="confirmPassword" type="password" />
+
+                    <Button className={styles['registerBtn']} >Register</Button>
+
+                    <p>By registering, you agree to Parkour’s <Link className={styles['Link']} to="">Terms of Service</Link> and <Link className={styles['Link']} to="">Privacy Policy</Link></p>
+                </form>
+            </div>
         </Fragment>
     )
 }
+
+
+// interface SignupProps {
+//     onSignup: (event: React.FormEvent<HTMLInputElement>, authData: {}) => void
+// }
 
 export default Signup

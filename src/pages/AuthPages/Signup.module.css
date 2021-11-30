@@ -1,0 +1,43 @@
+.wrapper{
+    height: 100%;
+    overflow: auto;
+}
+.form {
+    width: 85%;
+    margin: 0 7.5%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
+
+.backLink{
+    width: 20px;
+}
+.back{
+    position: relative;
+    left: -16px;
+    color: black;
+}
+
+.form h1{
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.form p{
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form p .Link{
+    color: black;
+    padding: 0 2px;
+    margin: 0;
+    text-decoration: underline;
+}
+
+.registerBtn{
+    background-color: black;
+    font-weight: 500;
+}

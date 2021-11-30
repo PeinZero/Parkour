@@ -1,6 +1,5 @@
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { useIonRouter } from "@ionic/react";
 import { Redirect, Route, withRouter } from 'react-router-dom'
 
 /* Core CSS required for Ionic components to work properly */
@@ -23,116 +22,48 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+
 import Menu from './components/Menu/Menu'
 import ParkerHome from './pages/Parker/ParkerHome'
+import Home from './pages/Home/Home'
 import Login from './pages/AuthPages/Login'
 import Signup from './pages/AuthPages/Signup'
 
+import { useAppSelector, useAppDispatch } from './store/hooks';
+import { authActions } from "./store/authentication"
+import { logout } from "./store/authenticationActions"
 
 const App: React.FC = (props) => {
-  const [userID, setUserID] = useState(null)
-  const [token, setToken] = useState(null)
-  const [isAuth, setIsAuth] = useState(false)
-
-  const router = useIonRouter();
-
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(state => state.authentication.isAuth);
+  
   useEffect(() => {
     const token = localStorage.getItem('token')
     const expiryDate = localStorage.getItem('expiryDate')
 
     if (!token || !expiryDate) {
-      return
+      return;
     }
 
     if (new Date(expiryDate) <= new Date()) {
-      logoutHandler()
+      dispatch(logout())
       return;
     }
 
     const userID = localStorage.getItem('userID')
-    const remainingTimeInMs =
-      new Date(expiryDate).getTime() - new Date().getTime()
+    const remainingTimeInMs = new Date(expiryDate).getTime() - new Date().getTime()
 
-    setIsAuth(true)
-    setToken(token)
-    setUserID(userID)
+    dispatch(authActions.login({
+      isAuth: true,
+      token: token,
+      userID: userID, 
+    }))
     setAutoLogout(remainingTimeInMs)
   })
 
-  const loginHandler = (event, authData) => {
-    event.preventDefault()
-    axios.post('http://localhost:5000/auth/login', {
-      phone: authData.phone,
-      password: authData.password, 
-    })
-      .then((res) => {
-        console.log(res)
-
-        setIsAuth(true)
-        setToken(res.data.token)
-        setUserID(res.data.userID)
-
-        localStorage.setItem('token', res.data.token)
-        localStorage.setItem('userID', res.data.userID)
-
-        const remainingTimeInMs = 60 * 60 * 1000
-        const expiryDate = new Date(new Date().getTime() + remainingTimeInMs)
-
-        localStorage.setItem('expiryDate', expiryDate.toISOString())
-        setAutoLogout(remainingTimeInMs)
-        // set Auto-Logout Here
-      })
-      .catch((err) => {
-        // Validation Check.
-        if (err.response.status === 422) {
-          console.log('Validation Failed')
-        }
-
-        // Authentication Check.
-        if (err.response.status !== 200 && err.response.status != 201) {
-          console.log('Could not authenticate you!')
-        }
-        setIsAuth(false)
-      })
-  }
-
-  const signupHandler = (event, authData) => {
-    event.preventDefault()
-
-    axios.post('http://localhost:5000/auth/signup', {
-      username: authData.username,
-      phone: authData.phone,
-      email: authData.email,
-      password: authData.password
-    })
-    .then( res => {
-      setIsAuth(false);
-
-    })
-    .catch((err) => {
-      if (err.response.status === 422){
-       console.log("Validation Failed!")
-      }
-
-      if (err.response.status != 200 && err.response.status !== 201){
-        console.log("Creating a user failed!")
-      }
-      setIsAuth(false)
-    })
-  }
-
-  const logoutHandler = () => {
-    setIsAuth(false);
-    setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiryDate');
-    localStorage.removeItem('userId');
-  };
-
   const setAutoLogout = milliseconds => {
     setTimeout(() => {
-      logoutHandler();
+      dispatch(logout());
     }, milliseconds);
   };
 
@@ -140,17 +71,18 @@ const App: React.FC = (props) => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId='main'>
-          {/* <Menu /> */}
           <IonRouterOutlet id='main'>
             <Route path='/' exact={true}>
-              {isAuth ? <div><h1>Successfully Logged In</h1><br /><button onClick={logoutHandler}>Logout</button></div> : <Redirect to='/page/login' /> }
+              {isAuth && <ParkerHome/>} 
+              {!isAuth && <Home/>} 
             </Route>
-            <Route path='/page/login' exact={true} render={props => (
-              <Login {...props} onLogin={loginHandler} />
-            )}/>
-            <Route path='/page/signup' exact={true} render={props => (
-              <Signup {...props} onSignup={signupHandler} />
-            )}/>
+            <Route path='/page/login' exact={true}>
+              {isAuth && <Redirect to="/" /> } 
+              {!isAuth && <Login/>} 
+            </Route>
+            <Route path='/page/signup' exact={true}>
+              <Signup/>
+            </Route>
             <Redirect to="/" /> 
           </IonRouterOutlet>
         </IonSplitPane>

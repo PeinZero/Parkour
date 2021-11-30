@@ -1,0 +1,53 @@
+
+.wrapper{
+    width: 85%;
+    height: 100vh;
+    margin: 0 7.5%;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.topBox{
+    width: 100%;
+}
+
+.topBox .heading{
+    font-size: 38px;
+    font-weight: 300;
+}
+
+.topBox .heading .name{
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.topBox .heading .name span{
+    color: black;
+    font-weight: 800;
+}
+
+.topBox p{
+    line-height: 20px;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.bottomBox{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loginBtn{
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background-color: white;
+}
+
+.registerBtn{
+    background-color: var(--primary);
+}
