@@ -6,7 +6,7 @@ export const sendLoginData = (loginData) => {
         
         const sendRequest = async () => {
             const response = await axios.post(
-                'http://localhost:5000/auth/login',
+                'https://parkour-backend.herokuapp.com/auth/login',
                 loginData
             )
 
@@ -58,7 +58,7 @@ export const sendSignupData = (signupData) => {
     return async (dispatch) => {
         const sendRequest = async () => {
             const response = axios.post(
-                'http://localhost:5000/auth/signup',
+                'https://parkour-backend.herokuapp.com/auth/signup',
                 signupData
             )
         }

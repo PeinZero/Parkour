@@ -6,6 +6,7 @@ import styles from './ParkerHome.module.css'
 
 import ParkerMap from '../../components/ParkerMap/ParkerMap'
 import Button  from '../../components/UI/Button/Button';
+import Hamburger from '../../components/UI/Hamburger/Hamburger';
 
 
 const ParkerHome: React.FC = () => {
@@ -16,6 +17,7 @@ const ParkerHome: React.FC = () => {
     }
     return (
         <Fragment>
+            <Hamburger> <p>Hello</p> </Hamburger>
             <div className={styles['map']}>
                 {/* <ParkerMap /> */}
             </div>
