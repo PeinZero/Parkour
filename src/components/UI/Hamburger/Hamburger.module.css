@@ -1,0 +1,107 @@
+.hamburgerWrapper{
+    position: relative;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 2px rgb(218, 218, 218);
+    margin: 10px;
+    margin-top: 40px;
+    z-index: 9000;
+}
+
+.hamburgerWrapper.open{
+    box-shadow: none;
+    border-radius: 0; 
+}
+
+.hamburger{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+}
+
+.hamburger .lines::before,
+.hamburger .lines::after{
+   content: '';
+   position: absolute;
+}
+.hamburger .lines,
+.hamburger .lines::before,
+.hamburger .lines::after{
+    width: 100%;
+    height: 15%;
+    background: black;
+    border-radius: 10px;
+    /* box-shadow: 0 2px 5px rgba(255, 101, 47, .2); */
+    transition: all 0.5s ease-in-out;
+}
+.hamburger .lines::before{
+    transform: translateY(-7px);
+}
+.hamburger .lines::after{
+    transform: translateY(7px);
+}
+.hamburger.open .lines{
+    transform: translateX(-50px);
+    background: transparent;
+    box-shadow: none;
+}
+.hamburger.open .lines::before,
+.hamburger.open .lines::after{
+    height: 100%;
+    background: black;
+}
+.hamburger.open .lines::before{
+    transform: rotate(45deg) translate(35px, -35px);
+}
+.hamburger.open .lines::after{
+    transform: rotate(-45deg) translate(35px, 35px);
+}
+
+.hamburgerBack{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: white;
+    z-index: 10;
+    overflow : hidden;
+    transition: opacity 0.75s, visibility 0.75s, width 0.75s;
+    opacity: 0;
+    visibility: hidden;
+    width: 0%;
+
+}
+
+
+
+.hamburgerBack.open{
+    opacity: 1;
+    visibility: visible;
+    width: 85%;
+    box-shadow: 2px 0 4px -2px rgb(204, 204, 204);
+    padding-top: 60px;
+}
+
+.name{
+    opacity: 0;
+    position: absolute;
+    top: 48px;
+    left: 50px;
+    font-size: 22px;
+    transition: opacity 0.2s;
+}
+
+.name.open{
+    opacity: 1;
+    transition-delay: 0.4s;
+}
+
+

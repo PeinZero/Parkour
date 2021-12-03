@@ -1,16 +1,4 @@
-import {
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-} from '@ionic/react';
-
-import { useLocation } from 'react-router-dom';
+import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
 import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
 
@@ -31,29 +19,62 @@ const appPages: AppPage[] = [
 ];
 
 
-const Menu: React.FC = () => {
-  const location = useLocation();
 
-  return (
-    <IonMenu contentId="main" type="overlay">
+
+const Menu: React.FC = () => (
+  <>
+    <IonMenu side="start" menuId="first">
+      <IonHeader>
+        <IonToolbar color="primary">
+          <IonTitle>Start Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                  <IonLabel>{appPage.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
+        <IonList>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
         </IonList>
       </IonContent>
     </IonMenu>
-  );
-};
+
+    <IonMenu side="start" menuId="custom" className="my-custom-menu">
+      <IonHeader>
+        <IonToolbar color="tertiary">
+          <IonTitle>Custom Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+        </IonList>
+      </IonContent>
+    </IonMenu>
+
+    <IonMenu side="end" type="push">
+      <IonHeader>
+        <IonToolbar color="danger">
+          <IonTitle>End Menu</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+          <IonItem>Menu Item</IonItem>
+        </IonList>
+      </IonContent>
+    </IonMenu>
+    <IonRouterOutlet></IonRouterOutlet>
+  </>
+);
 
 export default Menu;
