@@ -1,0 +1,117 @@
+img{
+  width: 100%;
+  border-radius: inherit;
+  height: inherit;
+}
+
+.menu {
+  width: 85vw;
+}
+
+.wrapper{
+  width: 90%;
+  margin: 30px 5% 0 5%;
+  
+}
+
+.header{
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  gap: 15px;
+  padding: 10px;
+  /* border-radius: 10px;
+  background-color: var(--background-grey);
+  box-shadow: 
+    1px 1px 2px 1px var(--card-shadow), 
+    -1px 0px 2px 1px var(--card-shadow);
+   */
+}
+
+.header .pic{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 100%;
+  box-shadow: 
+    1px 1px 4px 0px rgba(0, 0, 0, 0.5), 
+    -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.header .info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header .info h3{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 3px;
+}
+
+.header .info div{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+}
+
+.header .info div p,
+.header .info div svg{
+  margin: 0;
+  font-size: 16px;
+}
+.header .info div svg{
+  color: #FDCC0D;
+}
+
+
+.content{
+  padding: 5px;
+  margin-top: 20px;
+}
+
+.content a{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: 300;
+}
+
+.content a div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.content a svg,
+.content a div p,
+.content a div svg{
+  margin: 0;
+  font-size: 18px;
+}
+
+.footer{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  margin: 0;
+}
+
+.footer a{
+  text-align: center;
+  padding: 15px 0;
+  font-size: 16px;
+
+  /** Black & White **/
+  /* color: white;
+  background-color: black; */
+
+   /** Pink & White **/
+  color: white;
+  background-color: #ac3f65;
+  
+}

@@ -1,5 +1,7 @@
 import { Fragment, useState } from 'react'
+import Menu from '../../Menu/Menu'
 import styles from './Hamburger.module.css'
+
 
 const Hamburger = (props) => {
     const [clicked, setClicked] = useState(false)
@@ -14,9 +16,10 @@ const Hamburger = (props) => {
                     <div className={styles["lines"]}></div>
                 </div>
             </div>
-            <div className={`${styles["hamburgerBack"]} ${clicked && styles["open"]}`}>
+            <Menu clicked={clicked} toggleMenu={clickHandler}/>
+            {/* <div className={`${styles["hamburgerBack"]} ${clicked && styles["open"]}`}>
                 <div className={`${styles["name"]} ${clicked && styles["open"]}`}>Mahad Khalid</div>
-            </div>
+            </div> */}
         </Fragment>
     )
 }
