@@ -1,80 +1,92 @@
-import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonRouterOutlet } from '@ionic/react';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
+import { SwipeableDrawer } from '@mui/material';
+import styles from './Menu.module.css';
 
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
+import Anchor from '../UI/Anchor/Anchor';
+import StarIcon from '@mui/icons-material/Star';
+import DirectionsCarRoundedIcon from '@mui/icons-material/DirectionsCarRounded';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
+import HistoryIcon from '@mui/icons-material/History';
+import NotListedLocationIcon from '@mui/icons-material/NotListedLocation';
+
+interface MenuProps{
+  clicked: boolean,
+  toggleMenu() : void,
 }
 
-const appPages: AppPage[] = [
-  {
-    title: 'ParkerHome',
-    url: '/page/parkerhome',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
-];
 
 
-
-
-const Menu: React.FC = () => (
-  <>
-    <IonMenu side="start" menuId="first">
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Start Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonList>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-        </IonList>
-      </IonContent>
-    </IonMenu>
-
-    <IonMenu side="start" menuId="custom" className="my-custom-menu">
-      <IonHeader>
-        <IonToolbar color="tertiary">
-          <IonTitle>Custom Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonList>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-        </IonList>
-      </IonContent>
-    </IonMenu>
-
-    <IonMenu side="end" type="push">
-      <IonHeader>
-        <IonToolbar color="danger">
-          <IonTitle>End Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonList>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
-        </IonList>
-      </IonContent>
-    </IonMenu>
-    <IonRouterOutlet></IonRouterOutlet>
-  </>
-);
+const Menu: React.FC<MenuProps> = (props): JSX.Element => {
+  
+  return (
+    <SwipeableDrawer
+      onOpen = {props.toggleMenu}
+      open={props.clicked}
+      onClose={props.toggleMenu}
+      classes = {{
+        paper: styles['menu']
+      }}
+    >
+      <div className={styles['wrapper']}>
+        <div className={styles['header']}>
+          <div className={styles['pic']}>
+            <img src="/images/mahad_profile_pic.jpg" alt="" />
+          </div>
+          <div className={styles['info']}>
+            <h3>Mahad Khalid</h3>
+            <div> 
+              <p>Rated</p>
+              <p>4.7</p>
+              <StarIcon />
+            </div>
+          </div>
+        </div>
+        <div className={styles['content']}>
+          <Anchor path='#'>
+            <div>
+              <DirectionsCarRoundedIcon/>
+              <p>Registered Cars</p>
+            </div>
+            <ArrowForwardIosRoundedIcon/>
+          </Anchor>
+          <Anchor path='#'>
+            <div>
+              <AccountBalanceWalletRoundedIcon/>
+              <p>Wallet</p>
+            </div>
+            <ArrowForwardIosRoundedIcon/>
+          </Anchor>
+          <Anchor path='#'>
+            <div>
+              <HistoryIcon/>
+              <p>Your Past Bookings</p>
+            </div>
+            <ArrowForwardIosRoundedIcon/>
+          </Anchor>
+          <Anchor path='#'>
+            <div>
+              <SettingsIcon/>
+              <p>Settings</p>
+            </div>
+            <ArrowForwardIosRoundedIcon/>
+          </Anchor>
+          <Anchor path='#'>
+            <div>
+              <NotListedLocationIcon/>
+              <p>Help</p>
+            </div>
+            <ArrowForwardIosRoundedIcon/>
+          </Anchor>
+        </div>
+      </div>
+      <div className={styles['footer']}>
+          <Anchor path='#'>
+            Become a Spot Seller
+          </Anchor>
+      </div>
+    </SwipeableDrawer>
+  )
+};
 
 export default Menu;

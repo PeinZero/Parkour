@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import {useAppDispatch } from '../../store/hooks';
 import { logout } from "../../store/authenticationActions"
-import Ripples from 'react-ripples'
 
 import styles from './ParkerHome.module.css'
 

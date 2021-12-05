@@ -2,17 +2,19 @@
     width: 100%;
     height: 100vh;
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: -10;
 }
 
 .searchBox{
     width: 90%;
     margin: 0 5%;
-    /* background-color: red; */
+    background-color: white;
     border-radius: 6px;
-    padding: 15px 10px 0 10px;
-    box-shadow: 1px 1px 2px 1px rgb(207, 207, 207),
-    -1px -1px 2px 1px rgb(238, 238, 238);
+    padding: 15px 15px 10px 15px;
+    box-shadow: 1px 1px 4px 2px var(--card-shadow),
+    -1px -1px 4px 2px var(--card-shadow);
     position: fixed;
     bottom: 20px;
 }
@@ -35,7 +37,7 @@
 
 
 .searchBar{
-    background-color: rgb(226, 226, 226) !important;
+    background-color: var(--background-grey) !important;
     width: 100%;
     border-radius: 20px !important;
     margin:0 0 10px 0 !important;
@@ -81,7 +83,7 @@
 
 .recent .icon{
     border-radius: 50%;
-    background-color: rgb(226, 226, 226);
+    background-color: var(--background-grey);
     display: flex;
     justify-content: center;
     align-items: center;

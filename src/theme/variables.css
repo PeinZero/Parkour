@@ -3,6 +3,10 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+  /** own variables **/
+  --card-shadow: rgb(200, 200, 200);
+  --background-grey: rgb(226, 226, 226);
+
   /** primary **/
   --ion-color-primary: #222428;
   --ion-color-primary-rgb: 34, 36, 40;
