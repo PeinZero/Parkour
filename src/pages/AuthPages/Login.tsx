@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Link } from "react-router-dom";
 import { useAppDispatch } from '../../store/hooks';
-import {sendLoginData} from '../../store/authenticationActions';
+import {sendLoginData} from '../../store/Authentication/authenticationActions';
 
 import styles from './Login.module.css'
 

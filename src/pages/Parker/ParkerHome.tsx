@@ -1,11 +1,13 @@
-import { Fragment } from 'react';
-import {useAppDispatch } from '../../store/hooks';
-import { logout } from "../../store/authenticationActions"
+import { Fragment, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { logout } from "../../store/Authentication/authenticationActions"
+import { fetchUser } from "../../store/User/userActions"
 
 import styles from './ParkerHome.module.css'
 
 import ParkerMap from '../../components/ParkerMap/ParkerMap'
 import Button  from '../../components/UI/Button/Button';
+
 import Hamburger from '../../components/UI/Hamburger/Hamburger';
 import RoomIcon from '@mui/icons-material/Room';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,13 +15,19 @@ import {ButtonBase} from '@material-ui/core';
 
 const ParkerHome: React.FC = () => {
     const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.authentication.userId);
+    const token = useAppSelector(state => state.authentication.token);
+    
+    useEffect(() => {
+        dispatch(fetchUser(userId, token));
+    }, []);
 
     const logoutHandler = () => {
         dispatch(logout())
     }
     return (
         <Fragment>
-            <Hamburger> <p>Hello</p> </Hamburger>
+            <Hamburger/>
             <div className={styles['map']}>
                 {/* <ParkerMap /> */}
             </div>

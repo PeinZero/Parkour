@@ -1,25 +1,30 @@
 import { createSlice, PayloadAction  } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 
-const initialAuthState = {isAuth: false, token: null, userID: null};
+const initialState = {
+    isAuth: false,
+    token: null,
+    userId: null
+};
+
 interface LoginData {
     isAuth: boolean,
     token: String,
-    userID: String
+    userId: String,
 }
+
 const authenticationSlice = createSlice({
-    name: 'authentication',
-    initialState: initialAuthState,
+    name: 'authentication',  // name of the slice
+    initialState,
     reducers: {
         login(state, action: PayloadAction<LoginData>) {
             state.isAuth = action.payload.isAuth;
             state.token = action.payload.token;
-            state.userID = action.payload.userID;
+            state.userId = action.payload.userId;
         },
         logout(state) {
             state.isAuth = false;
             state.token = null;
-            state.userID = null;
+            state.userId = null;
         },
         signup(state) {
             state.isAuth = false;
