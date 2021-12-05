@@ -17,9 +17,6 @@ const Hamburger = (props) => {
                 </div>
             </div>
             <Menu clicked={clicked} toggleMenu={clickHandler}/>
-            {/* <div className={`${styles["hamburgerBack"]} ${clicked && styles["open"]}`}>
-                <div className={`${styles["name"]} ${clicked && styles["open"]}`}>Mahad Khalid</div>
-            </div> */}
         </Fragment>
     )
 }

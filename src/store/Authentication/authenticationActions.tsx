@@ -1,12 +1,13 @@
 import axios from "axios"
 import { authActions } from "./authentication"
+import { userActions } from "../User/user"
 
 export const sendLoginData = (loginData) => {
     return async (dispatch) => {
         
         const sendRequest = async () => {
             const response = await axios.post(
-                'https://parkour-backend.herokuapp.com/auth/login',
+                'http://localhost:5000/auth/login',
                 loginData
             )
 
@@ -15,21 +16,21 @@ export const sendLoginData = (loginData) => {
 
         try {
             const response = await sendRequest();
-
-            console.log(response.data.message)
-
+            
             dispatch(authActions.login({
                 isAuth: true,
                 token: response.data.token,
-                userID: response.data.userID
+                userId: response.data.user._id
             }))
 
-            const remainingTimeInMs = 60 * 60 * 1000
-            const expiryDate = new Date(new Date().getTime() + remainingTimeInMs)
+            const remainingTimeInMs = 60 * 60 * 1000;
+            const expiryDate = new Date(new Date().getTime() + remainingTimeInMs);
 
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('userID', response.data.userID)
-            localStorage.setItem('expiryDate', expiryDate.toISOString())
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('expiryDate', expiryDate.toISOString());
+            localStorage.setItem('userId', response.data.user._id);
+
+            console.log(response.data.message);
 
         } catch (err) {
 
@@ -43,11 +44,7 @@ export const sendLoginData = (loginData) => {
                 console.log('Could not authenticate you!')
             }
 
-            dispatch(authActions.login({
-                isAuth: false,
-                token: null,
-                userID: null
-            }))
+            dispatch(authActions.logout())
 
         }
     }
@@ -58,7 +55,7 @@ export const sendSignupData = (signupData) => {
     return async (dispatch) => {
         const sendRequest = async () => {
             const response = axios.post(
-                'https://parkour-backend.herokuapp.com/auth/signup',
+                'http://localhost:5000/auth/signup',
                 signupData
             )
         }

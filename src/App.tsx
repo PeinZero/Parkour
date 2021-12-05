@@ -1,6 +1,6 @@
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { Redirect, Route, withRouter } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -25,21 +25,24 @@ import { useState, useEffect } from 'react'
 
 import Menu from './components/Menu/Menu'
 import ParkerHome from './pages/Parker/ParkerHome'
+import RegisteredCars from './pages/Parker/RegisteredCars'
 import Home from './pages/Home/Home'
 import Login from './pages/AuthPages/Login'
 import Signup from './pages/AuthPages/Signup'
 
 import { useAppSelector, useAppDispatch } from './store/hooks';
-import { authActions } from "./store/authentication"
-import { logout } from "./store/authenticationActions"
+import { authActions } from "./store/Authentication/authentication"
+import { userActions } from "./store/User/user"
+import { logout } from "./store/Authentication/authenticationActions"
 
 const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(state => state.authentication.isAuth);
+  const currentRoleParker = useAppSelector(state => state.user.currentRoleParker);
   
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    const expiryDate = localStorage.getItem('expiryDate')
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
 
     if (!token || !expiryDate) {
       return;
@@ -50,15 +53,18 @@ const App: React.FC = (props) => {
       return;
     }
 
-    const userID = localStorage.getItem('userID')
-    const remainingTimeInMs = new Date(expiryDate).getTime() - new Date().getTime()
+    const userId = localStorage.getItem('userId');
+    const remainingTimeInMs = new Date(expiryDate).getTime() - new Date().getTime();
 
+    console.log(userId);
+    
     dispatch(authActions.login({
       isAuth: true,
       token: token,
-      userID: userID, 
-    }))
-    setAutoLogout(remainingTimeInMs)
+      userId: userId
+    }));
+    
+    setAutoLogout(remainingTimeInMs);
   })
 
   const setAutoLogout = milliseconds => {
@@ -73,7 +79,8 @@ const App: React.FC = (props) => {
         <IonSplitPane contentId='main'>
           <IonRouterOutlet id='main'>
             <Route path='/' exact={true}>
-              {isAuth && <ParkerHome/>} 
+              {isAuth && currentRoleParker && <ParkerHome/>} 
+              {isAuth && !currentRoleParker && null} 
               {!isAuth && <Home/>} 
             </Route>
             <Route path='/page/login' exact={true}>
@@ -82,6 +89,9 @@ const App: React.FC = (props) => {
             </Route>
             <Route path='/page/signup' exact={true}>
               <Signup/>
+            </Route>
+            <Route path='/page/registeredCars' exact={true}>
+              <RegisteredCars />
             </Route>
             <Redirect to="/" /> 
           </IonRouterOutlet>

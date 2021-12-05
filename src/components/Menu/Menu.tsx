@@ -1,7 +1,10 @@
-import { SwipeableDrawer } from '@mui/material';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+
 import styles from './Menu.module.css';
 
 import Anchor from '../UI/Anchor/Anchor';
+
+import { SwipeableDrawer } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import DirectionsCarRoundedIcon from '@mui/icons-material/DirectionsCarRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -18,7 +21,9 @@ interface MenuProps{
 
 
 const Menu: React.FC<MenuProps> = (props): JSX.Element => {
-  
+  const name = useAppSelector(state => state.user.name);
+  const rating = useAppSelector(state => state.user.parker);
+
   return (
     <SwipeableDrawer
       onOpen = {props.toggleMenu}
@@ -34,7 +39,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
             <img src="/images/mahad_profile_pic.jpg" alt="" />
           </div>
           <div className={styles['info']}>
-            <h3>Mahad Khalid</h3>
+            <h3>{name}</h3>
             <div> 
               <p>Rated</p>
               <p>4.7</p>
@@ -43,7 +48,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
           </div>
         </div>
         <div className={styles['content']}>
-          <Anchor path='#'>
+          <Anchor path='/page/registeredCars'>
             <div>
               <DirectionsCarRoundedIcon/>
               <p>Registered Cars</p>
