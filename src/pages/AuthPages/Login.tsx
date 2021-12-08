@@ -33,7 +33,7 @@ const Login: React.FC = () => {
                        placeholder="03158542543"
                 />
                 <Input label="Password" name="password" type="password" />
-                <Button className={styles['loginBtn']}>Login</Button>
+                <Button className="primary">Login</Button>
             </form>
         </Fragment>
     )

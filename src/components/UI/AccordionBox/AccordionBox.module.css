@@ -1,0 +1,12 @@
+.car{
+    box-shadow: none !important;
+    background-color: var(--background-grey) !important;
+    margin-bottom: 7px;
+}
+
+.carHeader{
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 90% !important;
+    margin: 0 5% !important;
+}

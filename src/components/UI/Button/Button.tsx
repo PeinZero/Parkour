@@ -1,13 +1,14 @@
 import { Fragment } from "react"
 import styles from './Button.module.css'
+import {ButtonBase} from '@material-ui/core';
 
 const Button = (props) => {
     return (
-        <Fragment>
-            <button className={`${styles['button']} ${props.className}`} type={props.type || 'submit'} onClick={props.onClick}>
+        <ButtonBase className={styles['ButtonBase']}>
+            <button className={`${styles['button']} ${styles[props.className]}`} type={props.type || 'submit'} onClick={props.onClick} style={props.style}>
                 {props.children}
             </button>
-        </Fragment>
+        </ButtonBase>
     )
 }
 
