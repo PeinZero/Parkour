@@ -62,7 +62,7 @@ const RegisteredCars = () => {
 
             <div className={styles['registerCar']}>
                 <div>
-                    <Anchor path="#"> <AddCircleIcon/> </Anchor>
+                    <Anchor path="/page/registerCar"> <AddCircleIcon/> </Anchor>
                 </div>
             </div>
 
