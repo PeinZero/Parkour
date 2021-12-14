@@ -41,13 +41,3 @@
     flex-direction: column;
     gap: 12px;
 }
-
-.loginBtn{
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    background-color: white;
-}
-
-.registerBtn{
-    background-color: var(--primary);
-}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import styles from './Home.module.css'
 
+import Anchor from '../../components/UI/Anchor/Anchor';
 import Button from '../../components/UI/Button/Button';
 
 const Home = () => {
@@ -22,13 +23,12 @@ const Home = () => {
                 </div>
                 <div></div>
                 <div className={styles['bottomBox']}>
-                    <Link to="/page/login">
-                        <Button className = {styles['loginBtn']}>Login</Button>
-                    </Link>
-                    <Link to="/page/signup">
-                        <Button className = {styles['registerBtn']}>Register</Button>
-                    </Link>
-                    
+                    <Anchor path="/page/login">
+                        <Button className="primary">Login</Button>
+                    </Anchor>
+                    <Anchor path="/page/signup">
+                        <Button className="primary-invert">Register</Button>
+                    </Anchor>
                 </div>
             </div>
         </Fragment>

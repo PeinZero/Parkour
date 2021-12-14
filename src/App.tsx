@@ -26,6 +26,7 @@ import { useState, useEffect } from 'react'
 import Menu from './components/Menu/Menu'
 import ParkerHome from './pages/Parker/ParkerHome'
 import RegisteredCars from './pages/Parker/RegisteredCars'
+import RegisterCar from './pages/Parker/RegisterCar'
 import Home from './pages/Home/Home'
 import Login from './pages/AuthPages/Login'
 import Signup from './pages/AuthPages/Signup'
@@ -92,6 +93,9 @@ const App: React.FC = (props) => {
             </Route>
             <Route path='/page/registeredCars' exact={true}>
               <RegisteredCars />
+            </Route>
+            <Route path='/page/registerCar' exact={true}>
+              <RegisterCar />
             </Route>
             <Redirect to="/" /> 
           </IonRouterOutlet>

@@ -46,7 +46,7 @@ const Signup: React.FC = ()=> {
                     <Input label="Password" name="password" type="password" />
                     <Input label="Confirm Password" name="confirmPassword" type="password" />
 
-                    <Button className={styles['registerBtn']} >Register</Button>
+                    <Button>Register</Button>
 
                     <p>By registering, you agree to Parkour’s <Link className={styles['Link']} to="">Terms of Service</Link> and <Link className={styles['Link']} to="">Privacy Policy</Link></p>
                 </form>
