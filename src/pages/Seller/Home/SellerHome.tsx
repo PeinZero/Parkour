@@ -1,17 +1,18 @@
 import { Fragment, useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { fetchUser } from "../../store/User/userActions";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { fetchUser } from "../../../store/User/userActions";
 
-import styles from "./ParkerHome.module.css";
+import styles from "./SellerHome.module.css";
 
-import ParkerMap from "../../components/ParkerMap/ParkerMap";
+import SellerMap from "../../../components/ParkerMap/ParkerMap";
+import Button from "../../../components/UI/Button/Button";
 
-import Hamburger from "../../components/UI/Hamburger/Hamburger";
+import Hamburger from "../../../components/UI/Hamburger/Hamburger";
 import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";
 import { ButtonBase } from "@material-ui/core";
 
-const ParkerHome: React.FC = () => {
+const SellerHome: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.authentication.userId);
   const token = useAppSelector((state) => state.authentication.token);
@@ -23,7 +24,7 @@ const ParkerHome: React.FC = () => {
   return (
     <Fragment>
       <Hamburger />
-      <div className={styles["map"]}>{/* <ParkerMap /> */}</div>
+      <div className={styles["map"]}>{/* <SellerMap /> */}</div>
       <div className={styles["searchBox"]}>
         <div className={styles["searchTopBox"]}>
           <h4>Where do you want to park?</h4>
@@ -55,4 +56,4 @@ const ParkerHome: React.FC = () => {
   );
 };
 
-export default ParkerHome;
+export default SellerHome;
