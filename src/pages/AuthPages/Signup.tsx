@@ -24,7 +24,7 @@ const Signup: React.FC = ()=> {
             confirmPassword: e.target.confirmPassword.value,
         })) 
     }
-    
+
     return (
         <Fragment>
             <div className={styles['wrapper']}>

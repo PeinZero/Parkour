@@ -10,7 +10,6 @@ export const sendLoginData = (loginData) => {
                 'http://localhost:5000/auth/login',
                 loginData
             )
-
             return response;
         } 
 

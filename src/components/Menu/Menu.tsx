@@ -36,7 +36,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
       <div className={styles['wrapper']}>
         <div className={styles['header']}>
           <div className={styles['pic']}>
-            <img src="/images/mahad_profile_pic.jpg" alt="" />
+            <img src="/images/mahad_profile_pic.jpg" alt="loading" />
           </div>
           <div className={styles['info']}>
             <h3>{name}</h3>

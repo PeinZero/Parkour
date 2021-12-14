@@ -10,8 +10,13 @@ import AccordionBox from '../../components/UI/AccordionBox/AccordionBox';
 import AccordionHeader from '../../components/UI/AccordionBox/AccordionHeader/AccordionHeader';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useAppSelector } from '../../store/hooks';
 
 const RegisteredCars = () => {
+
+    const userCarList = useAppSelector(state => state.user.parker.cars);
+    console.log(userCarList);
+
     const btnStyle = {
         fontSize: '12px'
     }

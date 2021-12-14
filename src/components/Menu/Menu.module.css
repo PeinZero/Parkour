@@ -33,6 +33,8 @@ img{
   align-items: center;
   border-radius: 50%;
   height: 100%;
+  height: 80px;
+  width: 80px;
   box-shadow: 
     1px 1px 4px 0px rgba(0, 0, 0, 0.5), 
     -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
@@ -42,6 +44,7 @@ img{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: black;
 }
 
 .header .info h3{
@@ -91,7 +94,7 @@ img{
 .content a div p,
 .content a div svg{
   margin: 0;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .footer{

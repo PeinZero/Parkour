@@ -13,13 +13,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 const Login: React.FC = () => {
     const dispatch = useAppDispatch();
 
-    const formSubmitHandler = (e) => {
+    const formSubmitHandler =  (e) => {
         e.preventDefault();
         
         dispatch(sendLoginData({
             phone: e.target.phone.value,
             password: e.target.password.value,
-        })) 
+        }))
     }
 
     return (

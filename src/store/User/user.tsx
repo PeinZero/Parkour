@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { start } from "repl";
 
 const initialState = {
     // Profile Info
@@ -43,7 +44,7 @@ const userSlice = createSlice({
         set_parker(state, action){
             state.parker = action.payload.parker;
         }
-    }  
+    }
 })
 
 export const userActions = userSlice.actions;
