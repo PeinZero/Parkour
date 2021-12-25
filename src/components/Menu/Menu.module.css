@@ -1,4 +1,4 @@
-img{
+img {
   width: 100%;
   border-radius: inherit;
   height: inherit;
@@ -8,13 +8,12 @@ img{
   width: 85vw;
 }
 
-.wrapper{
+.wrapper {
   width: 90%;
   margin: 30px 5% 0 5%;
-  
 }
 
-.header{
+.header {
   display: grid;
   grid-template-columns: 4fr 6fr;
   gap: 15px;
@@ -27,31 +26,30 @@ img{
    */
 }
 
-.header .pic{
+.header .pic {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   height: 100%;
-  box-shadow: 
-    1px 1px 4px 0px rgba(0, 0, 0, 0.5), 
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5),
     -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
-.header .info{
+.header .info {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.header .info h3{
+.header .info h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
   padding: 3px;
 }
 
-.header .info div{
+.header .info div {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -59,21 +57,20 @@ img{
 }
 
 .header .info div p,
-.header .info div svg{
+.header .info div svg {
   margin: 0;
   font-size: 16px;
 }
-.header .info div svg{
-  color: #FDCC0D;
+.header .info div svg {
+  color: #fdcc0d;
 }
 
-
-.content{
+.content {
   padding: 5px;
   margin-top: 20px;
 }
 
-.content a{
+.content a {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,7 +78,7 @@ img{
   font-weight: 300;
 }
 
-.content a div{
+.content a div {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -89,29 +86,32 @@ img{
 
 .content a svg,
 .content a div p,
-.content a div svg{
+.content a div svg {
   margin: 0;
   font-size: 18px;
 }
 
-.footer{
+.footer {
   position: absolute;
   width: 100%;
   bottom: 0;
   margin: 0;
 }
 
-.footer a{
+.footer a {
   text-align: center;
   padding: 15px 0;
   font-size: 16px;
 
-  /** Black & White **/
-  /* color: white;
-  background-color: black; */
+  /* * Black & White * */
+  /* color: white; */
+  /* background-color: black;
 
-   /** Pink & White **/
+  /** Pink & White **/
   color: white;
   background-color: #ac3f65;
-  
+}
+
+.footer.Seller a {
+  background-color: var(--primary);
 }

@@ -1,42 +1,43 @@
-.ButtonBase{
-    width: 100%;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    border-radius: 5px !important;
+.ButtonBase {
+  width: 100%;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  border-radius: 5px !important;
+  display: flex;
 }
 
-.button{
-    width: 100%;
-    padding: 15px 10px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    background-color: black;
+.button {
+  width: 100%;
+  padding: 15px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: black;
 }
 
-.primary{
-    background-color: var(--primary);
+.primary {
+  background-color: var(--primary);
 }
 
-.primary-invert{
-    background-color: white;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+.primary-invert {
+  background-color: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
 }
 
-.delete{
-    background-color: #bb3030;
-    color: white;
+.delete {
+  background-color: #bb3030;
+  color: white;
 }
 
-.delete-icon{
-    background-color: #bb3030;
-    color: white;
-    padding: 10px 5px;
+.delete-icon {
+  background-color: #bb3030;
+  color: white;
+  padding: 10px 5px;
 }
 
-.button *{
-    font-size: inherit;
+.button * {
+  font-size: inherit;
 }
