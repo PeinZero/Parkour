@@ -17,6 +17,11 @@
   background-color: black;
 }
 
+.logoutBtn {
+  width: 80%;
+  margin: 0 10% 5px 10%;
+}
+
 .primary {
   background-color: var(--primary);
 }

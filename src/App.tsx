@@ -22,6 +22,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 import { useState, useEffect } from "react";
+import { setupIonicReact } from "@ionic/react";
 
 import Menu from "./components/Menu/Menu";
 import ParkerHome from "./pages/Parker/ParkerHome";
@@ -39,6 +40,9 @@ import { userActions } from "./store/User/user";
 import { logout } from "./store/Authentication/authenticationActions";
 
 const App: React.FC = (props) => {
+  setupIonicReact({
+    mode: "md",
+  });
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
   const currentRoleParker = useAppSelector(

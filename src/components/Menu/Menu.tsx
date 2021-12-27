@@ -115,17 +115,16 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         </div>
       </div>
       <div className={`${styles["footer"]} ${!isParker && styles["Seller"]}`}>
-        <Button
-          style={{ width: "80%", margin: "0 10% 5px 10%" }}
-          onClick={logoutHandler}
-        >
+        <Button className={"logoutBtn"} onClick={logoutHandler}>
           {" "}
           Logout{" "}
         </Button>
         {isParker ? (
           <Anchor path="#">Become a Spot Seller</Anchor>
         ) : (
-          <Anchor path="#">Find Parking</Anchor>
+          <Anchor style={{ backgroundColor: "red" }} path="#">
+            Find Parking
+          </Anchor>
         )}
       </div>
     </SwipeableDrawer>
