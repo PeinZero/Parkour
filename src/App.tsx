@@ -31,12 +31,12 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
+import MySpots from "./pages/Seller/MySpots/MySpots";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
 import { logout } from "./store/Authentication/authenticationActions";
-import { MySpots } from "./pages/Seller/MySpots/MySpots";
 
 const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
@@ -101,7 +101,7 @@ const App: React.FC = (props) => {
             <Route path="/page/registeredCars" exact={true}>
               <RegisteredCars />
             </Route>
-            <Route path="/page/registerCar" exact={true}>
+            <Route path="/page/" exact={true}>
               <RegisterCar />
             </Route>
             <Route path="/seller/mySpots" exact={true}>
