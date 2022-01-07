@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
+import { IonApp } from "@ionic/react";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -19,11 +19,14 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useState, useEffect, Fragment } from "react";
-import { IonReactRouter } from "@ionic/react-router";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-import Menu from "./components/Menu/Menu";
 import ParkerHome from "./pages/Parker/ParkerHome";
 import RegisteredCars from "./pages/Parker/RegisteredCars";
 import RegisterCar from "./pages/Parker/RegisterCar";
@@ -34,7 +37,6 @@ import SellerHome from "./pages/Seller/Home/SellerHome";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
-import { userActions } from "./store/User/user";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
 
@@ -82,32 +84,37 @@ const App: React.FC = (props) => {
   };
 
   return (
-    <IonApp className='app'>
+    <IonApp className="app">
       <Router>
         <Routes>
-          <Route path="/" element={
-            <Fragment>
-              {isAuth && currentRoleParker && <ParkerHome />}
-              {isAuth && !currentRoleParker && <SellerHome />}
-              {!isAuth && <Home />}
-            </Fragment>
-          }/>
-            
-          <Route path="/login" element={
-            <Fragment>
-              {isAuth && <Navigate to="/" />}
-              {!isAuth && <Login />}
-            </Fragment>
-          }/>
+          <Route
+            path="/"
+            element={
+              <Fragment>
+                {isAuth && currentRoleParker && <ParkerHome />}
+                {isAuth && !currentRoleParker && <SellerHome />}
+                {!isAuth && <Home />}
+              </Fragment>
+            }
+          />
 
-          <Route path="/signup"  element={<Signup/>} />
-          <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
-          <Route path="/parker/registerCar" element={<RegisterCar/>}/>
-          <Route path="/seller/mySpots" element={<MySpots/>} />
+          <Route
+            path="/login"
+            element={
+              <Fragment>
+                {isAuth && <Navigate to="/" />}
+                {!isAuth && <Login />}
+              </Fragment>
+            }
+          />
 
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/parker/registeredCars" element={<RegisteredCars />} />
+          <Route path="/parker/registerCar" element={<RegisterCar />} />
+          <Route path="/seller/mySpots" element={<MySpots />} />
         </Routes>
       </Router>
-    </IonApp> 
+    </IonApp>
   );
 };
 
