@@ -1,12 +1,17 @@
 .ButtonBase {
-  width: 100%;
+  display: flex;
   justify-content: flex-start !important;
   align-items: flex-start !important;
+  width: 100%;
+  height: inherit;
   border-radius: 5px !important;
-  display: flex;
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
   width: 100%;
   padding: 15px 10px;
   border-radius: 4px;
@@ -35,7 +40,6 @@
 .delete-icon {
   background-color: #bb3030;
   color: white;
-  padding: 10px 5px;
 }
 
 .button * {

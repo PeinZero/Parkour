@@ -32,7 +32,9 @@
     display: grid;
     grid-template-columns: 8fr 2fr;
     gap: 10px;
+    height: 40px;
 }
+
 .registerCar{
     display: flex;
     justify-content: center;

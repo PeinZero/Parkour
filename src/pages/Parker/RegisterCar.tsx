@@ -17,7 +17,7 @@ const RegisterCar = () => {
         <Fragment>
             <div className={styles['wrapper']}>
                 <div className={styles['header']}>
-                        <Link to="/page/registeredCars" className={styles['backLink']}>
+                        <Link to="/parker/registeredCars" className={styles['backLink']}>
                             <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
                         </Link>
                         <h1>Register Car</h1>

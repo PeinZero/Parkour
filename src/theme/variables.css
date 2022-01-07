@@ -6,6 +6,8 @@ http://ionicframework.com/docs/theming/ */
   /** own variables **/
   --card-shadow: rgb(200, 200, 200);
   --background-grey: rgb(226, 226, 226);
+  --primary: #2986ae;
+  
 
   /** primary **/
   --ion-color-primary: #222428;
@@ -149,11 +151,6 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
-
-    background-color: white;
-    color: black;
-    --primary: #2986ae;
-    font-family: 'Roboto', sans-serif;
   }
 
   /*
@@ -242,4 +239,11 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+.app{
+  display: block !important;
+  background-color: white;
+  color: black;
+  font-family: 'Roboto', sans-serif;
 }

@@ -17,7 +17,7 @@ const RegisteredCars = () => {
     }
 
     const btnStyle2 = {
-        fontSize: '18px'
+        fontSize: '12px'
     }
     return (
         <Fragment>
@@ -62,7 +62,7 @@ const RegisteredCars = () => {
 
             <div className={styles['registerCar']}>
                 <div>
-                    <Anchor path="/page/registerCar"> <AddCircleIcon/> </Anchor>
+                    <Anchor path="/parker/registerCar"> <AddCircleIcon/> </Anchor>
                 </div>
             </div>
 

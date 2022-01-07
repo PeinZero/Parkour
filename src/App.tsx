@@ -1,6 +1,4 @@
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -21,7 +19,9 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
+import { IonReactRouter } from "@ionic/react-router";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Menu from "./components/Menu/Menu";
 import ParkerHome from "./pages/Parker/ParkerHome";
@@ -82,36 +82,32 @@ const App: React.FC = (props) => {
   };
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
+    <IonApp className='app'>
+      <Router>
+        <Routes>
+          <Route path="/" element={
+            <Fragment>
               {isAuth && currentRoleParker && <ParkerHome />}
               {isAuth && !currentRoleParker && <SellerHome />}
               {!isAuth && <Home />}
-            </Route>
-            <Route path="/page/login" exact={true}>
-              {isAuth && <Redirect to="/" />}
+            </Fragment>
+          }/>
+            
+          <Route path="/login" element={
+            <Fragment>
+              {isAuth && <Navigate to="/" />}
               {!isAuth && <Login />}
-            </Route>
-            <Route path="/page/signup" exact={true}>
-              <Signup />
-            </Route>
-            <Route path="/page/registeredCars" exact={true}>
-              <RegisteredCars />
-            </Route>
-            <Route path="/page/registerCar" exact={true}>
-              <RegisterCar />
-            </Route>
-            <Route path="/seller/mySpots" exact={true}>
-              <MySpots />
-            </Route>
-            <Redirect to="/" />
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
+            </Fragment>
+          }/>
+
+          <Route path="/signup"  element={<Signup/>} />
+          <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
+          <Route path="/parker/registerCar" element={<RegisterCar/>}/>
+          <Route path="/seller/mySpots" element={<MySpots/>} />
+
+        </Routes>
+      </Router>
+    </IonApp> 
   );
 };
 

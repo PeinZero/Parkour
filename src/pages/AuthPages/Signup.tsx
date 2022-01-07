@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useAppDispatch } from '../../store/hooks';
 import { sendSignupData } from '../../store/Authentication/authenticationActions';
 
@@ -12,6 +12,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Signup: React.FC = ()=> {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const formSubmitHandler = (e) => {
         e.preventDefault();
@@ -22,7 +23,9 @@ const Signup: React.FC = ()=> {
             email: e.target.email.value,
             password: e.target.password.value,
             confirmPassword: e.target.confirmPassword.value,
-        })) 
+        }))
+
+        navigate('/login');
     }
     
     return (
@@ -47,7 +50,6 @@ const Signup: React.FC = ()=> {
                     <Input label="Confirm Password" name="confirmPassword" type="password" />
 
                     <Button>Register</Button>
-
                     <p>By registering, you agree to Parkour’s <Link className={styles['Link']} to="">Terms of Service</Link> and <Link className={styles['Link']} to="">Privacy Policy</Link></p>
                 </form>
             </div>
