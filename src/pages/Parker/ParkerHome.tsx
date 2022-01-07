@@ -19,7 +19,7 @@ const ParkerHome: React.FC = () => {
     const token = useAppSelector(state => state.authentication.token);
     
     useEffect(() => {
-        dispatch(fetchUser(userId, token));
+        dispatch(fetchUser(userId, token))
     }, []);
 
     const logoutHandler = () => {

@@ -24,25 +24,25 @@ const RegisterCar = () => {
                 </div>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
                     <Input label="Car Registration Number" name="numberPlate" type="text" 
-                        placeholder="e.g. ABC-123"
+                        placeholder="e.g. ABC-123" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Make" name="make" type="text" 
-                        placeholder="e.g. Toyota"
+                        placeholder="e.g. Toyota" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Model" name="model" type="text" 
-                        placeholder="e.g. Corolla"
+                        placeholder="e.g. Corolla" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Color" name="color" type="text" 
-                        placeholder="e.g. Black"
+                        placeholder="e.g. Black" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Year" name="year" type="text" 
-                        placeholder="e.g. 2019"
+                        placeholder="e.g. 2019" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Mileage (Optional)" name="mileage" type="text" 
-                        placeholder="e.g. 12"
+                        placeholder="e.g. 12" className={styles["registerCarFormControl"]}
                     />
                     
-                    <Button>Register Car</Button>
+                    <Button style={{fontSize: '13px'}}>Register Car</Button>
                 </form>
             </div>
         </Fragment>
