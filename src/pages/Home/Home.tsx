@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { Link } from "react-router-dom";
 
 import styles from './Home.module.css'
 
@@ -23,10 +22,10 @@ const Home = () => {
                 </div>
                 <div></div>
                 <div className={styles['bottomBox']}>
-                    <Anchor path="/page/login">
+                    <Anchor path="/login">
                         <Button className="primary">Login</Button>
                     </Anchor>
-                    <Anchor path="/page/signup">
+                    <Anchor path="/signup">
                         <Button className="primary-invert">Register</Button>
                     </Anchor>
                 </div>

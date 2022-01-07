@@ -20,10 +20,6 @@ const ParkerHome: React.FC = () => {
         dispatch(fetchUser(userId, token))
     }, []);
 
-  useEffect(() => {
-    dispatch(fetchUser(userId, token));
-  }, []);
-
   return (
     <Fragment>
       <Hamburger />

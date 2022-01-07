@@ -58,7 +58,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         </div>
         <div className={styles["content"]}>
           {isParker ? (
-            <Anchor path="/page/registeredCars">
+            <Anchor path="/parker/registeredCars">
               <div>
                 <DirectionsCarRoundedIcon />
                 <p>My Cars</p>
