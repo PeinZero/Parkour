@@ -34,7 +34,8 @@
     flex-direction: column;
 }
 
-label{
+.registerCarFormControl label{
     font-size: 14px !important;
 }
+
 

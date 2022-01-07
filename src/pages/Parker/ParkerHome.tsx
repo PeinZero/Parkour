@@ -12,9 +12,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ButtonBase } from "@material-ui/core";
 
 const ParkerHome: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.authentication.userId);
-  const token = useAppSelector((state) => state.authentication.token);
+    const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.authentication.userId);
+    const token = useAppSelector(state => state.authentication.token);
+    
+    useEffect(() => {
+        dispatch(fetchUser(userId, token))
+    }, []);
 
   useEffect(() => {
     dispatch(fetchUser(userId, token));
