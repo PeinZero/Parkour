@@ -18,6 +18,7 @@ import AccordionBox from "../../../components/UI/AccordionBox/AccordionBox";
 import AccordionHeader from "../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { arrowDownCircle } from "ionicons/icons";
 import {
   IonContent,
   IonAccordionGroup,
@@ -27,7 +28,6 @@ import {
   IonList,
   IonPage,
 } from "@ionic/react";
-import { arrowDownCircle } from "ionicons/icons";
 
 const KHI = {
   lat: 24.8607,
@@ -98,7 +98,6 @@ const MySpots = () => {
           <IonItem slot="header">
             <IonLabel>Numbers</IonLabel>
           </IonItem>
-
           <IonList slot="content">
             <IonItem>
               <IonLabel>1</IonLabel>
