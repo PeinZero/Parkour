@@ -1,0 +1,6 @@
+npm install @capacitor/android
+npx cap add android
+ionic capacitor sync android
+npx cap open android
+
+//if line 4 doesn't work (Open Android Studio and open the android folder as the project)

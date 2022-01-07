@@ -6,7 +6,7 @@ export const sendLoginData = (loginData) => {
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = await axios.post(
-        `${process.env.backendLink}/auth/login`,
+        `${process.env.REACT_APP_backendLink}/auth/login`,
         loginData
       );
 
@@ -39,7 +39,7 @@ export const sendLoginData = (loginData) => {
       }
 
       // Authentication Check.
-      if (err.response.status !== 200 && err.response.status != 201) {
+      if (err.response.status !== 200 && err.response.status !== 201) {
         console.log("Could not authenticate you!");
       }
 
@@ -52,9 +52,10 @@ export const sendSignupData = (signupData) => {
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = axios.post(
-        `${process.env.backendLink}/auth/signup`,
+        `${process.env.REACT_APP_backendLink}/auth/signup`,
         signupData
       );
+      return response;
     };
 
     try {

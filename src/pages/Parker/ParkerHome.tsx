@@ -23,7 +23,9 @@ const ParkerHome: React.FC = () => {
   return (
     <Fragment>
       <Hamburger />
-      <div className={styles["map"]}>{/* <ParkerMap /> */}</div>
+      <div className={styles["map"]}>
+        <ParkerMap />
+      </div>
       <div className={styles["searchBox"]}>
         <div className={styles["searchTopBox"]}>
           <h4>Where do you want to park?</h4>

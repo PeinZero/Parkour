@@ -5,7 +5,7 @@ export const fetchUser = (userId, token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
       const response = await axios.get(
-        `${process.env.bakendLink}/user/getUser/${userId}`,
+        `${process.env.REACT_APP_backendLink}/user/getUser/${userId}`,
         {
           headers: {
             Authorization: "Bearer " + token,

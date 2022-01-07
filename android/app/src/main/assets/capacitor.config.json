@@ -1,0 +1,7 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Parkour",
+	"webDir": "build",
+	"bundledWebRuntime": false,
+	"CAPACITOR_ANDROID_STUDIO_PATH": "D:/Media/Software/AS/bin/studio64.exe"
+}
