@@ -7,7 +7,7 @@
 }
 
 .map {
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 .header .back {
@@ -39,23 +39,23 @@
   height: 40px;
 }
 
-.registerCar {
+.registerSpot {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 0;
 }
 
-.registerCar div {
+.registerSpot div {
   width: 50px;
 }
-.registerCar a {
+.registerSpot a {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.registerCar svg {
+.registerSpot svg {
   color: black;
   font-size: 42px;
 }

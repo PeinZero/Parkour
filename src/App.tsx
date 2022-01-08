@@ -39,6 +39,7 @@ import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
+import RegisterSpot from "./pages/Seller/RegisterSpot/RegisterSpot";
 
 const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
@@ -112,6 +113,7 @@ const App: React.FC = (props) => {
           <Route path="/parker/registeredCars" element={<RegisteredCars />} />
           <Route path="/parker/registerCar" element={<RegisterCar />} />
           <Route path="/seller/mySpots" element={<MySpots />} />
+          <Route path="/seller/registerSpot" element={<RegisterSpot />} />
         </Routes>
       </Router>
     </IonApp>

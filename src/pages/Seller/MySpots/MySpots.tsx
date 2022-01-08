@@ -44,12 +44,12 @@ export const MySpots = () => {
           <div className={styles["accordionDetails"]}>
             <div className={styles["map"]}>
               <MapIcon />
-              View in map
+              View
             </div>
             <div className={styles["buttons"]}>
-              <Button className="secondary" style={btnStyle}>
+              <Button className="primary" style={btnStyle}>
                 {" "}
-                Disable Spot
+                Disable
               </Button>
               <Button className="delete-icon" style={btnStyle2}>
                 <DeleteOutlineRoundedIcon />
@@ -63,11 +63,11 @@ export const MySpots = () => {
         >
           <div className={styles["accordionDetails"]}>
             <div className={styles["map"]}>
-              View in map
-              <MapIcon />
+              <MapIcon className={styles["mapicon"]} />
+              View
             </div>
             <div className={styles["buttons"]}>
-              <Button className="secondary" style={btnStyle}>
+              <Button className="primary" style={btnStyle}>
                 {" "}
                 Disable
               </Button>
@@ -89,13 +89,13 @@ export const MySpots = () => {
         >
           <div className={styles["accordionDetails"]}>
             <div className={styles["map"]}>
-              View
               <MapIcon />
+              View
             </div>
             <div className={styles["buttons"]}>
-              <Button className="secondary" style={btnStyle}>
+              <Button className="primary" style={btnStyle}>
                 {" "}
-                Disable Spot
+                Disable
               </Button>
               <Button className="delete-icon" style={btnStyle2}>
                 <DeleteOutlineRoundedIcon />
@@ -119,7 +119,7 @@ export const MySpots = () => {
               View
             </div>
             <div className={styles["buttons"]}>
-              <Button className="secondary" style={btnStyle}>
+              <Button className="primary" style={btnStyle}>
                 {" "}
                 Disable
               </Button>
@@ -131,9 +131,9 @@ export const MySpots = () => {
         </AccordionBox>
       </div>
 
-      <div className={styles["registerCar"]}>
+      <div className={styles["registerSpot"]}>
         <div>
-          <Anchor path="/parker/registerCar">
+          <Anchor path="/seller/registerSpot">
             {" "}
             <AddCircleIcon />{" "}
           </Anchor>

@@ -37,12 +37,12 @@
 }
 
 .delete {
-  background-color: #bb3030;
+  background-color: var(--negativeCTA);
   color: white;
 }
 
 .delete-icon {
-  background-color: #bb3030;
+  background-color: var(--negativeCTA);
   color: white;
 }
 

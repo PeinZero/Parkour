@@ -6,7 +6,8 @@ http://ionicframework.com/docs/theming/ */
   /** own variables **/
   --card-shadow: rgb(200, 200, 200);
   --background-grey: rgb(226, 226, 226);
-  --primary: #2986ae;
+  --primary: #0090cc;
+  --primaryRGB: 0, 144, 204;
   --negativeCTA: #ff7c7c;
   --secondary: #ac3f65;
 
