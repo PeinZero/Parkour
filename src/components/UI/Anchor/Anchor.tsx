@@ -1,14 +1,13 @@
 import styles from './Anchor.module.css';
-import {ButtonBase} from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Button from '../Button/Button'
 
 const Anchor = (props) => {
     return (
-        <ButtonBase className={`${styles['ButtonBase']} ${props.ClassName}`}>
-            <Link to={props.path} className={styles['Link']}>
-                {props.children}
-            </Link>
-        </ButtonBase>
+        <Link to={props.path} className={styles['Link']}>
+            <Button className={props.className}> {props.children} </Button>
+        </Link>
+        
     )
 }
 

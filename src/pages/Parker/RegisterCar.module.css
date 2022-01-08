@@ -30,6 +30,7 @@
 .form {
     width: 85%;
     margin: 0 7.5%;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
 }

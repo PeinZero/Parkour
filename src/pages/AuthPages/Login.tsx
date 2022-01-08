@@ -24,11 +24,13 @@ const Login: React.FC = () => {
 
     return (
         <Fragment>
-            <form onSubmit = {formSubmitHandler} className={styles['form']}>
+            <div className={styles['header']}>
                 <Link to="/" className={styles['backLink']}>
                     <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
                 </Link>
                 <h1>Login</h1>
+            </div>
+            <form onSubmit = {formSubmitHandler} className={styles['form']}>
                 <Input label="Phone Number" name="phone" type="text" 
                        placeholder="03158542543"
                 />
