@@ -19,11 +19,9 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useState, useEffect, Fragment } from "react";
-import { IonReactRouter } from "@ionic/react-router";
+import { useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import Menu from "./components/Menu/Menu";
 import ParkerHome from "./pages/Parker/ParkerHome";
 import RegisteredCars from "./pages/Parker/RegisteredCars";
 import RegisterCar from "./pages/Parker/RegisterCar";
@@ -31,10 +29,10 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
+import Search from "./pages/Search/Search";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
-import { userActions } from "./store/User/user";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
 
@@ -99,10 +97,13 @@ const App: React.FC = (props) => {
               {!isAuth && <Login />}
             </Fragment>
           }/>
+          <Route path="/signup" element={<Signup/>} />
 
-          <Route path="/signup"  element={<Signup/>} />
+          <Route path="/search" element={<Search/>} />
+
           <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
           <Route path="/parker/registerCar" element={<RegisterCar/>}/>
+
           <Route path="/seller/mySpots" element={<MySpots/>} />
 
         </Routes>

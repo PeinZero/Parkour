@@ -1,0 +1,30 @@
+.header{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 40px 0;
+    padding: 0 15px;
+}
+
+.header *{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    color: black;
+}
+
+.header a svg{
+    font-size: 36px;
+}
+
+.header h1{
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.header.small h1{
+    font-size: 22px;
+}

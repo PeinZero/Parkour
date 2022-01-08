@@ -8,6 +8,7 @@ http://ionicframework.com/docs/theming/ */
   --background-grey: rgb(226, 226, 226);
   --primary: #2986ae;
   --secondary: #ac3f65;
+  --placeholder-text-color: #838383;
   
 
   /** primary **/

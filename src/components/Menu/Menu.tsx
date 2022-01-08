@@ -5,6 +5,7 @@ import styles from "./Menu.module.css";
 
 import Anchor from "../UI/Anchor/Anchor";
 import Button from "../../components/UI/Button/Button";
+import Ripple from "../UI/Button/Ripple/Ripple";
 
 import { SwipeableDrawer } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
@@ -58,59 +59,73 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         </div>
         <div className={styles["content"]}>
           {isParker ? (
-            <Anchor path="/parker/registeredCars" className="reset">
-              <div>
-                <DirectionsCarRoundedIcon />
-                <p>My Cars</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+            <Anchor path="/parker/registeredCars">
+              <Ripple>
+                <div>
+                  <DirectionsCarRoundedIcon />
+                  <p>My Cars</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           ) : (
-            <Anchor path="/seller/mySpots" className="reset">
+            <Anchor path="/seller/mySpots">
+              <Ripple>
               <div>
                 <RoomIcon />
                 <p>My Spots</p>
               </div>
               <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           )}
-          <Anchor path="#" className="reset">
-            <div>
-              <AccountBalanceWalletRoundedIcon />
-              <p>Wallet</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+          <Anchor path="#">
+            <Ripple>
+              <div>
+                <AccountBalanceWalletRoundedIcon />
+                <p>Wallet</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
           {isParker ? (
-            <Anchor path="#" className="reset">
-              <div>
-                <HistoryIcon />
-                <p>Your Past Bookings</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+            <Anchor path="#">
+              <Ripple>
+                <div>
+                  <HistoryIcon />
+                  <p>Your Past Bookings</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           ) : (
-            <Anchor path="#" className="reset">
-              <div>
-                <HistoryIcon />
-                <p>Booking Requests</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+            <Anchor path="#">
+              <Ripple>
+                <div>
+                  <HistoryIcon />
+                  <p>Booking Requests</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           )}
-          <Anchor path="#" className="reset">
-            <div>
-              <SettingsIcon />
-              <p>Settings</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+          <Anchor path="#">
+            <Ripple>
+              <div>
+                <SettingsIcon />
+                <p>Settings</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
-          <Anchor path="#" className="reset">
-            <div>
-              <NotListedLocationIcon />
-              <p>Help</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+          <Anchor path="#">
+            <Ripple>
+              <div>
+                <NotListedLocationIcon />
+                <p>Help</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
         </div>
       </div>
@@ -119,8 +134,8 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
            Logout
         </Button>
         
-        {isParker && <Anchor path="#" className="secondary"> Become a Spot Seller</Anchor>}
-        {!isParker && <Anchor path="#" className="primary">Find Parking</Anchor>}
+        {isParker && <Anchor path="#"> <Button btnClass="secondary"> Become a Spot Seller </Button> </Anchor>}
+        {!isParker && <Anchor path="#"><Button btnClass="secondary"> Find Parking </Button></Anchor>}
 
       </div>
     </SwipeableDrawer>

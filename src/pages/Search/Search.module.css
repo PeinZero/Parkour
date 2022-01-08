@@ -1,0 +1,43 @@
+.headerMain{
+    width: 100%;
+    box-shadow: 0 2px 2px var(--card-shadow);
+    padding-bottom: 20px;
+}
+
+.searchInputBar{
+    display: grid;
+    grid-template-columns: 1fr 5fr 4fr;
+    background-color: var(--background-grey);
+    padding: 10px;
+    width: 90%;
+    margin: 0 5%;
+    border-radius: 5px;
+}
+
+.searchInputBar .searchIcon{
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+
+.searchInputBar .inputBar{
+    padding: 0 5px;
+    border: none;
+    background-color: inherit;
+}
+
+.searchInputBar .inputBar::placeholder{
+    color: var(--placeholder-text-color);
+}
+.searchInputBar .inputBar:focus{
+    outline: none;
+}
+
+.searchInputBar select{
+    border: none;
+    border-left: 2px solid gray;
+    background-color: inherit;
+    color: black;
+    outline: none !important;
+}
+

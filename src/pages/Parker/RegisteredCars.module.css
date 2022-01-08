@@ -1,28 +1,3 @@
-.header{
-    display: flex;
-    width: 90%;
-    margin: 35px 5% 30px 5%;
-    gap: 10px;
-    align-items: center;
-}
-
-.header .back {
-    display: flex;
-    align-items: center;
-}
-
-.header .back *{
-    margin:  0;
-    font-size: 30px;
-    color: black;
-}
-
-.header h3{
-    margin: 0;
-    padding: 10px 0;
-    font-size: 26px;
-}
-
 .accordionDetails{
     display: flex;
     justify-content: space-between;
@@ -50,11 +25,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
+    width: 45px;
 }
+
 .registerCar a button{
-    padding: 0 !important;
-    background-color: inherit !important;
+    justify-content: center !important;
 }
 .registerCar svg{
     color: black;

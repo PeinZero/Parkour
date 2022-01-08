@@ -5,11 +5,14 @@ import { fetchUser } from "../../store/User/userActions";
 import styles from "./ParkerHome.module.css";
 
 import ParkerMap from "../../components/ParkerMap/ParkerMap";
-
 import Hamburger from "../../components/UI/Hamburger/Hamburger";
+import Anchor from "../../components/UI/Anchor/Anchor";
+import Ripple from "../../components/UI/Button/Ripple/Ripple";
+
 import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";
-import { ButtonBase } from "@material-ui/core";
+
+
 
 const ParkerHome: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -30,14 +33,16 @@ const ParkerHome: React.FC = () => {
           <p>Tip: We search for parking spots near the pin you drop</p>
         </div>
         <div className={styles["searchBottomBox"]}>
-          <ButtonBase className={styles["searchBar"]}>
-            <div className={styles["searchIcon"]}>
-              <SearchIcon />
-            </div>
-            <div>Enter your destination</div>
-          </ButtonBase>
+          <Anchor path="/search" className={styles["searchBar"]}>
+            <Ripple>
+              <div className={styles["searchIcon"]}>
+                <SearchIcon />
+              </div>
+              <div>Enter your destination</div>
+            </Ripple>
+          </Anchor>
           <div className={styles["recents"]}>
-            <ButtonBase className={styles["recent"]}>
+            <Ripple className={styles["recent"]}>
               <div className={styles["icon"]}>
                 <RoomIcon />
               </div>
@@ -47,7 +52,7 @@ const ParkerHome: React.FC = () => {
                   Korangi - Karachi - Sindh
                 </div>
               </div>
-            </ButtonBase>
+            </Ripple>
           </div>
         </div>
       </div>

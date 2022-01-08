@@ -7,6 +7,7 @@ import styles from './Login.module.css'
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import Header from '../../components/UI/Header/Header';
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
@@ -24,18 +25,13 @@ const Login: React.FC = () => {
 
     return (
         <Fragment>
-            <div className={styles['header']}>
-                <Link to="/" className={styles['backLink']}>
-                    <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
-                </Link>
-                <h1>Login</h1>
-            </div>
+            <Header backLink="/" content="Login"/>
             <form onSubmit = {formSubmitHandler} className={styles['form']}>
                 <Input label="Phone Number" name="phone" type="text" 
                        placeholder="03158542543"
                 />
                 <Input label="Password" name="password" type="password" />
-                <Button className="primary">Login</Button>
+                <Button btnClass="primary">Login</Button>
             </form>
         </Fragment>
     )
