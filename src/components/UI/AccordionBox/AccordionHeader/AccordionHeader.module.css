@@ -1,44 +1,50 @@
-.header{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.avatar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    padding: 5px;
-    background-color: var(--primary);
-    box-shadow: 1px 1px 4px var(--card-shadow), -1px -1px 4px var(--card-shadow);
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 1px 1px 4px var(--card-shadow), -1px -1px 4px var(--card-shadow);
 }
-.avatar *{ 
-    font-size: 25px;
-    color: white;
+.avatar.Parker {
+  background-color: var(--primary);
 }
-
-.content{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 0;
+.avatar.Seller {
+  background-color: var(--secondary);
 }
 
-.content *{
-    margin: 0;
-    font-size: 16px;
+.avatar * {
+  font-size: 25px;
+  color: white;
 }
 
-.content h4{
-    font-weight: 600;
-    line-height: 1;
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
 }
 
-.content div{
-    border-radius: 50%;
-    background-color: black;
-    width: 5px;
-    height: 5px;
+.content * {
+  margin: 0;
+  font-size: 16px;
+}
+
+.content h4 {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.content div {
+  border-radius: 50%;
+  background-color: black;
+  width: 5px;
+  height: 5px;
 }

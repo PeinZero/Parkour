@@ -26,6 +26,10 @@
   background-color: var(--primary);
 }
 
+.secondary {
+  background-color: var(--secondary);
+}
+
 .primary-invert {
   background-color: white;
   color: var(--primary);
