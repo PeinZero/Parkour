@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  width: 90%;
+  margin: 35px 5% 30px 5%;
+  gap: 10px;
+  align-items: center;
+}
+
+.map {
+  color: var(--secondary);
+}
+
+.header .back {
+  display: flex;
+  align-items: center;
+}
+
+.header .back * {
+  margin: 0;
+  font-size: 30px;
+  color: black;
+}
+
+.header h3 {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 26px;
+}
+
+.accordionDetails {
+  display: flex;
+  justify-content: space-between;
+}
+
+.accordionDetails .buttons {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  gap: 10px;
+  height: 40px;
+}
+
+.registerCar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.registerCar div {
+  width: 50px;
+}
+.registerCar a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerCar svg {
+  color: black;
+  font-size: 42px;
+}
