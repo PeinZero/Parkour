@@ -19,12 +19,6 @@
   bottom: 20px;
 }
 
-.searchBox.expanded {
-  background-color: red;
-  height: 85%;
-  margin-top: 10%;
-}
-
 .searchTopBox {
   margin-bottom: 10px;
 }
