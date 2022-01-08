@@ -5,9 +5,7 @@ import styles from './RegisterCar.module.css'
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import Input2Column from '../../components/UI/Input/Input2Column/Input2Column';
-
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded';
+import Header from '../../components/UI/Header/Header';
 
 const RegisterCar = () => {
     const formSubmitHandler = (e) => {
@@ -18,12 +16,7 @@ const RegisterCar = () => {
     return (
         <Fragment>
             <div className={styles['wrapper']}>
-                <div className={styles['header']}>
-                        <Link to="/parker/registeredCars" className={styles['backLink']}>
-                            <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
-                        </Link>
-                        <h1>Register Car</h1>
-                </div>
+                <Header backLink="/" content="Register A Car" className="small"/>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
                     <Input label="Car Registration Number *" name="numberPlate" type="text" 
                         placeholder="ABC-123" className={styles["registerCarFormControl"]}

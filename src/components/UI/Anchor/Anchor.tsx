@@ -4,8 +4,8 @@ import Button from '../Button/Button'
 
 const Anchor = (props) => {
     return (
-        <Link to={props.path} className={styles['Link']}>
-            <Button className={props.className}> {props.children} </Button>
+        <Link to={props.path} className={`${styles['Link']} ${props.className}`}>
+            {props.children}
         </Link>
         
     )

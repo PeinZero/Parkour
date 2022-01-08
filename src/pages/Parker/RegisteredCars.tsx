@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
-import {Link} from 'react-router-dom'
 
 import styles from './RegisteredCars.module.css';
 import Button from '../../components/UI/Button/Button';
 import Anchor from '../../components/UI/Anchor/Anchor';
+import Header from '../../components/UI/Header/Header';
+import Ripple from '../../components/UI/Button/Ripple/Ripple';
 
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import AccordionBox from '../../components/UI/AccordionBox/AccordionBox';
 import AccordionHeader from '../../components/UI/AccordionBox/AccordionHeader/AccordionHeader';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
@@ -14,10 +14,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 const RegisteredCars = () => {
     return (
         <Fragment>
-            <div className={styles['header']}>
-                <Link to="/" className={styles['back']}> <ArrowBackIosNewIcon/> </Link>
-                <h3>My Cars</h3>
-            </div>
+            <Header backLink="/" content="My Cars" className="small"/>
 
             <div className={styles['carList']}>
                 <AccordionBox header={<AccordionHeader 
@@ -28,8 +25,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button className="primary"> Set as Default</Button>
-                            <Button className="delete-icon"> 
+                            <Button btnClass="primary"> Set as Default</Button>
+                            <Button btnClass="delete-icon"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>
@@ -44,8 +41,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button className="primary"> Set as Default</Button>
-                            <Button className="delete-icon"> 
+                            <Button btnClass="primary"> Set as Default</Button>
+                            <Button btnClass="delete-icon"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>
@@ -54,7 +51,11 @@ const RegisteredCars = () => {
             </div>
 
             <div className={styles['registerCar']}>
-                <Anchor path="/parker/registerCar"> <AddCircleIcon/> </Anchor>
+                <Anchor path="/parker/registerCar">
+                    <Ripple>
+                        <AddCircleIcon/> 
+                    </Ripple>
+                </Anchor>
             </div>
 
             
