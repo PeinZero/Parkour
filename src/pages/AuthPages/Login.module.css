@@ -1,19 +1,31 @@
+.header{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 40px 0;
+    padding: 0 15px;
+}
+
+.header *{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    line-height: 1;
+    color: black;
+}
+
+.header h1{
+    margin: 0;
+    font-size: 28px;
+}
+
 .form {
     width: 85%;
     margin: 0 7.5%;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    margin-top: 15%;
-
-}
-
-.backLink{
-    width: 20px;
-}
-.back{
-    position: relative;
-    left: -16px;
-    color: black;
 }
 
 .form h1{

@@ -22,11 +22,11 @@ const Home = () => {
                 </div>
                 <div></div>
                 <div className={styles['bottomBox']}>
-                    <Anchor path="/login">
-                        <Button className="primary">Login</Button>
+                    <Anchor className="primary" path="/login">
+                       Login
                     </Anchor>
-                    <Anchor path="/signup">
-                        <Button className="primary-invert">Register</Button>
+                    <Anchor className="primary-invert" path="/signup">
+                        Register
                     </Anchor>
                 </div>
             </div>

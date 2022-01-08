@@ -35,22 +35,27 @@
     height: 40px;
 }
 
+.buttons button{
+    font-size: 12px;
+}
+
+/* The Add Icon */
 .registerCar{
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px 0;
 }
-
-.registerCar div {
-    width: 50px;
-}
 .registerCar a{
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
 }
-
+.registerCar a button{
+    padding: 0 !important;
+    background-color: inherit !important;
+}
 .registerCar svg{
     color: black;
     font-size: 42px;

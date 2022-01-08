@@ -64,24 +64,23 @@ img {
   margin-top: 20px;
 }
 
-.content a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  font-weight: 300;
-  width: 100%;
+.content a button{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px !important;
+  font-weight: 300 !important;
 }
 
-.content a div {
+.content a button div {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.content a svg,
-.content a div p,
-.content a div svg {
+.content a button svg,
+.content a button div p,
+.content a button div svg {
   margin: 0;
   font-size: 16px;
 }
@@ -93,20 +92,8 @@ img {
   margin: 0;
 }
 
-.footer a {
-  text-align: center;
-  padding: 15px 0;
-  font-size: 16px;
-
-  /* * Black & White * */
-  /* color: white; */
-  /* background-color: black;
-
-  /** Pink & White **/
-  color: white;
-  background-color: #ac3f65;
+.footer a button{
+  border-radius: 0 !important;
+  font-size: 13px;
 }
 
-.footer.Seller a {
-  background-color: var(--primary);
-}

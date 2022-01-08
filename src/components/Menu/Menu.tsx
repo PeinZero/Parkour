@@ -58,7 +58,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         </div>
         <div className={styles["content"]}>
           {isParker ? (
-            <Anchor path="/parker/registeredCars">
+            <Anchor path="/parker/registeredCars" className="reset">
               <div>
                 <DirectionsCarRoundedIcon />
                 <p>My Cars</p>
@@ -66,7 +66,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Anchor>
           ) : (
-            <Anchor path="/seller/mySpots">
+            <Anchor path="/seller/mySpots" className="reset">
               <div>
                 <RoomIcon />
                 <p>My Spots</p>
@@ -74,7 +74,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Anchor>
           )}
-          <Anchor path="#">
+          <Anchor path="#" className="reset">
             <div>
               <AccountBalanceWalletRoundedIcon />
               <p>Wallet</p>
@@ -82,7 +82,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
             <ArrowForwardIosRoundedIcon />
           </Anchor>
           {isParker ? (
-            <Anchor path="#">
+            <Anchor path="#" className="reset">
               <div>
                 <HistoryIcon />
                 <p>Your Past Bookings</p>
@@ -90,7 +90,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Anchor>
           ) : (
-            <Anchor path="#">
+            <Anchor path="#" className="reset">
               <div>
                 <HistoryIcon />
                 <p>Booking Requests</p>
@@ -98,14 +98,14 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Anchor>
           )}
-          <Anchor path="#">
+          <Anchor path="#" className="reset">
             <div>
               <SettingsIcon />
               <p>Settings</p>
             </div>
             <ArrowForwardIosRoundedIcon />
           </Anchor>
-          <Anchor path="#">
+          <Anchor path="#" className="reset">
             <div>
               <NotListedLocationIcon />
               <p>Help</p>
@@ -114,19 +114,14 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
           </Anchor>
         </div>
       </div>
-      <div className={`${styles["footer"]} ${!isParker && styles["Seller"]}`}>
-        <Button
-          style={{ width: "80%", margin: "0 10% 5px 10%" }}
-          onClick={logoutHandler}
-        >
-          {" "}
-          Logout{" "}
+      <div className={styles["footer"]}>
+        <Button style={{ width: "80%", margin: "5px 10%" }} onClick={logoutHandler}>
+           Logout
         </Button>
-        {isParker ? (
-          <Anchor path="#">Become a Spot Seller</Anchor>
-        ) : (
-          <Anchor path="#">Find Parking</Anchor>
-        )}
+        
+        {isParker && <Anchor path="#" className="secondary"> Become a Spot Seller</Anchor>}
+        {!isParker && <Anchor path="#" className="primary">Find Parking</Anchor>}
+
       </div>
     </SwipeableDrawer>
   );

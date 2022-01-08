@@ -31,12 +31,13 @@ const Signup: React.FC = ()=> {
     return (
         <Fragment>
             <div className={styles['wrapper']}>
+                <div className={styles['header']}>
+                        <Link to="/" className={styles['backLink']}>
+                            <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
+                        </Link>
+                        <h1>Register</h1>
+                </div>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
-                    <Link to="/" className={styles['backLink']}>
-                        <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
-                    </Link>
-                    <h1>Register</h1>
-
                     <Input label="Full Name" name="name" type="text" 
                         placeholder="Mahad Khalid"
                     />

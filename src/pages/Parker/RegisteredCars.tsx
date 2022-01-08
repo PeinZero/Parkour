@@ -12,13 +12,6 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const RegisteredCars = () => {
-    const btnStyle = {
-        fontSize: '12px'
-    }
-
-    const btnStyle2 = {
-        fontSize: '12px'
-    }
     return (
         <Fragment>
             <div className={styles['header']}>
@@ -35,8 +28,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button className="primary" style={btnStyle}> Set as Default</Button>
-                            <Button className="delete-icon" style={btnStyle2}> 
+                            <Button className="primary"> Set as Default</Button>
+                            <Button className="delete-icon"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>
@@ -51,8 +44,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button className="primary" style={btnStyle}> Set as Default</Button>
-                            <Button className="delete-icon" style={btnStyle2}> 
+                            <Button className="primary"> Set as Default</Button>
+                            <Button className="delete-icon"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>
@@ -61,9 +54,7 @@ const RegisteredCars = () => {
             </div>
 
             <div className={styles['registerCar']}>
-                <div>
-                    <Anchor path="/parker/registerCar"> <AddCircleIcon/> </Anchor>
-                </div>
+                <Anchor path="/parker/registerCar"> <AddCircleIcon/> </Anchor>
             </div>
 
             
