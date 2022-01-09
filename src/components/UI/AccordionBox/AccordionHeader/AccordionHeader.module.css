@@ -32,9 +32,9 @@
   padding: 5px 0;
 }
 
-.content * {
-  margin: 0;
-  font-size: 13px;
+.content *{
+    margin: 0;
+    font-size: 15px;
 }
 
 .content h4 {

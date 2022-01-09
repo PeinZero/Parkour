@@ -21,7 +21,7 @@ export const fetchUser = (userId, token) => {
       const response = await sendRequest();
       dispatch(userActions.createUser(response.data.user));
     } catch (error) {
-      console.log("Failed to fetch user date!");
+      console.log("Failed to fetch user data!");
     }
   };
 };

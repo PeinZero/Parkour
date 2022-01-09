@@ -28,7 +28,8 @@ export const sendLoginData = (loginData) => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("expiryDate", expiryDate.toISOString());
       localStorage.setItem("userId", response.data.user._id);
-
+      
+      dispatch(userActions.createUser(response.data.user))
       console.log(response.data.message);
     } catch (err) {
       // Validation Check.

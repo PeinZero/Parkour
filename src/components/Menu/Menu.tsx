@@ -5,6 +5,7 @@ import styles from "./Menu.module.css";
 
 import Anchor from "../UI/Anchor/Anchor";
 import Button from "../../components/UI/Button/Button";
+import Ripple from "../UI/Button/Ripple/Ripple";
 
 import { SwipeableDrawer } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
@@ -28,11 +29,23 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
     dispatch(logout());
   };
 
-  const name = useAppSelector((state) => state.user.name);
-  const parker = useAppSelector((state) => state.user.parker);
-  // const rating = parker.rating;
-  const isParker = useAppSelector((state) => state.user.currentRoleParker);
+  const user = useAppSelector((state) => state.user);
+  
+  const name = user.name;
+  const isParker = user.currentRoleParker;
 
+  let rating;
+  if(user.currentRoleParker && user.parker != null){
+      rating = user.parker.cumulativeRating;
+  }
+  else if(user.seller != null){
+      rating = user.seller.cumulativeRating
+  };
+  
+  if(rating === -1){
+      rating = "N.R";
+  }
+ 
   return (
     <SwipeableDrawer
       onOpen={props.toggleMenu}
@@ -51,7 +64,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
             <h3>{name}</h3>
             <div>
               <p>Rated</p>
-              <p>4.2</p>
+              <p>{rating}</p>
               <StarIcon />
             </div>
           </div>
@@ -59,74 +72,83 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         <div className={styles["content"]}>
           {isParker ? (
             <Anchor path="/parker/registeredCars">
-              <div>
-                <DirectionsCarRoundedIcon />
-                <p>My Cars</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+              <Ripple>
+                <div>
+                  <DirectionsCarRoundedIcon />
+                  <p>My Cars</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           ) : (
             <Anchor path="/seller/mySpots">
+              <Ripple>
               <div>
                 <RoomIcon />
                 <p>My Spots</p>
               </div>
               <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           )}
           <Anchor path="#">
-            <div>
-              <AccountBalanceWalletRoundedIcon />
-              <p>Wallet</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+            <Ripple>
+              <div>
+                <AccountBalanceWalletRoundedIcon />
+                <p>Wallet</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
           {isParker ? (
             <Anchor path="#">
-              <div>
-                <HistoryIcon />
-                <p>Your Past Bookings</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+              <Ripple>
+                <div>
+                  <HistoryIcon />
+                  <p>Your Past Bookings</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           ) : (
             <Anchor path="#">
-              <div>
-                <HistoryIcon />
-                <p>Booking Requests</p>
-              </div>
-              <ArrowForwardIosRoundedIcon />
+              <Ripple>
+                <div>
+                  <HistoryIcon />
+                  <p>Booking Requests</p>
+                </div>
+                <ArrowForwardIosRoundedIcon />
+              </Ripple>
             </Anchor>
           )}
           <Anchor path="#">
-            <div>
-              <SettingsIcon />
-              <p>Settings</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+            <Ripple>
+              <div>
+                <SettingsIcon />
+                <p>Settings</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
-          <Anchor path="#">
-            <div>
-              <NotListedLocationIcon />
-              <p>Help</p>
-            </div>
-            <ArrowForwardIosRoundedIcon />
+          <Anchor path="/parker/spotdetails">
+            <Ripple>
+              <div>
+                <NotListedLocationIcon />
+                <p>Help</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
           </Anchor>
         </div>
       </div>
-      <div className={`${styles["footer"]} ${!isParker && styles["Seller"]}`}>
-        <Button
-          style={{ width: "80%", margin: "0 10% 5px 10%" }}
-          onClick={logoutHandler}
-        >
-          {" "}
-          Logout{" "}
+      <div className={styles["footer"]}>
+        <Button style={{ width: "80%", margin: "5px 10%" }} onClick={logoutHandler}>
+           Logout
         </Button>
-        {isParker ? (
-          <Anchor path="#">Become a Spot Seller</Anchor>
-        ) : (
-          <Anchor path="#">Find Parking</Anchor>
-        )}
+        
+        {isParker && <Anchor path="#"> <Button btnClass="secondary"> Become a Spot Seller </Button> </Anchor>}
+        {!isParker && <Anchor path="#"><Button btnClass="secondary"> Find Parking </Button></Anchor>}
+
       </div>
     </SwipeableDrawer>
   );

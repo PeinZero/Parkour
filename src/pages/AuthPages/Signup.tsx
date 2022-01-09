@@ -5,10 +5,9 @@ import { sendSignupData } from "../../store/Authentication/authenticationActions
 
 import styles from "./Signup.module.css";
 
-import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
-
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+import Header from '../../components/UI/Header/Header';
 
 const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,15 +32,8 @@ const Signup: React.FC = () => {
   return (
     <Fragment>
       <div className={styles["wrapper"]}>
+        <Header backLink="/" content="Register"/>
         <form onSubmit={formSubmitHandler} className={styles["form"]}>
-          <Link to="/" className={styles["backLink"]}>
-            <ArrowBackIosNewIcon
-              className={styles["back"]}
-              sx={{ fontSize: 36 }}
-            />
-          </Link>
-          <h1>Register</h1>
-
           <Input
             label="Full Name"
             name="name"

@@ -1,85 +1,42 @@
-import { Fragment, useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { fetchUser } from "../../store/User/userActions";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
+import { Fragment} from "react";
 
 import styles from "./ParkerHome.module.css";
-import Map from "../../components/Map/Map";
 
+import ParkerMap from "../../components/ParkerMap/ParkerMap";
 import Hamburger from "../../components/UI/Hamburger/Hamburger";
+import Anchor from "../../components/UI/Anchor/Anchor";
+import Ripple from "../../components/UI/Button/Ripple/Ripple";
+
 import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";
-import { ButtonBase } from "@material-ui/core";
-import { SpinningCircles } from "react-loading-icons";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
 
 const ParkerHome: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.authentication.userId);
-  const token = useAppSelector((state) => state.authentication.token);
-  const [expanded, setExpanded] = useState(false);
-  const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
-
-  const expandSearchHandler = () => {
-    // console.log("Search Clicked");
-    setExpanded(true);
-  };
-
-  const handleSelect = (address) => {
-    geocodeByAddress(address)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        // console.log("Success", latLng);
-        setCoordinates(latLng);
-      });
-    // .catch((error) => ));
-    setAddress(address);
-  };
-
-  const searchOptions = {
-    componentRestrictions: { country: "pk" },
-    fields: ["name", "formatted_address", "place_id", "geometry"],
-  };
-
-  useEffect(() => {
-    dispatch(fetchUser(userId, token));
-  }, []);
-
   return (
     <Fragment>
       {/* {console.log(coordinates)} */}
       <Hamburger />
-      <div
-        className={styles["map"]}
-        onClick={() => {
-          setExpanded(false);
-        }}
-      >
+      <div className={styles["map"]}>
         {/* <Map /> */}
       </div>
       <div
-        className={`${styles["searchBox"]} ${expanded && styles["expanded"]}`}
+        className={styles["searchBox"]}
       >
         <div className={styles["searchTopBox"]}>
           <h4>Where do you want to park?</h4>
-          {expanded && <ArrowDropDownIcon />}
           <p>Tip: We search for parking spots near the pin you drop</p>
         </div>
         <div className={styles["searchBottomBox"]}>
-          <ButtonBase
-            onClick={expandSearchHandler}
-            className={styles["searchBar"]}
-          >
-            <div className={styles["searchIcon"]}>
-              <SearchIcon />
-            </div>
-          </ButtonBase>
+          <Anchor path="/search" className={styles["searchBar"]}>
+            <Ripple>
+              <div className={styles["searchIcon"]}>
+                <SearchIcon />
+              </div>
+              <div>Enter your destination</div>
+            </Ripple>
+          </Anchor>
           <div className={styles["recents"]}>
-            <ButtonBase className={styles["recent"]}>
+            <Ripple className={styles["recent"]}>
               <div className={styles["icon"]}>
                 <RoomIcon />
               </div>
@@ -89,57 +46,7 @@ const ParkerHome: React.FC = () => {
                   Korangi - Karachi - Sindh
                 </div>
               </div>
-            </ButtonBase>
-
-            <PlacesAutocomplete
-              value={address}
-              debounce="2000"
-              onChange={setAddress}
-              onSelect={handleSelect}
-              searchOptions={searchOptions}
-            >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading,
-              }) => {
-                console.log(suggestions);
-                return (
-                  <div>
-                    <input
-                      onClick={expandSearchHandler}
-                      className={styles["searchBar"]}
-                      {...getInputProps({
-                        placeholder: "Enter your destination",
-                      })}
-                    />
-
-                    <div>
-                      {loading && (
-                        <div>
-                          <SpinningCircles />
-                        </div>
-                      )}
-                      {suggestions.map((suggestion) => {
-                        const style = {
-                          backgroundColor: suggestion.active
-                            ? "lightblue"
-                            : "#0090CC",
-                        };
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, { style })}
-                          >
-                            {suggestion.description}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                );
-              }}
-            </PlacesAutocomplete>
+            </Ripple>
           </div>
         </div>
       </div>

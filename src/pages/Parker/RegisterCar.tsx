@@ -4,8 +4,8 @@ import styles from './RegisterCar.module.css'
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
-
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import Input2Column from '../../components/UI/Input/Input2Column/Input2Column';
+import Header from '../../components/UI/Header/Header';
 
 const RegisterCar = () => {
     const formSubmitHandler = (e) => {
@@ -15,31 +15,28 @@ const RegisterCar = () => {
 
     return (
         <Fragment>
-            <div className={styles['wrapper']}>
-                <div className={styles['header']}>
-                        <Link to="/parker/registeredCars" className={styles['backLink']}>
-                            <ArrowBackIosNewIcon className={styles['back']} sx={{ fontSize: 36 }}/>
-                        </Link>
-                        <h1>Register Car</h1>
-                </div>
+            <div className={styles['addCar']}>
+                <Header backLink="/" content="Add A Car" className="small" style={{marginBottom: '0px'}}/>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
-                    <Input label="Car Registration Number" name="numberPlate" type="text" 
-                        placeholder="e.g. ABC-123" className={styles["registerCarFormControl"]}
+                    <p>Add a car to use for parking</p>
+                    <Input label="Car Registration Number *" name="numberPlate" type="text" 
+                        placeholder="ABC-123" className={styles["registerCarFormControl"]}
                     />
-                    <Input label="Make" name="make" type="text" 
-                        placeholder="e.g. Toyota" className={styles["registerCarFormControl"]}
+                    <Input label="Make *" name="make" type="text" 
+                        placeholder="Toyota" className={styles["registerCarFormControl"]}
                     />
-                    <Input label="Model" name="model" type="text" 
-                        placeholder="e.g. Corolla" className={styles["registerCarFormControl"]}
+                    <Input label="Model *" name="model" type="text" 
+                        placeholder="Corolla" className={styles["registerCarFormControl"]}
                     />
-                    <Input label="Color" name="color" type="text" 
-                        placeholder="e.g. Black" className={styles["registerCarFormControl"]}
+                    <Input label="Color *" name="color" type="text" 
+                        placeholder="Black" className={styles["registerCarFormControl"]}
                     />
                     <Input label="Year" name="year" type="text" 
-                        placeholder="e.g. 2019" className={styles["registerCarFormControl"]}
+                        placeholder="2019" className={styles["registerCarFormControl"]}
                     />
-                    <Input label="Mileage (Optional)" name="mileage" type="text" 
-                        placeholder="e.g. 12" className={styles["registerCarFormControl"]}
+                    <Input2Column label="Mileage" name="mileage" type="text" 
+                        placeholder="12" className={styles["registerCarFormControl"]}
+                        sideContent="km/litre"
                     />
                     
                     <Button style={{fontSize: '13px'}}>Register Car</Button>

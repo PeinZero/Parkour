@@ -9,14 +9,33 @@
     font-weight: 500;
 }
 
-.formControl input{
-    padding: 8px 10px;
-    background-color: white;
+.formControl .input2Column{
+    display: grid;
+    grid-template-columns: 75% 25%;
     border: 2px solid black;
     border-radius: 3px;
     font-size: 13px;
     font-weight: 500;
     color: black;
+}
+
+.secondColumn *{
+    font-size: 1.2rem !important;
+}
+
+.input2Column .secondColumn{
+    background-color: #EFEFEF;
+    color: #838383;
+    border-left: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formControl input{
+    border: none;
+    padding: 8px 10px;
+    background-color: white;
 }
 
 .formControl input::placeholder{

@@ -1,0 +1,11 @@
+.heading{
+    background-color: var(--background-grey);
+    padding: 8px 5%;
+    font-weight: 500;
+    color: var(--placeholder-text-color);
+    font-size: 15px;
+}
+
+.results{
+    margin-bottom: 30px;
+}

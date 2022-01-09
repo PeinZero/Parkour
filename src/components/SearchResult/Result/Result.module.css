@@ -1,0 +1,29 @@
+.result *{
+    margin: 0;
+    padding: 0;
+}
+
+.result{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 10px 5% !important;
+    border-bottom: 1px solid rgba(141, 119, 119, 0.1) !important;
+}
+
+.result.hovered{
+    background-color: var(--background-grey);
+}
+
+.result h4{
+    font-size: 16px;
+    text-transform: capitalize;
+    text-align: left;
+}
+
+.result p{
+    color: var(--placeholder-text-color);
+    font-size: 14px;
+    text-transform: capitalize;
+    text-align: left;
+}
+

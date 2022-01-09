@@ -1,19 +1,9 @@
 .form {
     width: 85%;
     margin: 0 7.5%;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    margin-top: 15%;
-
-}
-
-.backLink{
-    width: 20px;
-}
-.back{
-    position: relative;
-    left: -16px;
-    color: black;
 }
 
 .form h1{

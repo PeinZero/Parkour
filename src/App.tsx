@@ -20,12 +20,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 import { useEffect, Fragment } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import ParkerHome from "./pages/Parker/ParkerHome";
 import RegisteredCars from "./pages/Parker/RegisteredCars";
@@ -34,9 +29,12 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
+import Search from "./pages/Search/Search";
+import SpotDetails from "./pages/Parker/SpotDetails";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
+import { fetchUser } from "./store/User/userActions";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
 import RegisterSpot from "./pages/Seller/RegisterSpot/RegisterSpot";
@@ -65,8 +63,6 @@ const App: React.FC = (props) => {
     const remainingTimeInMs =
       new Date(expiryDate).getTime() - new Date().getTime();
 
-    console.log(userId);
-
     dispatch(
       authActions.login({
         isAuth: true,
@@ -75,8 +71,12 @@ const App: React.FC = (props) => {
       })
     );
 
+    console.log("App.tsx => useEffect()");
+    
+    dispatch(fetchUser(userId, token))
+
     setAutoLogout(remainingTimeInMs);
-  });
+  }, []);
 
   const setAutoLogout = (milliseconds) => {
     setTimeout(() => {
@@ -88,30 +88,28 @@ const App: React.FC = (props) => {
     <IonApp className="app">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Fragment>
-                {isAuth && currentRoleParker && <ParkerHome />}
-                {isAuth && !currentRoleParker && <SellerHome />}
-                {!isAuth && <Home />}
-              </Fragment>
-            }
-          />
+          <Route path="/" element={
+            <Fragment>
+              {isAuth && currentRoleParker && <ParkerHome />}
+              {isAuth && !currentRoleParker && <SellerHome />}
+              {!isAuth && <Home />}
+            </Fragment>
+          }/>
+            
+          <Route path="/login" element={
+            <Fragment>
+              {isAuth && <Navigate to="/" />}
+              {!isAuth && <Login />}
+            </Fragment>
+          }/>
+          <Route path="/signup" element={<Signup/>} />
 
-          <Route
-            path="/login"
-            element={
-              <Fragment>
-                {isAuth && <Navigate to="/" />}
-                {!isAuth && <Login />}
-              </Fragment>
-            }
-          />
+          <Route path="/search" element={<Search/>} />
 
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/parker/registeredCars" element={<RegisteredCars />} />
-          <Route path="/parker/registerCar" element={<RegisterCar />} />
+          <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
+          <Route path="/parker/registerCar" element={<RegisterCar/>}/>
+          <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
+          
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/registerSpot" element={<RegisterSpot />} />
         </Routes>

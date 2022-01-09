@@ -1,29 +1,25 @@
-.ButtonBase {
-  display: flex;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-  width: 100%;
-  height: inherit;
-  border-radius: 5px !important;
-}
-
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  padding: 15px 10px !important;
+  background-color: black !important;
+  color: white !important;
   height: inherit;
   width: 100%;
-  padding: 15px 10px;
-  border-radius: 4px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background-color: black;
+}
+
+.button *{
+  font-size: inherit;
 }
 
 .primary {
-  background-color: var(--primary);
+  background-color: var(--primary) !important;
 }
 
 .secondary {
@@ -31,14 +27,18 @@
 }
 
 .primary-invert {
-  background-color: white;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+  background-color: white !important;
+  color: var(--primary) !important;
+  border: 2px solid var(--primary) !important;
+}
+
+.secondary {
+  background-color: var(--secondary) !important;
 }
 
 .delete {
-  background-color: var(--negativeCTA);
-  color: white;
+  background-color: var(--negativeCTA) !important;
+  color: white !important;
 }
 
 .deactivate {
@@ -56,11 +56,27 @@
 }
 
 .delete-icon {
-  background-color: var(--negativeCTA);
-  color: white;
-  width: 34px;
+  background-color: var(--negativeCTA) !important;
+  color: white !important;
+  padding: 0 !important;
+}
+.delete-icon svg{
+  font-size: 1.2rem;
 }
 
-.button * {
-  font-size: inherit;
+.reset{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  border-radius: none !important;
+  padding: 0 !important;
+  background-color: inherit !important;
+  color: black !important;
+  height: inherit;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: none;
+  letter-spacing: 0;
 }
+
