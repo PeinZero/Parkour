@@ -14,13 +14,7 @@ import MapIcon from "@mui/icons-material/Map";
 
 export const MySpots = () => {
   let price = 100;
-  const btnStyle = {
-    fontSize: "12px",
-  };
 
-  const btnStyle2 = {
-    fontSize: "12px",
-  };
   return (
     <Fragment>
       <div className={styles["header"]}>
@@ -42,18 +36,12 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["map"]}>
-              <MapIcon />
-              View
-            </div>
             <div className={styles["buttons"]}>
-              <Button className="primary" style={btnStyle}>
-                {" "}
-                Disable
-              </Button>
-              <Button className="delete-icon" style={btnStyle2}>
+              <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
+              <Button className="deactivate"> Deactivate</Button>
+              <Button className="primary"> Deactivate</Button>
             </div>
           </div>
         </AccordionBox>
@@ -62,18 +50,12 @@ export const MySpots = () => {
           header={<AccordionHeader spotNumber={"2"} location={""} />}
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["map"]}>
-              <MapIcon className={styles["mapicon"]} />
-              View
-            </div>
             <div className={styles["buttons"]}>
-              <Button className="primary" style={btnStyle}>
-                {" "}
-                Disable
-              </Button>
-              <Button className="delete-icon" style={btnStyle2}>
+              <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
+              <Button className="deactivate">Deactivate</Button>
+              <Button className="primary">Deactivate</Button>
             </div>
           </div>
         </AccordionBox>
@@ -88,18 +70,12 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["map"]}>
-              <MapIcon />
-              View
-            </div>
             <div className={styles["buttons"]}>
-              <Button className="primary" style={btnStyle}>
-                {" "}
-                Disable
-              </Button>
-              <Button className="delete-icon" style={btnStyle2}>
+              <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
+              <Button className="deactivate"> Deactivate</Button>
+              <Button className="primary"> Deactivate</Button>
             </div>
           </div>
         </AccordionBox>
@@ -114,18 +90,12 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["map"]}>
-              <MapIcon />
-              View
-            </div>
             <div className={styles["buttons"]}>
-              <Button className="primary" style={btnStyle}>
-                {" "}
-                Disable
-              </Button>
-              <Button className="delete-icon" style={btnStyle2}>
+              <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
+              <Button className="deactivate"> Deactivate</Button>
+              <Button className="primary"> Deactivate</Button>
             </div>
           </div>
         </AccordionBox>

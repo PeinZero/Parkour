@@ -6,10 +6,6 @@
   align-items: center;
 }
 
-.map {
-  color: var(--primary);
-}
-
 .header .back {
   display: flex;
   align-items: center;
@@ -36,7 +32,7 @@
   display: grid;
   grid-template-columns: 8fr 2fr;
   gap: 10px;
-  height: 40px;
+  height: 34px;
 }
 
 .registerSpot {

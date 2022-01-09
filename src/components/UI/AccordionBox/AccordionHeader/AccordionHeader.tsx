@@ -30,13 +30,9 @@ const AccordionHeader = (props) => {
           <LocationOnIcon />
         </div>
         <div className={styles["content"]}>
-          <h4>{props.spotNumber || "1"}</h4>
-          <div></div>
           <p>
             {props.location || "Nagan Chowrangi, Sector 11-E, North Karachi."}
           </p>
-
-          <p>{props.price || "RS 50/hr"}</p>
         </div>
       </div>
     );

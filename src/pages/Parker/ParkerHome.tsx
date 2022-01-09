@@ -25,7 +25,7 @@ const ParkerHome: React.FC = () => {
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
 
   const expandSearchHandler = () => {
-    console.log("Search Clicked");
+    // console.log("Search Clicked");
     setExpanded(true);
   };
 
@@ -33,15 +33,16 @@ const ParkerHome: React.FC = () => {
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
-        console.log("Success", latLng);
+        // console.log("Success", latLng);
         setCoordinates(latLng);
-      })
-      .catch((error) => console.error("Error", error));
+      });
+    // .catch((error) => ));
     setAddress(address);
   };
 
   const searchOptions = {
     componentRestrictions: { country: "pk" },
+    fields: ["name", "formatted_address", "place_id", "geometry"],
   };
 
   useEffect(() => {
@@ -50,6 +51,7 @@ const ParkerHome: React.FC = () => {
 
   return (
     <Fragment>
+      {/* {console.log(coordinates)} */}
       <Hamburger />
       <div
         className={styles["map"]}
@@ -91,6 +93,7 @@ const ParkerHome: React.FC = () => {
 
             <PlacesAutocomplete
               value={address}
+              debounce="2000"
               onChange={setAddress}
               onSelect={handleSelect}
               searchOptions={searchOptions}
@@ -100,37 +103,42 @@ const ParkerHome: React.FC = () => {
                 suggestions,
                 getSuggestionItemProps,
                 loading,
-              }) => (
-                <div>
-                  <input
-                    onClick={expandSearchHandler}
-                    className={styles["searchBar"]}
-                    {...getInputProps({
-                      placeholder: "Enter your destination",
-                    })}
-                  />
-
+              }) => {
+                console.log(suggestions);
+                return (
                   <div>
-                    {loading && (
-                      <div>
-                        <SpinningCircles />
-                      </div>
-                    )}
-                    {suggestions.map((suggestion) => {
-                      const style = {
-                        backgroundColor: suggestion.active
-                          ? "lightblue"
-                          : "red",
-                      };
-                      return (
-                        <div {...getSuggestionItemProps(suggestion, { style })}>
-                          {suggestion.description}
+                    <input
+                      onClick={expandSearchHandler}
+                      className={styles["searchBar"]}
+                      {...getInputProps({
+                        placeholder: "Enter your destination",
+                      })}
+                    />
+
+                    <div>
+                      {loading && (
+                        <div>
+                          <SpinningCircles />
                         </div>
-                      );
-                    })}
+                      )}
+                      {suggestions.map((suggestion) => {
+                        const style = {
+                          backgroundColor: suggestion.active
+                            ? "lightblue"
+                            : "#0090CC",
+                        };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, { style })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              }}
             </PlacesAutocomplete>
           </div>
         </div>
