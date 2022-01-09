@@ -4,7 +4,7 @@ import { fetchUser } from "../../../store/User/userActions";
 
 import styles from "./SellerHome.module.css";
 
-import Map from "../../../components/Map/Map";
+import Map from "../../../components/ParkerMap/ParkerMap";
 import Button from "../../../components/UI/Button/Button";
 
 import Hamburger from "../../../components/UI/Hamburger/Hamburger";
