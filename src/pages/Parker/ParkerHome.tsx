@@ -1,6 +1,4 @@
-import { Fragment, useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { fetchUser } from "../../store/User/userActions";
+import { Fragment} from "react";
 
 import styles from "./ParkerHome.module.css";
 
@@ -15,14 +13,6 @@ import SearchIcon from "@mui/icons-material/Search";
 
 
 const ParkerHome: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const userId = useAppSelector(state => state.authentication.userId);
-    const token = useAppSelector(state => state.authentication.token);
-    
-    useEffect(() => {
-        dispatch(fetchUser(userId, token))
-    }, []);
-
   return (
     <Fragment>
       <Hamburger />

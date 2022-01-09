@@ -16,7 +16,7 @@ const RegisterCar = () => {
     return (
         <Fragment>
             <div className={styles['addCar']}>
-                <Header backLink="/" content="Add A Car" className="small"/>
+                <Header backLink="/" content="Add A Car" className="small" style={{marginBottom: '0px'}}/>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
                     <p>Add a car to use for parking</p>
                     <Input label="Car Registration Number *" name="numberPlate" type="text" 

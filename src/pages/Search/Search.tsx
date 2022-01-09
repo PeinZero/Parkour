@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-
+import {useState } from 'react';
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from "react-places-autocomplete";
-import { SpinningCircles } from "react-loading-icons";
+
 
 import styles from './Search.module.css';
 
@@ -12,7 +11,7 @@ import Header from '../../components/UI/Header/Header';
 
 import SearchIcon from "@mui/icons-material/Search";
 import SearchResult from '../../components/SearchResult/SearchResult';
-import { Button } from '@material-ui/core';
+
 
 const Search = () => {
 
