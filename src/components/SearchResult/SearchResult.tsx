@@ -2,9 +2,9 @@ import styles from './SearchResult.module.css'
 
 import Result from './Result/Result';
 
-const SearchResult = ({resultList}) => {
+const SearchResult = ({resultList, selectHandler}) => {
     const results = resultList.map( (result, index) => {
-        return <Result key={index} name={result.name} address={result.address}/>
+        return <Result key={index} name={result.formattedSuggestion.mainText} address={result.description} selectHandler={selectHandler}/>
     })
 
     return (

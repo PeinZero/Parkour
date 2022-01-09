@@ -30,6 +30,7 @@ import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import Search from "./pages/Search/Search";
+import SpotDetails from "./pages/Parker/SpotDetails";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
@@ -59,8 +60,6 @@ const App: React.FC = (props) => {
     const userId = localStorage.getItem("userId");
     const remainingTimeInMs =
       new Date(expiryDate).getTime() - new Date().getTime();
-
-    console.log(userId);
 
     dispatch(
       authActions.login({
@@ -103,6 +102,7 @@ const App: React.FC = (props) => {
 
           <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
           <Route path="/parker/registerCar" element={<RegisterCar/>}/>
+          <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
 
           <Route path="/seller/mySpots" element={<MySpots/>} />
 

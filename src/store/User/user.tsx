@@ -15,7 +15,10 @@ const initialState = {
     currentRoleParker: true,
     
     // Parker Details
-    parker: null
+    parker: null,
+
+    // Seller Details
+    seller: null
 }
 
 const userSlice = createSlice({
@@ -23,16 +26,22 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         createUser(state, action){
+            // Profile Info
             state.name = action.payload.name;
             state.phone = action.payload.phone;
             state.email = action.payload.email;
             state.gender = action.payload.gender;
             state.dob = action.payload.DOB;
             state.password = action.payload.password;
+
+            // State
             state.isParker = action.payload.isParker;
             state.isSeller = action.payload.isSeller;
             state.currentRoleParker = action.payload.currentRoleParker;
+
+            // Parker & Seller Details
             state.parker = action.payload.parker;
+            state.seller = action.payload.seller;
         },
         switchRole(state){
             state.currentRoleParker = !state.currentRoleParker;

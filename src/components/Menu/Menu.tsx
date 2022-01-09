@@ -118,7 +118,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Ripple>
           </Anchor>
-          <Anchor path="#">
+          <Anchor path="/parker/spotdetails">
             <Ripple>
               <div>
                 <NotListedLocationIcon />

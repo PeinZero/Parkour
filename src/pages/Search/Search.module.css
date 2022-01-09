@@ -6,7 +6,7 @@
 
 .searchInputBar{
     display: grid;
-    grid-template-columns: 1fr 5fr 4fr;
+    grid-template-columns: 1fr 6fr 3fr;
     background-color: var(--background-grey);
     padding: 10px;
     width: 90%;
@@ -24,6 +24,7 @@
     padding: 0 5px;
     border: none;
     background-color: inherit;
+    min-width: 0;
 }
 
 .searchInputBar .inputBar::placeholder{
@@ -40,4 +41,5 @@
     color: black;
     outline: none !important;
 }
+
 

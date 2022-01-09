@@ -3,12 +3,17 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
-  /** own variables **/
+  /** own color styles **/
   --card-shadow: rgb(200, 200, 200);
-  --background-grey: rgb(226, 226, 226);
+  --background-grey: #E3E3E3;
+  /* --background-grey-dark: #F5F5F5; */
+  --background-grey-light: #F5F5F5;
   --primary: #2986ae;
   --secondary: #ac3f65;
+
+  /** own text styles **/
   --placeholder-text-color: #838383;
+  --cardlabels: #9C9C9C;
   
 
   /** primary **/
