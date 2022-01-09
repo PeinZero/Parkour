@@ -38,7 +38,7 @@ const Search = () => {
 
 
     return (
-        <div className={styles['wrapper']}>
+        <div className={styles['searchPage']}>
             <div className={styles['headerMain']}>
                 <Header backLink="/" content="Search Parking" className="small" /> 
                 <form className={styles['searchInputBar']}>
