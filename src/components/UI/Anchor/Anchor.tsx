@@ -6,8 +6,7 @@ const Anchor = (props) => {
     return (
         <Link to={props.path} className={`${styles['Link']} ${props.className}`}>
             {props.children}
-        </Link>
-        
+        </Link> 
     )
 }
 

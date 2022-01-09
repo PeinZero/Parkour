@@ -15,9 +15,10 @@ const RegisterCar = () => {
 
     return (
         <Fragment>
-            <div className={styles['wrapper']}>
-                <Header backLink="/" content="Register A Car" className="small"/>
+            <div className={styles['addCar']}>
+                <Header backLink="/" content="Add A Car" className="small"/>
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
+                    <p>Add a car to use for parking</p>
                     <Input label="Car Registration Number *" name="numberPlate" type="text" 
                         placeholder="ABC-123" className={styles["registerCarFormControl"]}
                     />
@@ -35,7 +36,7 @@ const RegisterCar = () => {
                     />
                     <Input2Column label="Mileage" name="mileage" type="text" 
                         placeholder="12" className={styles["registerCarFormControl"]}
-                        sideContent="km/ltr"
+                        sideContent="km/litre"
                     />
                     
                     <Button style={{fontSize: '13px'}}>Register Car</Button>
