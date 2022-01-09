@@ -17,7 +17,7 @@
   background-color: var(--primary);
 }
 .avatar.Seller {
-  background-color: var(--secondary);
+  background-color: var(--primary);
 }
 
 .avatar * {
@@ -34,7 +34,7 @@
 
 .content * {
   margin: 0;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .content h4 {

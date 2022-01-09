@@ -6,10 +6,6 @@
   align-items: center;
 }
 
-.map {
-  color: var(--secondary);
-}
-
 .header .back {
   display: flex;
   align-items: center;
@@ -36,26 +32,26 @@
   display: grid;
   grid-template-columns: 8fr 2fr;
   gap: 10px;
-  height: 40px;
+  height: 34px;
 }
 
-.registerCar {
+.registerSpot {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 0;
 }
 
-.registerCar div {
+.registerSpot div {
   width: 50px;
 }
-.registerCar a {
+.registerSpot a {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.registerCar svg {
+.registerSpot svg {
   color: black;
   font-size: 42px;
 }
