@@ -87,12 +87,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
+}
+.primaryTopContent .rating *{
+    margin: 0;
 }
 .primaryTopContent .icon{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 2px;
+    padding-left: 4px;
 }
 
 .primaryTopContent .rating svg{

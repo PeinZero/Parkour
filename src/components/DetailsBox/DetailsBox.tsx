@@ -54,7 +54,6 @@ const DetailsBox = (props) => {
         const spotInfo = Object.keys(props.spotDetail).map( (k, index) => {
             const infoType = k;
             const info = props.spotDetail[infoType];
-            console.log(info);
             
             return (
                 <li key={index}> 
@@ -67,9 +66,7 @@ const DetailsBox = (props) => {
                 </li>
             )
         })
-        
-        console.log(spotInfo);
-        
+
         bottomContent = (
             <>
                 <ul className={styles['spotInfo']}>

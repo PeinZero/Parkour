@@ -34,6 +34,7 @@ import SpotDetails from "./pages/Parker/SpotDetails";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
+import { fetchUser } from "./store/User/userActions";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
 
@@ -69,8 +70,12 @@ const App: React.FC = (props) => {
       })
     );
 
+    console.log("App.tsx => useEffect()");
+    
+    dispatch(fetchUser(userId, token))
+
     setAutoLogout(remainingTimeInMs);
-  });
+  }, []);
 
   const setAutoLogout = (milliseconds) => {
     setTimeout(() => {

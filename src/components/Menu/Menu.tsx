@@ -29,11 +29,23 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
     dispatch(logout());
   };
 
-  const name = useAppSelector((state) => state.user.name);
-  const parker = useAppSelector((state) => state.user.parker);
-  // const rating = parker.rating;
-  const isParker = useAppSelector((state) => state.user.currentRoleParker);
+  const user = useAppSelector((state) => state.user);
+  
+  const name = user.name;
+  const isParker = user.currentRoleParker;
 
+  let rating;
+  if(user.currentRoleParker && user.parker != null){
+      rating = user.parker.cumulativeRating;
+  }
+  else if(user.seller != null){
+      rating = user.seller.cumulativeRating
+  };
+  
+  if(rating === -1){
+      rating = "N.R";
+  }
+ 
   return (
     <SwipeableDrawer
       onOpen={props.toggleMenu}
@@ -52,7 +64,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
             <h3>{name}</h3>
             <div>
               <p>Rated</p>
-              <p>4.2</p>
+              <p>{rating}</p>
               <StarIcon />
             </div>
           </div>
