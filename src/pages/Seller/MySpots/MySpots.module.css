@@ -26,13 +26,20 @@
 .accordionDetails {
   display: flex;
   justify-content: space-between;
+  height: 34px;
 }
 
-.accordionDetails .buttons {
-  display: grid;
-  grid-template-columns: 8fr 2fr;
+.accordionDetails .leftButtons {
+  display: flex;
   gap: 10px;
-  height: 34px;
+}
+
+.accordionDetails .leftButtons:first-child {
+  margin-right: 5px;
+}
+
+.accordionDetails .edit {
+  justify-self: flex-end;
 }
 
 .registerSpot {

@@ -41,9 +41,24 @@
   color: white;
 }
 
+.deactivate {
+  font-size: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid var(--negativeCTA);
+  color: var(--negativeCTA);
+  width: 142px;
+}
+
+.edit {
+  font-size: 10px;
+  width: 69px;
+  background-color: var(--primary);
+}
+
 .delete-icon {
   background-color: var(--negativeCTA);
   color: white;
+  width: 34px;
 }
 
 .button * {

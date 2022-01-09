@@ -36,12 +36,14 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["buttons"]}>
+            <div className={styles["leftButtons"]}>
               <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
               <Button className="deactivate"> Deactivate</Button>
-              <Button className="primary"> Deactivate</Button>
+            </div>
+            <div className={styles["rightButtons"]}>
+              <Button className="edit">Edit</Button>
             </div>
           </div>
         </AccordionBox>
@@ -50,12 +52,14 @@ export const MySpots = () => {
           header={<AccordionHeader spotNumber={"2"} location={""} />}
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["buttons"]}>
+            <div className={styles["leftButtons"]}>
               <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
               <Button className="deactivate">Deactivate</Button>
-              <Button className="primary">Deactivate</Button>
+            </div>
+            <div>
+              <Button className="edit">Edit</Button>
             </div>
           </div>
         </AccordionBox>
@@ -70,12 +74,14 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["buttons"]}>
+            <div>
               <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
               <Button className="deactivate"> Deactivate</Button>
-              <Button className="primary"> Deactivate</Button>
+            </div>
+            <div>
+              <Button className="edit">Edit</Button>
             </div>
           </div>
         </AccordionBox>
@@ -90,12 +96,14 @@ export const MySpots = () => {
           }
         >
           <div className={styles["accordionDetails"]}>
-            <div className={styles["buttons"]}>
+            <div>
               <Button className="delete-icon">
                 <DeleteOutlineRoundedIcon />
               </Button>
               <Button className="deactivate"> Deactivate</Button>
-              <Button className="primary"> Deactivate</Button>
+            </div>
+            <div>
+              <Button className="edit">Edit</Button>
             </div>
           </div>
         </AccordionBox>
