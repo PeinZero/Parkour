@@ -1,3 +1,17 @@
+.searchPage{
+    position: relative;
+    animation: slide-up 0.4s ease-in-out forwards;
+}
+
+@keyframes slide-up{
+    0%{
+        bottom: -100%;
+    }
+    100%{
+        bottom: 0%;
+    }
+}
+
 .headerMain{
     width: 100%;
     box-shadow: 0 2px 2px var(--card-shadow);
