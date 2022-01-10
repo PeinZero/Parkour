@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import styles from './SpotDetails.module.css';
 
-import DetailsBox from '../../components/DetailsBox/DetailsBox';
-import Header from '../../components/UI/Header/Header';
+import DetailsBox from '../../../components/DetailsBox/DetailsBox';
+import Header from '../../../components/UI/Header/Header';
 
 const SpotDetails = () => {
     const user = useAppSelector(state => state.user);
