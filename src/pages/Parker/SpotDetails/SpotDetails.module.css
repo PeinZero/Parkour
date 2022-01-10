@@ -6,3 +6,41 @@
     width: 90%;
     margin: 10px 5% 20px 5%;
 }
+
+.availibilityBottom div:first-of-type{
+    width: 100%;
+}
+
+.availibilityBottom div:first-of-type > label{
+    color: var(--exmaple-lable);
+    font-size: 16px;
+}
+
+.availableSlotsBox{
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.availableSlotsBox h5{
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.availableSlots{
+    /* reset */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.availableSlots > li {
+    margin-bottom: 5px;
+    /* border-bottom: 1px solid var(--primary); */
+    border-radius: 2px;
+    text-align: center;
+    padding: 2px 0;
+}
