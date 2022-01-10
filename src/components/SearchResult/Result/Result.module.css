@@ -11,7 +11,7 @@
 }
 
 .result.hovered{
-    background-color: var(--background-grey);
+    background-color: var(--image-placeholder);
 }
 
 .result h4{

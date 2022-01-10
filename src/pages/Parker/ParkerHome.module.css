@@ -8,7 +8,6 @@
 }
 
 .searchBox {
-  height: 30%;
   width: 90%;
   margin: 0 5%;
   background-color: white;
@@ -19,13 +18,6 @@
   position: fixed;
   bottom: 20px;
   transition: all 0.25s ease-in-out;
-}
-
-.searchBox.expanded {
-  transition: all 0.25s ease-in-out;
-  background-color: grey;
-  height: 85%;
-  margin-top: 10%;
 }
 
 .searchTopBox {
@@ -45,7 +37,7 @@
 }
 
 .searchBar button{
-    background-color: var(--background-grey) !important;
+    background-color: var(--image-placeholder) !important;
     border-radius: 20px !important;
     margin:0 0 10px 0 !important;
     padding: 5px 10px !important;
@@ -89,7 +81,7 @@
 
 .recent .icon {
   border-radius: 50%;
-  background-color: var(--background-grey);
+  background-color: var(--image-placeholder);
   display: flex;
   justify-content: center;
   align-items: center;
