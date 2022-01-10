@@ -25,8 +25,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button btnClass="primary"> Set as Default</Button>
-                            <Button btnClass="delete-icon"> 
+                            <Button btnClass="primary" size="small"> Set as Default</Button>
+                            <Button btnClass="delete-icon" size="small"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>
@@ -41,8 +41,8 @@ const RegisteredCars = () => {
                     <div className={styles['accordionDetails']}>
                         <div></div>
                         <div className={styles['buttons']}>
-                            <Button btnClass="primary"> Set as Default</Button>
-                            <Button btnClass="delete-icon"> 
+                            <Button btnClass="primary" size="small"> Set as Default</Button>
+                            <Button btnClass="delete-icon" size="small"> 
                                 <DeleteOutlineRoundedIcon/>
                             </Button>
                         </div>

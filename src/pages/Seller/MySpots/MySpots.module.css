@@ -1,46 +1,22 @@
-.header {
-  display: flex;
-  width: 90%;
-  margin: 35px 5% 30px 5%;
-  gap: 10px;
-  align-items: center;
-}
-
-.header .back {
-  display: flex;
-  align-items: center;
-}
-
-.header .back * {
-  margin: 0;
-  font-size: 30px;
-  color: black;
-}
-
-.header h3 {
-  margin: 0;
-  padding: 10px 0;
-  font-size: 26px;
-}
-
 .accordionDetails {
   display: flex;
   justify-content: space-between;
-  height: 34px;
+  padding: 0 12px;
 }
 
-.accordionDetails .leftButtons {
+.accordionDetails .leftButtons,
+.accordionDetails .rightButtons {
   display: flex;
   gap: 10px;
 }
 
-.accordionDetails .leftButtons:first-child {
+/* .accordionDetails .leftButtons:first-child {
   margin-right: 5px;
 }
 
 .accordionDetails .edit {
   justify-self: flex-end;
-}
+} */
 
 .registerSpot {
   display: flex;
