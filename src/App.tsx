@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
+import { IonApp } from "@ionic/react";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -37,6 +37,7 @@ import { authActions } from "./store/Authentication/authentication";
 import { fetchUser } from "./store/User/userActions";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
+import RegisterSpot from "./pages/Seller/RegisterSpot/RegisterSpot";
 
 const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
@@ -84,7 +85,7 @@ const App: React.FC = (props) => {
   };
 
   return (
-    <IonApp className='app'>
+    <IonApp className="app">
       <Router>
         <Routes>
           <Route path="/" element={
@@ -108,12 +109,12 @@ const App: React.FC = (props) => {
           <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
           <Route path="/parker/registerCar" element={<RegisterCar/>}/>
           <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
-
-          <Route path="/seller/mySpots" element={<MySpots/>} />
-
+          
+          <Route path="/seller/mySpots" element={<MySpots />} />
+          <Route path="/seller/registerSpot" element={<RegisterSpot />} />
         </Routes>
       </Router>
-    </IonApp> 
+    </IonApp>
   );
 };
 

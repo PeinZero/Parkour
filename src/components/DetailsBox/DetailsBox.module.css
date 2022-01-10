@@ -9,7 +9,7 @@
 }
 
 .top{
-    background-color: var(--background-grey);
+    background-color: var(--image-placeholder);
     height: 40px;
     padding: 0 10px;
     border-radius: inherit;
@@ -22,7 +22,7 @@
 }
 
 .bottom{
-    background-color: var(--background-grey-light);
+    background-color: var(--card-background);
     padding: 10px;
 }
 /*  x --------- x */
@@ -80,7 +80,7 @@
     border-radius: 50%;
     height: 60px;
     width: 60px;
-    background-color: var(--background-grey);
+    background-color: var(--image-placeholder);
 }
 
 .primaryTopContent .rating{
