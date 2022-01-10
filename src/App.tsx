@@ -22,15 +22,15 @@ import "./theme/variables.css";
 import { useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import ParkerHome from "./pages/Parker/ParkerHome";
-import RegisteredCars from "./pages/Parker/RegisteredCars";
-import RegisterCar from "./pages/Parker/RegisterCar";
+import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
+import RegisteredCars from "./pages/Parker/MyCars/MyCars";
+import RegisterCar from "./pages/Parker/AddCar/AddCar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import Search from "./pages/Search/Search";
-import SpotDetails from "./pages/Parker/SpotDetails";
+import SpotDetails from "./pages/Parker/SpotDetails/SpotDetails";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";

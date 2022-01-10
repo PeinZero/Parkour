@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import { Link } from "react-router-dom";
-import styles from './RegisterCar.module.css'
+import styles from './AddCar.module.css'
 
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
-import Input2Column from '../../components/UI/Input/Input2Column/Input2Column';
-import Header from '../../components/UI/Header/Header';
+import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
+import Input2Column from '../../../components/UI/Input/Input2Column/Input2Column';
+import Header from '../../../components/UI/Header/Header';
 
 const RegisterCar = () => {
     const formSubmitHandler = (e) => {
@@ -16,9 +16,8 @@ const RegisterCar = () => {
     return (
         <Fragment>
             <div className={styles['addCar']}>
-                <Header backLink="/" content="Add A Car" className="small" style={{marginBottom: '0px'}}/>
+                <Header backLink="/" content="Add A Car" className="small" />
                 <form onSubmit={formSubmitHandler} className={styles['form']}> 
-                    <p>Add a car to use for parking</p>
                     <Input label="Car Registration Number *" name="numberPlate" type="text" 
                         placeholder="ABC-123" className={styles["registerCarFormControl"]}
                     />

@@ -2,10 +2,10 @@ import { Fragment} from "react";
 
 import styles from "./ParkerHome.module.css";
 
-import ParkerMap from "../../components/ParkerMap/ParkerMap";
-import Hamburger from "../../components/UI/Hamburger/Hamburger";
-import Anchor from "../../components/UI/Anchor/Anchor";
-import Ripple from "../../components/UI/Button/Ripple/Ripple";
+import ParkerMap from "../../../components/ParkerMap/ParkerMap";
+import Hamburger from "../../../components/UI/Hamburger/Hamburger";
+import Anchor from "../../../components/UI/Anchor/Anchor";
+import Ripple from "../../../components/UI/Button/Ripple/Ripple";
 
 import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";

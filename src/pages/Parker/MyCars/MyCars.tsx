@@ -1,13 +1,13 @@
 import { Fragment } from 'react'
 
-import styles from './RegisteredCars.module.css';
-import Button from '../../components/UI/Button/Button';
-import Anchor from '../../components/UI/Anchor/Anchor';
-import Header from '../../components/UI/Header/Header';
-import Ripple from '../../components/UI/Button/Ripple/Ripple';
+import styles from './MyCars.module.css';
+import Button from '../../../components/UI/Button/Button';
+import Anchor from '../../../components/UI/Anchor/Anchor';
+import Header from '../../../components/UI/Header/Header';
+import Ripple from '../../../components/UI/Button/Ripple/Ripple';
+import AccordionBox from '../../../components/UI/AccordionBox/AccordionBox';
+import AccordionHeader from '../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader';
 
-import AccordionBox from '../../components/UI/AccordionBox/AccordionBox';
-import AccordionHeader from '../../components/UI/AccordionBox/AccordionHeader/AccordionHeader';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
