@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./DetailsBox.module.css";
 
@@ -10,7 +11,6 @@ import Button from "../UI/Button/Button";
 
 
 const DetailsBox = (props) => {
-    
     let topContent;
     let bottomContent;
     
@@ -23,8 +23,7 @@ const DetailsBox = (props) => {
                     <div>{props.rating}</div>
                     { props.rating !== "N.R" && <div className={styles["icon"]}> <StarIcon/> </div> }   
                 </div>
-                {/* <div className={styles["phoneNumber"]}> {props.phone}</div> */}
-            </div>
+            </div> 
         )
 
         bottomContent = (
@@ -81,6 +80,7 @@ const DetailsBox = (props) => {
                 <h5>{props.boxClass}</h5>
             </div>
         )
+        
 
         bottomContent = (
             <>
@@ -94,7 +94,7 @@ const DetailsBox = (props) => {
             <div className={`${styles["top"]} ${styles[props.boxClass]}`}>
                 {topContent}
             </div>
-            <div className={`${styles["bottom"]} ${props.className}` }>
+            <div className={`${styles["bottom"]} ${props.className}`}>
                 {bottomContent}
             </div>
         </div>
