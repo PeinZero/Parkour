@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import styles from "./RegisterSpot.module.css";
+import styles from "./AddSpot.module.css";
 
 const RegisterSpot = () => {
   const submitForm = (e) => {
