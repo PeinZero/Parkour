@@ -1,10 +1,10 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { fetchUser } from "../../../store/User/userActions";
 
 import styles from "./SellerHome.module.css";
 
-import SellerMap from "../../../components/ParkerMap/ParkerMap";
+import Map from "../../../components/ParkerMap/ParkerMap";
 import Button from "../../../components/UI/Button/Button";
 
 import Hamburger from "../../../components/UI/Hamburger/Hamburger";
@@ -24,34 +24,7 @@ const SellerHome: React.FC = () => {
   return (
     <Fragment>
       <Hamburger />
-      <div className={styles["map"]}>{/* <SellerMap /> */}</div>
-      <div className={styles["searchBox"]}>
-        <div className={styles["searchTopBox"]}>
-          <h4>Where do you want to park?</h4>
-          <p>Tip: We search for parking spots near the pin you drop</p>
-        </div>
-        <div className={styles["searchBottomBox"]}>
-          <ButtonBase className={styles["searchBar"]}>
-            <div className={styles["searchIcon"]}>
-              <SearchIcon />
-            </div>
-            <div>Enter your destination</div>
-          </ButtonBase>
-          <div className={styles["recents"]}>
-            <ButtonBase className={styles["recent"]}>
-              <div className={styles["icon"]}>
-                <RoomIcon />
-              </div>
-              <div className={styles["location"]}>
-                <div className={styles["locationName"]}>Fast</div>
-                <div className={styles["locationAddress"]}>
-                  Korangi - Karachi - Sindh
-                </div>
-              </div>
-            </ButtonBase>
-          </div>
-        </div>
-      </div>
+      <div className={styles["map"]}>{/* <Map /> */}</div>
     </Fragment>
   );
 };

@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  width: 90%;
+  margin: 35px 5% 30px 5%;
+  gap: 10px;
+  align-items: center;
+}
+
+.header .back {
+  display: flex;
+  align-items: center;
+}
+
+.header .back * {
+  margin: 0;
+  font-size: 30px;
+  color: black;
+}
+
+.header h3 {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 26px;
+}
+
+.accordionDetails {
+  display: flex;
+  justify-content: space-between;
+  height: 34px;
+}
+
+.accordionDetails .leftButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.accordionDetails .leftButtons:first-child {
+  margin-right: 5px;
+}
+
+.accordionDetails .edit {
+  justify-self: flex-end;
+}
+
+.registerSpot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.registerSpot div {
+  width: 50px;
+}
+.registerSpot a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerSpot svg {
+  color: black;
+  font-size: 42px;
+}

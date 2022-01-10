@@ -11,13 +11,17 @@ import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";
 
 
-
 const ParkerHome: React.FC = () => {
   return (
     <Fragment>
+      {/* {console.log(coordinates)} */}
       <Hamburger />
-      <div className={styles["map"]}>{/* <ParkerMap /> */}</div>
-      <div className={styles["searchBox"]}>
+      <div className={styles["map"]}>
+        {/* <Map /> */}
+      </div>
+      <div
+        className={styles["searchBox"]}
+      >
         <div className={styles["searchTopBox"]}>
           <h4>Where do you want to park?</h4>
           <p>Tip: We search for parking spots near the pin you drop</p>

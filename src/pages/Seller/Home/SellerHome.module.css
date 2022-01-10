@@ -36,7 +36,7 @@
 }
 
 .searchBar {
-  background-color: var(--background-grey) !important;
+  background-color: var(--image-placeholder) !important;
   width: 100%;
   border-radius: 20px !important;
   margin: 0 0 10px 0 !important;
@@ -81,7 +81,7 @@
 
 .recent .icon {
   border-radius: 50%;
-  background-color: var(--background-grey);
+  background-color: var(--image-placeholder);
   display: flex;
   justify-content: center;
   align-items: center;

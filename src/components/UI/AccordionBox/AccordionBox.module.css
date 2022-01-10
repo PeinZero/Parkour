@@ -1,6 +1,6 @@
 .car{
     box-shadow: none !important;
-    background-color: var(--background-grey) !important;
+    background-color: var(--image-placeholder) !important;
     margin-bottom: 7px;
 }
 

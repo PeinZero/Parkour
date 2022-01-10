@@ -21,7 +21,7 @@
 .searchInputBar{
     display: grid;
     grid-template-columns: 1fr 6fr 3fr;
-    background-color: var(--background-grey);
+    background-color: var(--image-placeholder);
     padding: 10px;
     width: 90%;
     margin: 0 5%;

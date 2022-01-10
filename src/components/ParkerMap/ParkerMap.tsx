@@ -1,6 +1,6 @@
 import {GoogleMap, withScriptjs, withGoogleMap, Marker, DirectionsRenderer } from "react-google-maps";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const KHI = {
   lat: 24.8607,
