@@ -10,20 +10,14 @@ import AccordionBox from "../../../components/UI/AccordionBox/AccordionBox";
 import AccordionHeader from "../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Header from "../../../components/UI/Header/Header";
 
 export const MySpots = () => {
   let price = 100;
 
   return (
     <Fragment>
-      <div className={styles["header"]}>
-        <Link to="/" className={styles["back"]}>
-          {" "}
-          <ArrowBackIosNewIcon />{" "}
-        </Link>
-        <h3>My Spots</h3>
-      </div>
-
+      <Header backLink="/" content="My Spots"/>
       <div className={styles["carList"]}>
         <AccordionBox
           header={
@@ -36,13 +30,13 @@ export const MySpots = () => {
         >
           <div className={styles["accordionDetails"]}>
             <div className={styles["leftButtons"]}>
-              <Button className="delete-icon">
+              <Button btnClass="delete-icon" size="small">
                 <DeleteOutlineRoundedIcon />
               </Button>
-              <Button className="deactivate"> Deactivate</Button>
+              <Button btnClass="negative-outline" size="small"> Deactivate</Button>
             </div>
             <div className={styles["rightButtons"]}>
-              <Button className="edit">Edit</Button>
+              <Button btnClass="primary" size="small">Edit</Button>
             </div>
           </div>
         </AccordionBox>
@@ -52,57 +46,13 @@ export const MySpots = () => {
         >
           <div className={styles["accordionDetails"]}>
             <div className={styles["leftButtons"]}>
-              <Button className="delete-icon">
+              <Button btnClass="delete-icon" size="small">
                 <DeleteOutlineRoundedIcon />
               </Button>
-              <Button className="deactivate">Deactivate</Button>
+              <Button btnClass="negative-outline" size="small">Deactivate</Button>
             </div>
-            <div>
-              <Button className="edit">Edit</Button>
-            </div>
-          </div>
-        </AccordionBox>
-
-        <AccordionBox
-          header={
-            <AccordionHeader
-              spotNumber={"3"}
-              location={"Smol"}
-              price={"RS 1/hr"}
-            />
-          }
-        >
-          <div className={styles["accordionDetails"]}>
-            <div>
-              <Button className="delete-icon">
-                <DeleteOutlineRoundedIcon />
-              </Button>
-              <Button className="deactivate"> Deactivate</Button>
-            </div>
-            <div>
-              <Button className="edit">Edit</Button>
-            </div>
-          </div>
-        </AccordionBox>
-
-        <AccordionBox
-          header={
-            <AccordionHeader
-              spotNumber={"4"}
-              location={"this is medium ?"}
-              price={"RS 1000/hr"}
-            />
-          }
-        >
-          <div className={styles["accordionDetails"]}>
-            <div>
-              <Button className="delete-icon">
-                <DeleteOutlineRoundedIcon />
-              </Button>
-              <Button className="deactivate"> Deactivate</Button>
-            </div>
-            <div>
-              <Button className="edit">Edit</Button>
+            <div className={styles["rightButtons"]}>
+              <Button btnClass="primary" size="small">Edit</Button>
             </div>
           </div>
         </AccordionBox>
