@@ -23,7 +23,7 @@ import { useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
-import MyCar from "./pages/Parker/MyCars/MyCars";
+import MyCars from "./pages/Parker/MyCars/MyCars";
 import AddCar from "./pages/Parker/AddCar/AddCar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
@@ -106,7 +106,7 @@ const App: React.FC = (props) => {
 
           <Route path="/search" element={<Search/>} />
 
-          <Route path="/parker/registeredCars" element={<MyCar/>} />
+          <Route path="/parker/registeredCars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
           <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
           

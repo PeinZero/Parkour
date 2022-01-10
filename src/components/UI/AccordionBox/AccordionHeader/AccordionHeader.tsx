@@ -23,7 +23,7 @@ const AccordionHeader = (props) => {
         </div>
       </div>
     );
-  } else {
+  } else if(!isParker){
     AccordionHeaderJSX = (
       <div className={styles["header"]}>
         <div className={`${styles["avatar"]} ${!isParker && styles["Seller"]}`}>

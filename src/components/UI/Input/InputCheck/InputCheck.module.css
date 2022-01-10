@@ -1,0 +1,12 @@
+label{
+    margin: 0 !important;
+    padding: 5px !important;
+}
+
+label > span:first-of-type{
+    margin-right: 10px;
+}
+
+label > span:last-of-type{
+    font-size: 14px;
+}
