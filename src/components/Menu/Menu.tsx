@@ -29,6 +29,11 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
     dispatch(logout());
   };
 
+  const switchUserHandler = () => {
+    console.log("switch user");
+  }
+
+
   const user = useAppSelector((state) => state.user);
   
   const name = user.name;
@@ -146,7 +151,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
            Logout
         </Button>
         
-        {isParker && <Anchor path="#"> <Button btnClass="secondary"> Become a Spot Seller </Button> </Anchor>}
+        {isParker && <Button btnClass="secondary" onClick={switchUserHandler}> Become a Spot Seller </Button>}
         {!isParker && <Anchor path="#"><Button btnClass="secondary"> Find Parking </Button></Anchor>}
 
       </div>

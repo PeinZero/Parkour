@@ -78,7 +78,7 @@ const DetailsBox = (props) => {
     else{
         topContent = (
             <div className={styles["otherTopContent"]}>
-                <h5>{props.boxName}</h5>
+                <h5>{props.boxClass}</h5>
             </div>
         )
 
@@ -94,7 +94,7 @@ const DetailsBox = (props) => {
             <div className={`${styles["top"]} ${styles[props.boxClass]}`}>
                 {topContent}
             </div>
-            <div className={styles["bottom"]}>
+            <div className={`${styles["bottom"]} ${props.className}` }>
                 {bottomContent}
             </div>
         </div>

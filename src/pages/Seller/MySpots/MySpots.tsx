@@ -58,9 +58,9 @@ export const MySpots = () => {
         </AccordionBox>
       </div>
 
-      <div className={styles["registerSpot"]}>
+      <div className={styles["addSpot"]}>
         <div>
-          <Anchor path="/seller/registerSpot">
+          <Anchor path="/seller/addSpot">
             {" "}
             <AddCircleIcon />{" "}
           </Anchor>

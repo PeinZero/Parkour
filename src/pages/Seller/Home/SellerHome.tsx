@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { fetchUser } from "../../../store/User/userActions";
 
