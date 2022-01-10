@@ -8,6 +8,7 @@ const Input = (props) => {
                 type = {props.type}
                 name = {props.name} 
                 placeholder = {props.placeholder || ''}
+                value = {props.value}
             />
         </div>
     )
