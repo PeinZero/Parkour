@@ -10,7 +10,6 @@ import AccordionBox from "../../../components/UI/AccordionBox/AccordionBox";
 import AccordionHeader from "../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import MapIcon from "@mui/icons-material/Map";
 
 export const MySpots = () => {
   let price = 100;

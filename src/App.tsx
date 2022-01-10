@@ -23,8 +23,8 @@ import { useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
-import RegisteredCars from "./pages/Parker/MyCars/MyCars";
-import RegisterCar from "./pages/Parker/AddCar/AddCar";
+import MyCar from "./pages/Parker/MyCars/MyCars";
+import AddCar from "./pages/Parker/AddCar/AddCar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
@@ -37,7 +37,7 @@ import { authActions } from "./store/Authentication/authentication";
 import { fetchUser } from "./store/User/userActions";
 import { logout } from "./store/Authentication/authenticationActions";
 import { MySpots } from "./pages/Seller/MySpots/MySpots";
-import RegisterSpot from "./pages/Seller/RegisterSpot/RegisterSpot";
+import AddSpot from "./pages/Seller/AddSpot/AddSpot";
 
 const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
@@ -106,12 +106,12 @@ const App: React.FC = (props) => {
 
           <Route path="/search" element={<Search/>} />
 
-          <Route path="/parker/registeredCars" element={<RegisteredCars/>} />
-          <Route path="/parker/registerCar" element={<RegisterCar/>}/>
+          <Route path="/parker/registeredCars" element={<MyCar/>} />
+          <Route path="/parker/registerCar" element={<AddCar/>}/>
           <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
           
           <Route path="/seller/mySpots" element={<MySpots />} />
-          <Route path="/seller/registerSpot" element={<RegisterSpot />} />
+          <Route path="/seller/registerSpot" element={<AddSpot />} />
         </Routes>
       </Router>
     </IonApp>

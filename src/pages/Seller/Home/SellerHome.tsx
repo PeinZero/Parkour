@@ -5,12 +5,8 @@ import { fetchUser } from "../../../store/User/userActions";
 import styles from "./SellerHome.module.css";
 
 import Map from "../../../components/ParkerMap/ParkerMap";
-import Button from "../../../components/UI/Button/Button";
 
 import Hamburger from "../../../components/UI/Hamburger/Hamburger";
-import RoomIcon from "@mui/icons-material/Room";
-import SearchIcon from "@mui/icons-material/Search";
-import { ButtonBase } from "@material-ui/core";
 
 const SellerHome: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,10 +1,12 @@
-let inProduction: Boolean = false;
-
+let devEnviournment: string;;
 let backendLink: string;
 
-if (!inProduction) {
+// devEnviournment = "inProduction";
+devEnviournment = "inDevelopment";
+
+if (devEnviournment === "inProduction") {
   backendLink = "https://parkour-backend.herokuapp.com";
-} else {
+} else if(devEnviournment === "inDevelopment") {
   backendLink = "http://localhost:5000";
 }
 
