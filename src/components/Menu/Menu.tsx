@@ -35,6 +35,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
   const isParker = user.currentRoleParker;
 
   let rating;
+  console.log(user);
   if(user.currentRoleParker && user.parker != null){
       rating = user.parker.cumulativeRating;
   }
