@@ -8,6 +8,10 @@ import MessageIcon from '@mui/icons-material/Message';
 
 import Button from "../UI/Button/Button";
 
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+
 
 const DetailsBox = (props) => {
     
@@ -81,12 +85,33 @@ const DetailsBox = (props) => {
                 <h5>{props.boxName}</h5>
             </div>
         )
+        
+        if (props.boxClass === "availibility"){
+            bottomContent = (
+                <div className={styles["availibilityBottom"]}>
+                    <div className={styles["day"]}>
 
-        bottomContent = (
-            <>
-                {props.children}
-            </>
-        )
+                    </div>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                            label="Basic example"
+                            // value={value}
+                            // onChange={(newValue) => {
+                            //     setValue(newValue);
+                            // }}
+                            // renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider>
+                </div>
+            )
+        }
+        else{
+            bottomContent = (
+                <>
+                    {props.children}
+                </>
+            )
+        }
     }
 
     return (

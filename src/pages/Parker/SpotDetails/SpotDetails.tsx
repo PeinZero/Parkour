@@ -39,7 +39,7 @@ const SpotDetails = () => {
                     boxClass="primary" name={name} rating={rating} phone={phone}>
                 </DetailsBox>
                 <DetailsBox boxClass="location" spotDetail={spotDetail}></DetailsBox>
-                <DetailsBox boxName="Availibility"></DetailsBox>
+                <DetailsBox boxName="availibility"></DetailsBox>
                 <DetailsBox boxName="Images"></DetailsBox>
             </div>
         </div>
