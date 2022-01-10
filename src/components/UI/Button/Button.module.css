@@ -6,7 +6,7 @@
   padding: 15px 10px !important;
   background-color: black !important;
   color: white !important;
-  height: inherit;
+  height: 45px;
   width: 100%;
   font-weight: 600;
   font-size: 14px;
@@ -22,8 +22,9 @@
   background-color: var(--primary) !important;
 }
 
-.secondary {
-  background-color: var(--secondary);
+.small{
+  font-size: 10px !important;
+  height: 34px !important;
 }
 
 .primary-invert {
@@ -34,6 +35,7 @@
 
 .secondary {
   background-color: var(--secondary) !important;
+  color: white !important;
 }
 
 .delete {
@@ -41,29 +43,22 @@
   color: white !important;
 }
 
-.deactivate {
-  font-size: 10px;
-  background-color: rgba(255, 255, 255, 0);
-  border: 1px solid var(--negativeCTA);
-  color: var(--negativeCTA);
-  width: 142px;
-}
-
-.edit {
-  font-size: 10px;
-  width: 69px;
-  background-color: var(--primary);
+.negative-outline {
+  background-color: transparent !important;
+  border: 1px solid var(--negativeCTA) !important;
+  color: var(--negativeCTA) !important;
 }
 
 .delete-icon {
   background-color: var(--negativeCTA) !important;
   color: white !important;
-  padding: 0 !important;
+  width: 34px;
 }
 .delete-icon svg{
   font-size: 1.2rem;
 }
 
+/* RESET */
 .reset{
   display: flex !important;
   align-items: center !important;
