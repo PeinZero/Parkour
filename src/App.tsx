@@ -111,7 +111,7 @@ const App: React.FC = (props) => {
           <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
           
           <Route path="/seller/mySpots" element={<MySpots />} />
-          <Route path="/seller/registerSpot" element={<AddSpot />} />
+          <Route path="/seller/addSpot" element={<AddSpot />} />
         </Routes>
       </Router>
     </IonApp>
