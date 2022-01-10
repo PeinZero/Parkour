@@ -1,48 +1,62 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   overflow: auto;
 }
 
-.staticMap{
+.staticMap {
   background-color: rgb(144, 238, 144, 0.5);
   width: 85%;
   height: 30%;
-  margin: 0 auto;
+  margin: 0 7.5%;
   border-radius: 4px;
   margin-bottom: 20px;
-}
-
-
-
-.header {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 40px 0 30px 0;
-  padding: 0 10px;
-}
-
-.header * {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  line-height: 1;
-  color: black;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 24px;
 }
 
 .form {
   width: 85%;
   margin: 0 7.5%;
+  margin-bottom: 7.5%;
   display: flex;
   flex-direction: column;
+}
+
+.calendar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.pickerWrapper {
+  margin: 20px 0;
+}
+
+.timePickers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.addesSlotsWrapper {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.addedTimeSlots {
+  list-style: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.submitBtn {
+  margin-bottom: 40px;
 }
 
 .registerSpot label {
