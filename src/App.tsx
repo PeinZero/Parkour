@@ -106,7 +106,7 @@ const App: React.FC = (props) => {
 
           <Route path="/search" element={<Search/>} />
 
-          <Route path="/parker/registeredCars" element={<MyCars/>} />
+          <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
           <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
           
