@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
 import { sendSignupData } from "../../store/Authentication/authenticationActions";
@@ -30,49 +29,47 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Fragment>
-      <div className={styles["wrapper"]}>
-        <Header backLink="/" content="Register"/>
-        <form onSubmit={formSubmitHandler} className={styles["form"]}>
-          <Input
-            label="Full Name"
-            name="name"
-            type="text"
-            placeholder="Mahad Khalid"
-          />
-          <Input
-            label="Phone Number"
-            name="phone"
-            type="text"
-            placeholder="03158542543"
-          />
-          <Input
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="mahadzx@gmail.com"
-          />
-          <Input label="Password" name="password" type="password" />
-          <Input
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-          />
+    <div className={styles["signupPage"]}>
+      <Header backLink="/" content="Register"/>
+      <form onSubmit={formSubmitHandler} className={styles["form"]}>
+        <Input
+          label="Full Name"
+          name="name"
+          type="text"
+          placeholder="Mahad Khalid"
+        />
+        <Input
+          label="Phone Number"
+          name="phone"
+          type="text"
+          placeholder="03158542543"
+        />
+        <Input
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="mahadzx@gmail.com"
+        />
+        <Input label="Password" name="password" type="password" />
+        <Input
+          label="Confirm Password"
+          name="confirmPassword"
+          type="password"
+        />
 
-          <Button>Register</Button>
-          <p>
-            By registering, you agree to Parkour’s{" "}
-            <Link className={styles["Link"]} to="">
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link className={styles["Link"]} to="">
-              Privacy Policy
-            </Link>
-          </p>
-        </form>
-      </div>
-    </Fragment>
+        <Button>Register</Button>
+        <p>
+          By registering, you agree to Parkour’s{" "}
+          <Link className={styles["Link"]} to="">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link className={styles["Link"]} to="">
+            Privacy Policy
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 };
 
