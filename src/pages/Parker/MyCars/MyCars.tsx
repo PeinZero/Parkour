@@ -1,4 +1,7 @@
 import { Fragment } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+import { deleteCar, setDefaultCar } from '../../../store/Cars/carActions';
+
 
 import styles from './MyCars.module.css';
 import Button from '../../../components/UI/Button/Button';
@@ -12,44 +15,56 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const RegisteredCars = () => {
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.user);
+    const token = useAppSelector(state => state.authentication.token);
+    let cars = [];
+
+    if(user.currentRoleParker && user.parker !== null){
+        cars = user.parker.cars;
+    }
+
+    const deleteCarHandler = (carId) => {
+        dispatch(deleteCar(carId, token));
+    }
+
+    const setDefaultCarHandler = (carId) => {
+        dispatch(setDefaultCar(carId))
+    }
+    
+    const carsMapped = cars.map( car => {;
+        return (
+            <AccordionBox key={car._id} header={<AccordionHeader 
+                name={car.make}
+                color={car.color}
+                numPlate={car.numberPlate}
+            />}>
+                <div className={styles['accordionDetails']}>
+                    <div></div>
+                    <div className={styles['buttons']}>
+                        <Button btnClass="primary" size="small" onClick={() => setDefaultCarHandler(car._id)}> Set as Default</Button>
+                        <Button btnClass="delete-icon" size="small" onClick={() => deleteCarHandler(car._id)}> 
+                            <DeleteOutlineRoundedIcon/>
+                        </Button>
+                    </div>
+                </div>
+            </AccordionBox>
+        )
+    })
+
     return (
         <Fragment>
             <Header backLink="/" content="My Cars" className="small"/>
 
             <div className={styles['carList']}>
-                <AccordionBox header={<AccordionHeader 
-                    name={"Corolla"}
-                    color={"White"}
-                    numPlate={"AUD-208"}
-                />}>
-                    <div className={styles['accordionDetails']}>
-                        <div></div>
-                        <div className={styles['buttons']}>
-                            <Button btnClass="primary" size="small"> Set as Default</Button>
-                            <Button btnClass="delete-icon" size="small"> 
-                                <DeleteOutlineRoundedIcon/>
-                            </Button>
-                        </div>
-                    </div>
-                </AccordionBox>
-
-                <AccordionBox header={<AccordionHeader 
-                    name={"Alto"}
-                    color={"Black"}
-                    numPlate={"BCD-109"}
-                />}>
-                    <div className={styles['accordionDetails']}>
-                        <div></div>
-                        <div className={styles['buttons']}>
-                            <Button btnClass="primary" size="small"> Set as Default</Button>
-                            <Button btnClass="delete-icon" size="small"> 
-                                <DeleteOutlineRoundedIcon/>
-                            </Button>
-                        </div>
-                    </div>
-                </AccordionBox>
+                {carsMapped}
             </div>
 
+            { cars.length <= 0 &&
+                <p className={styles['noCars']}> No Registered Cars</p>
+            }
+
+             
             <div className={styles['registerCar']}>
                 <Anchor path="/parker/registerCar">
                     <Ripple>
@@ -57,6 +72,9 @@ const RegisteredCars = () => {
                     </Ripple>
                 </Anchor>
             </div>
+            
+
+
 
             
         </Fragment>

@@ -29,6 +29,9 @@ const authenticationSlice = createSlice({
         signup(state) {
             state.isAuth = false;
         },
+        getToken(state){
+            return state.token;
+        }
     }
 });
 

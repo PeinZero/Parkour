@@ -1,5 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { logout } from "../../store/Authentication/authenticationActions";
+import { switchRole } from "../../store/User/userActions";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./Menu.module.css";
 
@@ -24,33 +26,34 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = (props): JSX.Element => {
   const dispatch = useAppDispatch();
+  const token = useAppSelector(state => state.authentication.token);
+  const navigate = useNavigate();
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
   const switchUserHandler = () => {
-    console.log("switch user");
+    dispatch(switchRole(token))
+      .then( response => {
+        navigate("/")
+      });
   }
 
 
   const user = useAppSelector((state) => state.user);
-  
   const name = user.name;
   const isParker = user.currentRoleParker;
-
+  
   let rating;
-  if(user.currentRoleParker && user.parker != null){
+  if(isParker && user.parker != null){
       rating = user.parker.cumulativeRating;
   }
-  else if(user.seller != null){
+  else if(!isParker && user.seller != null){
       rating = user.seller.cumulativeRating
   };
   
-  if(rating === -1){
-      rating = "N.R";
-  }
- 
+  
   return (
     <SwipeableDrawer
       onOpen={props.toggleMenu}
@@ -63,20 +66,21 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
       <div className={styles["wrapper"]}>
         <div className={styles["header"]}>
           <div className={styles["pic"]}>
-            <img src="/images/mahad_profile_pic.jpg" alt="" />
+            <img/>
           </div>
           <div className={styles["info"]}>
             <h3>{name}</h3>
             <div>
-              <p>Rated</p>
-              <p>{rating}</p>
-              <StarIcon />
+              { rating === -1 && <p className={styles["nr"]}> Not Rated </p> }
+              { rating !== -1 && <> <p>Rated</p> <p>{rating}</p> <StarIcon /> </> }
+              
+              
             </div>
           </div>
         </div>
         <div className={styles["content"]}>
           {isParker ? (
-            <Anchor path="/parker/registeredCars">
+            <Anchor path="/parker/mycars">
               <Ripple>
                 <div>
                   <DirectionsCarRoundedIcon />
@@ -152,10 +156,10 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
         </Button>
         
         {isParker && <Button btnClass="secondary" onClick={switchUserHandler}> Become a Spot Seller </Button>}
-        {!isParker && <Anchor path="#"><Button btnClass="secondary"> Find Parking </Button></Anchor>}
+        {!isParker && <Button btnClass="primary" onClick={switchUserHandler}> Find Parking </Button>}
 
       </div>
-    </SwipeableDrawer>
+    </SwipeableDrawer> 
   );
 };
 

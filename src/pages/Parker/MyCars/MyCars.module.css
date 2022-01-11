@@ -36,3 +36,10 @@
     color: black;
     font-size: 42px;
 }
+
+/* No cars */
+.noCars{
+    color: var(--example-label);
+    font-style: italic;
+    text-align: center;
+}

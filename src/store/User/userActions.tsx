@@ -25,3 +25,30 @@ export const fetchUser = (userId, token) => {
     }
   };
 };
+
+export const switchRole = (token) => {
+  return async (dispatch) => {
+    const sendRequest = async () => {
+      return await axios.get(
+        `${backendLink}/user/switchrole`,
+        {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        }
+      );
+    };
+
+    try {
+      const response = await sendRequest();
+
+      dispatch(userActions.createUser(response.data.user));
+
+      return response;
+
+    } catch (error)
+    {
+      console.log("Failed to fetch user data!");
+    }
+  };
+};

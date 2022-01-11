@@ -51,6 +51,15 @@ const userSlice = createSlice({
         },
         set_parker(state, action){
             state.parker = action.payload.parker;
+        },
+        set_cars(state, action){
+            console.log(action.payload.cars);
+            console.log(action.payload);
+            
+            state.parker.cars = action.payload.cars;
+        },
+        set_default_car(state, action){
+            state.parker.defaultCar = action.payload.defaultCar;
         }
     }  
 })
