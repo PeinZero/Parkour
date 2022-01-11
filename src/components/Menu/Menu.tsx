@@ -66,7 +66,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
       <div className={styles["wrapper"]}>
         <div className={styles["header"]}>
           <div className={styles["pic"]}>
-            <img/>
+            <img src="/images/mahad_profile_pic.jpg" alt=""/>
           </div>
           <div className={styles["info"]}>
             <h3>{name}</h3>
@@ -139,7 +139,7 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Ripple>
           </Anchor>
-          <Anchor path="/parker/spotdetails">
+          <Anchor path="#">
             <Ripple>
               <div>
                 <NotListedLocationIcon />

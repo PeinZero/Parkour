@@ -15,6 +15,11 @@
 }
 /* x-----x */
 
+.availibilityBottom div:first-of-type,
+.availibilityBottom div:first-of-type > label{
+    margin-top: 10px;;
+}
+
 .availibilityBottom div:first-of-type{
     width: 100%;
 }
