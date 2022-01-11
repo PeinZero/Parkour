@@ -1,6 +1,17 @@
-.wrapper{
+.signupPage{
+    position: relative;
     height: 100%;
     overflow: auto;
+    animation: slide-up 0.4s ease-in-out forwards;
+}
+
+@keyframes slide-up{
+    0%{
+        bottom: -100%;
+    }
+    100%{
+        bottom: 0%;
+    }
 }
 
 .form {

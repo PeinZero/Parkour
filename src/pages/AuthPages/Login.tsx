@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-import { Link } from "react-router-dom";
 import { useAppDispatch } from '../../store/hooks';
 import {sendLoginData} from '../../store/Authentication/authenticationActions';
 
@@ -9,7 +7,6 @@ import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import Header from '../../components/UI/Header/Header';
 
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Login: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -24,7 +21,7 @@ const Login: React.FC = () => {
     }
 
     return (
-        <Fragment>
+        <div className={styles["loginPage"]}>
             <Header backLink="/" content="Login"/>
             <form onSubmit = {formSubmitHandler} className={styles['form']}>
                 <Input label="Phone Number" name="phone" type="text" 
@@ -33,12 +30,8 @@ const Login: React.FC = () => {
                 <Input label="Password" name="password" type="password" />
                 <Button btnClass="primary">Login</Button>
             </form>
-        </Fragment>
+        </div>
     )
 }
-
-// interface LoginProps {
-//     onLogin: (event: React.FormEvent<HTMLInputElement>, authData: {}) => void
-// }
 
 export default Login
