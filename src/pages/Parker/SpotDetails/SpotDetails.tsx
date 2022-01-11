@@ -10,6 +10,7 @@ import Header from '../../../components/UI/Header/Header';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { MobileDatePicker } from "@mui/lab";
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 import RoomIcon from "@mui/icons-material/Room";
@@ -99,7 +100,6 @@ const SpotDetails = (props) => {
         const start =  d.start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
         const end =  d.end.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
         
-        // console.log("AvailableSpot", d);
         return <li key={index}> {`${start} - ${end}`} </li>
     })
     
