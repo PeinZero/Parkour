@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { getAllSpotsBySeller } from "../../../store/Spot/spotActions";
 import styles from "./SellerHome.module.css";
 
-import SellerMap from "../../../components/SellerMap/SellerMap";
+import SellerMap from "../SellerMap/SellerMap";
 
 import Hamburger from "../../../components/UI/Hamburger/Hamburger";
 

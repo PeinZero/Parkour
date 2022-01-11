@@ -48,7 +48,7 @@ const Search = () => {
                     <PlacesAutocomplete
                         value={address}
                         onChange={setAddress}
-                        debounce={2000}
+                        debounce={1000}
                         searchOptions={searchOptions}
                     >
                         {({

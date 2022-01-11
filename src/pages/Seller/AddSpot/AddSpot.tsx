@@ -52,10 +52,11 @@ const AddSpot = (props) => {
               position={KHI}
               draggable={true}
             />
-      </GoogleMap>)))
+      </GoogleMap>
+    ))
+  )
 
  
-
   let data = {
     // empty this in production, keeping only the structure
     addressLine1:
@@ -221,8 +222,9 @@ const AddSpot = (props) => {
               </Button>
             </div>
             <div className={styles['availableSlotsBox']}>
-              <h4>Added Spots</h4>
-              <ul className={styles["availableSlots"]}>{timeSlots}</ul>
+              <h4>Added Slots</h4>
+              { timeSlots.length > 0 && <ul className={styles["availableSlots"]}>{timeSlots}</ul>}
+              { timeSlots.length <= 0 && <p> No Slots Added</p>}
             </div>
           </DetailsBox>
           <Button btnClass="primary" className={styles["submitBtn"]}>
