@@ -124,7 +124,7 @@ const SpotDetails = (props) => {
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <ThemeProvider theme={calanderTheme}>
                             <MobileDatePicker
-                                label={`Showing available spots for`}
+                                label={`Showing available time slots for`}
                                 value={date}
                                 onChange={setDateHandeler}
                                 renderInput={(params) => <TextField {...params} />}

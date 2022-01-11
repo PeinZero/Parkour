@@ -40,20 +40,47 @@
   width: 100%;
 }
 
-.addesSlotsWrapper {
-  margin: 0;
-  padding: 0;
+.availableSlotsBox{
   margin-top: 10px;
+  padding: 5px;
 }
 
-.addedTimeSlots {
-  list-style: none;
+.availableSlotsBox h4{
+  margin: 20px 15%;
   text-align: center;
+  font-size: 15px;
+  color: black;
+  background-color: var(--image-placeholder);
+  padding: 10px;
+  width: 70%;
+  border-radius: 8px;
+  letter-spacing: 1px;
+}
+
+.availableSlotsBox h5{
+  margin: 0;
+  margin-bottom: 3px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.availableSlots{
+  /* reset */
   margin: 0;
   padding: 0;
+  list-style: none;
   font-size: 14px;
-  margin-top: 10px;
 }
+
+.availableSlots > li {
+  margin-bottom: 5px;
+  /* border-bottom: 1px solid var(--primary); */
+  border-radius: 2px;
+  text-align: center;
+  padding: 2px 0;
+}
+
 
 .submitBtn {
   margin-bottom: 40px;

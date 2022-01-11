@@ -1,8 +1,8 @@
 let devEnviournment: string;;
 let backendLink: string;
 
-// devEnviournment = "inProduction";
-devEnviournment = "inDevelopment";
+devEnviournment = "inProduction";
+// devEnviournment = "inDevelopment";
 
 if (devEnviournment === "inProduction") {
   backendLink = "https://parkour-backend.herokuapp.com";

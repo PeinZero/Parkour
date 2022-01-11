@@ -10,14 +10,15 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { MobileDatePicker } from "@mui/lab";
 import { MobileTimePicker } from "@mui/lab";
 import { TextField } from "@mui/material";
+import {
+  GoogleMap,
+  withScriptjs,
+  withGoogleMap,
+  Marker,
+} from "react-google-maps";
 
-const AddSpot = (props) => {
-  const [spotList, setSpotList] = useState([]);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [day, setDay] = useState(new Date().toLocaleDateString("en-CA"));
-
-  const MONTHS = [
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+const MONTHS = [
     "Jan",
     "Feb",
     "Mar",
@@ -30,7 +31,30 @@ const AddSpot = (props) => {
     "Oct",
     "Nov",
     "Dec",
-  ];
+];
+
+const AddSpot = (props) => {
+  const [spotList, setSpotList] = useState([]);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [date, setDate] = useState(new Date().toLocaleDateString("en-CA"));
+
+
+  const KHI = {
+    lat: 24.8607,
+    lng: 67.0011,
+  };
+
+  const Map = withScriptjs(
+    withGoogleMap((props) => (
+      <GoogleMap defaultZoom={17} defaultCenter={KHI}>
+        <Marker
+              position={KHI}
+              draggable={true}
+            />
+      </GoogleMap>)))
+
+ 
 
   let data = {
     // empty this in production, keeping only the structure
@@ -74,13 +98,10 @@ const AddSpot = (props) => {
 
   let timeSlots = spotList.map((timeSlot, index) => {
     if (timeSlot.startTime !== null && timeSlot.endTime !== null) {
-      let date =
-        timeSlot.startTime.getDate() +
-        ", " +
-        MONTHS[timeSlot.startTime.getMonth()];
+      const day= WEEKDAYS[new Date(date).getDay()] + " " + new Date(date).getDate() + " " + MONTHS[new Date(date).getMonth()];
       let startTime = timeSlot.startTime.toLocaleTimeString(
         navigator.language,
-        {
+        { 
           hour: "2-digit",
           minute: "2-digit",
         }
@@ -90,11 +111,11 @@ const AddSpot = (props) => {
         minute: "2-digit",
       });
       return (
-        <li key={index}>
-          {" "}
-          <strong>{date}:</strong> {startTime} <strong>-</strong> {endTime}
+        <li key={index}> 
+          <h5>{day}</h5>
+          {`${startTime} - ${endTime}`} 
         </li>
-      );
+      )
     }
   });
 
@@ -102,7 +123,19 @@ const AddSpot = (props) => {
     <Fragment>
       <div className={styles["wrapper"]}>
         <Header backLink="/" content="Add Spot" />
-        <div className={styles["staticMap"]}></div>
+        <div className={styles["staticMap"]}>
+
+      <div style={{ width: "100%", height: "100%" }}>
+      <Map
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`} // ${process.env.REACT_APP_MAPS_API_KEY}
+        containerElement={<div style={{ height: `100%` }} />}
+        loadingElement={<div style={{ height: `100%` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
+
+    </div>
+
+        </div>
         <form onSubmit={onSubmitHandler} className={styles["form"]}>
           <Input
             label="Address Line 1"
@@ -140,16 +173,16 @@ const AddSpot = (props) => {
             onChange={modelHandler}
             value={model.pricePerHour}
           />
-          <DetailsBox boxClass="availability">
+          <DetailsBox title="availability">
             <div className={styles["addTimeSlot"]}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <div className={styles["pickerWrapper"]}>
                   <div className={styles["calendar"]}>
                     <MobileDatePicker
                       label="Add available Slots for"
-                      value={day}
+                      value={date}
                       onChange={(newValue) => {
-                        setDay(newValue);
+                        setDate(newValue);
                       }}
                       renderInput={(params) => <TextField {...params} />}
                     />
@@ -187,9 +220,9 @@ const AddSpot = (props) => {
                 Add
               </Button>
             </div>
-            <div className="addesSlotsWrapper">
-              <h5>Added Slots</h5>
-              <ul className={styles["addedTimeSlots"]}>{timeSlots}</ul>
+            <div className={styles['availableSlotsBox']}>
+              <h4>Added Spots</h4>
+              <ul className={styles["availableSlots"]}>{timeSlots}</ul>
             </div>
           </DetailsBox>
           <Button btnClass="primary" className={styles["submitBtn"]}>
