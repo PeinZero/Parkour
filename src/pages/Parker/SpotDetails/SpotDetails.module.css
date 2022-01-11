@@ -35,8 +35,7 @@
 }
 
 .availableSlotsBox h5{
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 10px 0;
     text-align: center;
     font-weight: bold;
     font-size: 14px;
@@ -57,7 +56,7 @@
 }
 
 .availableSlots > li {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     /* border-bottom: 1px solid var(--primary); */
     border-radius: 2px;
     text-align: center;

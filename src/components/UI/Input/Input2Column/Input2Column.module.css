@@ -13,7 +13,7 @@
 .formControl .input2Column{
     display: grid;
     grid-template-columns: 75% 25%;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 3px;
     font-size: 13px;
     font-weight: 500;
