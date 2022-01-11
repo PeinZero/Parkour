@@ -1,0 +1,15 @@
+li{
+    padding: 10px 0;
+}
+
+li .infoType{
+    text-transform: capitalize;
+    color: var(--cardlabels);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+li .info{
+    font-size: 13px;
+    text-transform: capitalize;
+}

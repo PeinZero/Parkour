@@ -7,6 +7,14 @@
     margin: 10px 5% 20px 5%;
 }
 
+/* Location Bottom Box  */
+.spotInfo{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/* x-----x */
+
 .availibilityBottom div:first-of-type{
     width: 100%;
 }
@@ -35,6 +43,12 @@
     padding: 0;
     list-style: none;
     font-size: 14px;
+}
+
+.availableSlots > p{
+    text-align: center;
+    font-style: italic;
+    color: var(--exmaple-lable);
 }
 
 .availableSlots > li {
