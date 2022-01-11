@@ -17,7 +17,7 @@ const ParkerHome: React.FC = () => {
       {/* {console.log(coordinates)} */}
       <Hamburger />
       <div className={styles["map"]}>
-        {/* <Map /> */}
+        <ParkerMap />
       </div>
       <div
         className={styles["searchBox"]}

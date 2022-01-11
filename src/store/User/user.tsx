@@ -12,7 +12,7 @@ const initialState = {
     // State
     isParker: true,
     isSeller: false,
-    currentRoleParker: true,
+    currentRoleParker: null,
     
     // Parker Details
     parker: null,

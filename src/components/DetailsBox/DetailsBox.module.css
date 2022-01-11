@@ -84,6 +84,11 @@
     background-color: var(--image-placeholder);
 }
 
+.primaryTopContent .seperator{
+    font-size: 20px;
+}
+
+.primaryTopContent .seperator,
 .primaryTopContent .rating{
     display: flex;
     align-items: center;
@@ -134,28 +139,6 @@
 }
 /* x-----x */
 
-/* Location Bottom Box  */
-.spotInfo{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.spotInfo li{
-    padding: 10px 0;
-}
-
-.spotInfo .infoType{
-    text-transform: capitalize;
-    color: var(--cardlabels);
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.spotInfo .info{
-    font-size: 13px;
-}
-/* x-----x */
 
 .availibilityBottom .day .calender{
     border: none;

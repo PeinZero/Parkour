@@ -1,26 +1,39 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { fetchUser } from "../../../store/User/userActions";
-
+import { getAllSpotsBySeller } from "../../../store/Spot/spotActions";
 import styles from "./SellerHome.module.css";
 
-import Map from "../../../components/ParkerMap/ParkerMap";
+import SellerMap from "../../../components/SellerMap/SellerMap";
 
 import Hamburger from "../../../components/UI/Hamburger/Hamburger";
 
+
 const SellerHome: React.FC = () => {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.authentication.userId);
   const token = useAppSelector((state) => state.authentication.token);
+  const [data, setData] = useState({});
+  
+  const setDataHandler = (data) => {
+    setData(prevState => {
+      return {...prevState, data};
+    });
+  }
+
 
   useEffect(() => {
-    dispatch(fetchUser(userId, token));
-  }, []);
+    dispatch(getAllSpotsBySeller(token))
+      .then( data => {
+        setDataHandler(data);
+      })
+  },[]);
+
+
+  
 
   return (
     <Fragment>
       <Hamburger />
-      <div className={styles["map"]}>{/* <Map /> */}</div>
+       {Object.keys(data).length !== 0 && <div className={styles["map"]}>  <SellerMap model = {data}/>  </div>}
     </Fragment>
   );
 };
