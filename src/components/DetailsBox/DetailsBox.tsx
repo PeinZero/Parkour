@@ -14,7 +14,9 @@ const DetailsBox = (props) => {
   if (props.boxClass === "primary") {
     topContent = (
       <div className={styles["primaryTopContent"]}>
-        <div className={styles["avatar"]}></div>
+        <div className={styles["avatar"]}>
+          <img src="/images/mahad_profile_pic.jpg" alt=""/>
+        </div>
         <div className={styles["name"]}> {props.name}</div>
         <div className={styles['seperator']}> &bull; </div>
         <div className={styles["rating"]}>
