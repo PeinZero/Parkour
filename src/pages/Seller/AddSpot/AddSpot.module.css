@@ -73,6 +73,13 @@
   font-size: 14px;
 }
 
+
+.availableSlotsBox > p{
+  text-align: center;
+  font-style: italic;
+  color: var(--exmaple-lable);
+}
+
 .availableSlots > li {
   margin-bottom: 5px;
   /* border-bottom: 1px solid var(--primary); */
