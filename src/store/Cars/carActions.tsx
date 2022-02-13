@@ -5,7 +5,7 @@ import { userActions } from '../User/user'
 export const sendCarData = (carData, token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      return axios.post(
+      return await axios.post(
         `${backendLink}/car/addcar`,
         {
           model: carData
@@ -39,7 +39,7 @@ export const deleteCar = (carId, token) => {
   return async (dispatch) => {
     console.log(carId, token)
     const sendRequest = async () => {
-      return axios.delete(`${backendLink}/car/deletecar/${carId}`, {
+      return await axios.delete(`${backendLink}/car/deletecar/${carId}`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -66,7 +66,7 @@ export const deleteCar = (carId, token) => {
 export const setDefaultCar = (carId) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      return axios.post(`${backendLink}/car/setdefaultcar`, { carId: carId })
+      return await axios.post(`${backendLink}/car/setdefaultcar`, { carId: carId })
     }
 
     try {

@@ -12,7 +12,7 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Header from "../../../components/UI/Header/Header";
 
-export const MySpots = () => {
+const MySpots = () => {
   let price = 100;
 
   return (
@@ -69,3 +69,5 @@ export const MySpots = () => {
     </Fragment>
   );
 };
+
+export default MySpots;

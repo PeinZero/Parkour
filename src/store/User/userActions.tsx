@@ -20,6 +20,7 @@ export const fetchUser = (userId, token) => {
     try {
       const response = await sendRequest();
       dispatch(userActions.createUser(response.data.user));
+      
     } catch (error) {
       console.log("Failed to fetch user data!");
     }

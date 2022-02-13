@@ -4,6 +4,7 @@ import styles from './Hamburger.module.css'
 
 
 const Hamburger = (props) => {
+
     const [clicked, setClicked] = useState(false)
     const clickHandler = () => {
         setClicked(!clicked);
