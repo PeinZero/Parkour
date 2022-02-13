@@ -31,22 +31,35 @@ import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import Search from "./pages/Search/Search";
 import SpotDetails from "./pages/Parker/SpotDetails/SpotDetails";
+import MySpots  from "./pages/Seller/MySpots/MySpots";
+import AddSpot from "./pages/Seller/AddSpot/AddSpot";
+import Loader from "./components/UI/Loader/Loader";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
 import { fetchUser } from "./store/User/userActions";
 import { logout } from "./store/Authentication/authenticationActions";
-import { MySpots } from "./pages/Seller/MySpots/MySpots";
-import AddSpot from "./pages/Seller/AddSpot/AddSpot";
+
 
 const App: React.FC = (props) => {
+  console.log("APP RUNNING")
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
-  const currentRoleParker = useAppSelector(
-    (state) => state.user.currentRoleParker
-  );
+  const currentRoleParker = useAppSelector((state) => state.user.currentRoleParker);
 
+  console.log("AUTH", isAuth);
+  console.log("CurrentRoleParker", currentRoleParker);
+
+
+  const setAutoLogout = (milliseconds) => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, milliseconds);
+  };
+  
   useEffect(() => {
+    console.log("APP => useEffect()");
+
     const token = localStorage.getItem("token");
     const expiryDate = localStorage.getItem("expiryDate");
 
@@ -62,6 +75,8 @@ const App: React.FC = (props) => {
     const userId = localStorage.getItem("userId");
     const remainingTimeInMs =
       new Date(expiryDate).getTime() - new Date().getTime();
+      
+    setAutoLogout(remainingTimeInMs);
 
     dispatch(
       authActions.login({
@@ -70,19 +85,9 @@ const App: React.FC = (props) => {
         userId: userId,
       })
     );
-
-    console.log("App.tsx => useEffect()");
     
     dispatch(fetchUser(userId, token))
-
-    setAutoLogout(remainingTimeInMs);
   }, []);
-
-  const setAutoLogout = (milliseconds) => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, milliseconds);
-  };
 
   return (
     <IonApp className="app">
@@ -90,9 +95,10 @@ const App: React.FC = (props) => {
         <Routes>
           <Route path="/" element={
             <Fragment>
-              {isAuth && currentRoleParker && <ParkerHome />}
-              {isAuth && !currentRoleParker && <SellerHome />}
-              {!isAuth && <Home />}
+              { (isAuth && currentRoleParker === null) && <Loader/>}
+              { (isAuth && currentRoleParker === true) && <ParkerHome />}
+              { (isAuth && currentRoleParker === false) && <SellerHome />}
+              { !isAuth && <Home />}
             </Fragment>
           }/>
             

@@ -1,4 +1,5 @@
-import {useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -18,17 +19,18 @@ const Search = () => {
     const [address, setAddress] = useState("");
     const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
     const [suggestions, setSuggestions] = useState([]);
+    const navigate = useNavigate();
 
     const handleSelect = (address) => {
-        console.log(address);
+
         geocodeByAddress(address)
             .then((results) => getLatLng(results[0]))
             .then((latLng) => {
-            console.log("Success", latLng);
-            setCoordinates(latLng);
+                console.log("Success", latLng);
+                setCoordinates(latLng);
+                navigate('/', {state: latLng})
             })
             .catch((error) => console.error("Error", error));
-        setAddress(address);
     };
     
     const searchOptions = {
@@ -80,27 +82,3 @@ const Search = () => {
 }
 
 export default Search
-
-
-{/* <div>
-
-<div>
-    {loading && (
-    <div>
-        <SpinningCircles />
-    </div>
-    )}
-    {suggestions.map((suggestion) => {
-    const style = {
-        backgroundColor: suggestion.active
-        ? "lightblue"
-        : "#0090CC",
-    };
-    return (
-        <div {...getSuggestionItemProps(suggestion, { style })}>
-        {suggestion.description}
-        </div>
-    );
-    })}
-</div>
-</div> */}

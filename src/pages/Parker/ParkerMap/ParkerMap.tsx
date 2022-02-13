@@ -5,22 +5,23 @@ import {
   Marker,
   DirectionsRenderer,
 } from "react-google-maps";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getSpotsAroundDestination } from "../../../store/Spot/spotActions";
 
-
-const KHI = {
-  lat: 24.8607,
-  lng: 67.0011,
-};
-
-const ParkerMap = (props) => {
-  console.log("Parker Map",props.spotList)
+const ParkerMap = ({coordinates}) => {
+  console.log("Parker Map")
   
   const navigate = useNavigate();
-  const [center, setCenter] = useState(null);
-  const [zoom, setZoom] = useState(12);
-  const spotList = props.spotList;
+  const dispatch = useAppDispatch();
+
+  const token = useAppSelector(state => state.authentication.token);
+  const [center, setCenter] = useState(coordinates);
+  const [zoom, setZoom] = useState(14);
+  const [allSpots, setAllSpots] = useState([]);
+
+  console.log("Coordinates:", coordinates);
 
   const markerClickHandler = (spot, seller) => {
     let model = spot;
@@ -33,8 +34,17 @@ const ParkerMap = (props) => {
 
   const Map = withScriptjs(
     withGoogleMap((props) => (
-      <GoogleMap defaultZoom={zoom} defaultCenter={KHI}>
-        {spotList.map((model) => {
+      <GoogleMap defaultZoom={zoom} defaultCenter={center}>
+        <Marker
+          position={coordinates}
+          options={{ 
+            icon: { 
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", 
+              scaledSize:  new google.maps.Size(50, 50), 
+            } 
+          }}
+        />
+        {/* {spotList.map((model) => {
           return model.seller.activeSpots.map(spot => {
             const lng = spot.location.coordinates[0];
             const lat = spot.location.coordinates[1];
@@ -53,12 +63,18 @@ const ParkerMap = (props) => {
             );
 
           })
-        })}
+        })} */}
       </GoogleMap>
     ))
   );
 
+  // useEffect(() => {
+  //   dispatch(getSpotsAroundDestination(token, coordinates))
+  //     .then( fetchedSpots => {
+  //       setAllSpots(fetchedSpots);
+  //   })
 
+  // }, [])
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>

@@ -18,7 +18,7 @@ export const sendLoginData = (loginData) => {
         authActions.login({
           isAuth: true,
           token: response.data.token,
-          userId: response.data.user._id,
+          userId: response.data.user._id
         })
       );
 

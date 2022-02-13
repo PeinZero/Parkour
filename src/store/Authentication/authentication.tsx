@@ -3,13 +3,14 @@ import { createSlice, PayloadAction  } from "@reduxjs/toolkit";
 const initialState = {
     isAuth: false,
     token: null,
-    userId: null
+    userId: null,
+    currentRoleParker: null
 };
 
 interface LoginData {
     isAuth: boolean,
     token: String,
-    userId: String,
+    userId: String
 }
 
 const authenticationSlice = createSlice({
@@ -28,9 +29,6 @@ const authenticationSlice = createSlice({
         },
         signup(state) {
             state.isAuth = false;
-        },
-        getToken(state){
-            return state.token;
         }
     }
 });
