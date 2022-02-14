@@ -19,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const ParkerHome= () => {
   console.log("PARKER HOME RUNNING");
   
-  const location = useLocation();
+  const {state: searchedLocation} = useLocation();
   const [currentLocation, setCurrentLocation] = useState(null)
 
   console.log(currentLocation);
@@ -27,8 +27,8 @@ const ParkerHome= () => {
   useEffect(() => {
     console.log("PARKER HOME => useEffect()");
 
-    if(location.state){
-      setCurrentLocation(location.state);
+    if(searchedLocation){
+      setCurrentLocation(searchedLocation);
     }
     else if (navigator.geolocation && currentLocation === null) {
       navigator.geolocation.getCurrentPosition(position => {  
@@ -41,7 +41,7 @@ const ParkerHome= () => {
           });  
       })
     }
-  }, [])
+  }, [currentLocation, searchedLocation])
   
   return(
     <Fragment>
