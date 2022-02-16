@@ -9,6 +9,8 @@ import Hamburger from "../../../components/UI/Hamburger/Hamburger";
 
 
 const SellerHome: React.FC = () => {
+  console.log("SELLER HOME RUNNING");
+  
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.authentication.token);
   const [data, setData] = useState({});
@@ -26,9 +28,6 @@ const SellerHome: React.FC = () => {
         setDataHandler(data);
       })
   },[]);
-
-
-  
 
   return (
     <Fragment>
