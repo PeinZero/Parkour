@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import React from 'react'
+import { GoogleMap, Marker } from '@react-google-maps/api'
 
 const KHI = {
   lat: 24.8607,
