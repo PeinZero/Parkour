@@ -1,6 +1,12 @@
-import React, { Fragment, useState, useEffect, useCallback, useMemo } from 'react'
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react'
 
-import convertTimeToString from '../../../helper/convertTimeToString'
+import {convertTimeToString, formatDate} from '../../../helper/timeFunctions'
 
 import Button from '../../../components/UI/Button/Button'
 import Input from '../../../components/UI/Input/Input'
@@ -23,6 +29,7 @@ import {
   withGoogleMap,
   Marker,
 } from 'react-google-maps'
+import Loader from '../../../components/UI/Loader/Loader'
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
 const MONTHS = [
@@ -68,8 +75,8 @@ const AddSpot = (props) => {
   // ===========================================================================================
   console.log('ADD SPOT RUNNING')
 
-  let defaultStartTime = new Date();
-  defaultStartTime.setMinutes(30, 0, 0); // Resets also seconds and milliseconds
+  let defaultStartTime = new Date()
+  defaultStartTime.setMinutes(30, 0, 0) // Resets also seconds and milliseconds
 
   const [currentPosition, setCurrentPosition] = useState(null)
   const [spotList, setSpotList] = useState([])
@@ -80,7 +87,7 @@ const AddSpot = (props) => {
   const [startTimeError, setStartTimeError] = useState('')
   const [endTimeError, setEndTimeError] = useState('')
   const [overlappingError, setOverlappingError] = useState('')
-  
+
   // Setting up min times for timePickers
   let minStartTime = new Date()
   let minEndTime = new Date()
@@ -92,48 +99,45 @@ const AddSpot = (props) => {
   }
 
   // Sorting the spotList
-  const sortedSpotList = useMemo( () => {
-    const list = [...spotList];
-    list.sort(function(ts1, ts2)
-    { 
-      ts1.startTime.setSeconds(0, 0);
-      ts2.startTime.setSeconds(0, 0);
+  const sortedSpotList = useMemo(() => {
+    const list = [...spotList]
+    list.sort(function (ts1, ts2) {
+      ts1.startTime.setSeconds(0, 0)
+      ts2.startTime.setSeconds(0, 0)
 
       // First compare by start time
       if (ts1.startTime > ts2.startTime) {
-        if(ts1.date.valueOf() >= ts2.date.valueOf()){
-          return 1;
+        if (ts1.date.valueOf() >= ts2.date.valueOf()) {
+          return 1
         }
-        return -1;
-      } else if (ts1.startTime < ts2.startTime) { 
-        if(ts1.date.valueOf() <= ts2.date.valueOf()){
-          return -1;
+        return -1
+      } else if (ts1.startTime < ts2.startTime) {
+        if (ts1.date.valueOf() <= ts2.date.valueOf()) {
+          return -1
         }
-        return 1;
+        return 1
       }
 
-      if(ts1.date.valueOf() < ts2.date.valueOf()){
-        return -1;
-      }
-      else if(ts1.date.valueOf() > ts2.date.valueOf()){
-        return 1;
+      if (ts1.date.valueOf() < ts2.date.valueOf()) {
+        return -1
+      } else if (ts1.date.valueOf() > ts2.date.valueOf()) {
+        return 1
       }
 
       // Else compare by endTime
-      if (ts1.endTime < ts2.endTime) { 
-          return -1;
+      if (ts1.endTime < ts2.endTime) {
+        return -1
       } else if (ts1.endTime > ts2.endTime) {
-          return 1
-      } else { // nothing to split them
-          return 0;
+        return 1
+      } else {
+        // nothing to split them
+        return 0
       }
     })
 
     // console.log("Spot List Sorted:", list);
-    return list;
-
+    return list
   }, [spotList])
- 
 
   // FOR TESTING PURPOSES
   // console.log(minStartTime);
@@ -144,7 +148,6 @@ const AddSpot = (props) => {
 
   // Add & Delete time handlers
   const addTimeSlotHandler = () => {
-
     if (startTime === null || endTime === null) {
       return
     }
@@ -154,92 +157,96 @@ const AddSpot = (props) => {
     }
 
     // Preventing overlapping times
-    let st = new Date(startTime.setSeconds(0,0));
-    let et = new Date(endTime.setSeconds(0,0));
-    let markedForRemoval = [];
-    let list = [...sortedSpotList];
+    let st = new Date(startTime.setSeconds(0, 0))
+    let et = new Date(endTime.setSeconds(0, 0))
+    let markedForRemoval = []
+    let list = [...sortedSpotList]
 
-    function CheckTimeSlot(){
-      for (let i = 0; i < list.length; i++){
-        let {startTime: cst, endTime: cet, date: currentSlotDate} = list[i];
+    function CheckTimeSlot() {
+      for (let i = 0; i < list.length; i++) {
+        let { startTime: cst, endTime: cet, date: currentSlotDate } = list[i]
 
         const d1 = new Date(currentSlotDate.getTime())
         const d2 = new Date(date.getTime())
 
-        d1.setHours(0,0,0,0);
-        d2.setHours(0,0,0,0);
+        d1.setHours(0, 0, 0, 0)
+        d2.setHours(0, 0, 0, 0)
 
-        if(d1.valueOf() !== d2.valueOf()){
+        if (d1.valueOf() !== d2.valueOf()) {
           // console.log("Different Day", d1, d2);
           continue
         }
-        
-        console.log(convertTimeToString(st), convertTimeToString(et), convertTimeToString(cst), convertTimeToString(cet));
+
+        console.log(
+          convertTimeToString(st),
+          convertTimeToString(et),
+          convertTimeToString(cst),
+          convertTimeToString(cet)
+        )
         // check if new slot is smallest isoloted slot.
-        if (et < cst){
+        if (et < cst) {
           // console.log("1");
-          return 1;
+          return 1
         }
         // check if new slot is in between some existing slot or same as an existing slot
-        else if (cst <= st && et <= cet){  
+        else if (cst <= st && et <= cet) {
           // console.log("2");
-          return -1;
+          return -1
         }
         // check if new slot completely overlaps an existing slot
-        else if (st <= cst && cet <= et){
+        else if (st <= cst && cet <= et) {
           // console.log("3");
-          markedForRemoval.push(i);
+          markedForRemoval.push(i)
         }
         // check if new slot endTime is in between an existing slot.
-        else if (st < cst && cst <= et && et <= cet){
+        else if (st < cst && cst <= et && et <= cet) {
           // console.log("4");
-          markedForRemoval.push(i);
-          et = cet;
+          markedForRemoval.push(i)
+          et = cet
         }
         // check if new slot startTime is in between an existing slot.
-        else if (cst <= st && st <= cet && cet < et){
+        else if (cst <= st && st <= cet && cet < et) {
           // console.log("5");
-          markedForRemoval.push(i);
-          st = cst;
-        }
-        else if (cet < st){
+          markedForRemoval.push(i)
+          st = cst
+        } else if (cet < st) {
           // console.log("6");
-          if (i === list.length -1){
+          if (i === list.length - 1) {
             // console.log("6.1");
-            return 1;
+            return 1
           }
-        }  
+        }
       }
-      return 0;
+      return 0
     }
 
-    const result = CheckTimeSlot();
+    const result = CheckTimeSlot()
     // console.log("Result:", result);
-    
-    if (result === -1){
-      // console.log("-1");  
-      setOverlappingError("Time slot already exists.")   
+
+    if (result === -1) {
+      // console.log("-1");
+      setOverlappingError('Time slot already exists.')
       return
     }
 
     // console.log("markedForRemoval: ", markedForRemoval);
-    if (markedForRemoval.length > 0){
-      list = list.filter( (slot, index) => !markedForRemoval.includes(index));
+    if (markedForRemoval.length > 0) {
+      list = list.filter((slot, index) => !markedForRemoval.includes(index))
     }
-    
+
     const newTimeSlot = {
-      id: new Date().getTime(),
+      id: date.getTime(),
       date,
       startTime: st,
       endTime: et,
     }
-    
-    list.push(newTimeSlot);
+
+    list.push(newTimeSlot)
 
     setSpotList(list)
     setStartTime(null)
     setEndTime(null)
-    setOverlappingError(null)   
+    setOverlappingError(null)
   }
 
   const deleteTimeSlotHandler = (slotId) => {
@@ -282,16 +289,18 @@ const AddSpot = (props) => {
   })
 
   // Creating Google Map
-  const {geolocation} = navigator;
-  const onMarkerDragEnd = useCallback( (e) => {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    setCurrentPosition({ lat, lng})
-  }, []);
+  const { geolocation } = navigator
+  const onMarkerDragEnd = useCallback((e) => {
+    const lat = e.latLng.lat()
+    const lng = e.latLng.lng()
+    setCurrentPosition({ lat, lng })
+  }, [])
 
   useEffect(() => {
+    console.log('ADD SPOT => useEffect()')
+
     if (geolocation) {
-      geolocation.getCurrentPosition(position => {  
+      geolocation.getCurrentPosition((position) => {
         const currentPosition = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -306,7 +315,17 @@ const AddSpot = (props) => {
       <div className={styles['wrapper']}>
         <Header backLink='/seller/mySpots' content='Add Spot' />
         <div className={styles['content']}>
-          <GMap zoom={14} markerPosition={currentPosition} onDragEnd={onMarkerDragEnd} className={styles['gmap']}/>
+          <div className={styles['mapContainer']}>
+            {currentPosition === null && <Loader />}
+            {currentPosition !== null &&
+              <GMap
+                zoom={14}
+                markerPosition={currentPosition}
+                onDragEnd={onMarkerDragEnd}
+                className={styles['gmap']}
+              />
+            }
+          </div>
           <form onSubmit={onSubmitHandler} className={styles['form']}>
             <Input
               label='Address Line 1'
@@ -358,19 +377,18 @@ const AddSpot = (props) => {
                         }}
                         renderInput={(params) => <TextField {...params} />}
                       />
-                      {/* </LocalizationProvider> */}
                     </div>
                     <div className={styles['timePickers']}>
                       <MobileTimePicker
                         className='timePicker'
                         ampm={true}
                         minutesStep={30}
+                        maxTime={new Date(0, 0, 0, 23, 1)}
                         minTime={
-                          date.getDate() > minStartTime.getDate()
+                          (date.getDate() > minStartTime.getDate() || minStartTime.getTime() > new Date(0,0,0,23, 0).getTime())
                             ? null
                             : minStartTime
                         }
-                        maxTime={new Date(0, 0, 0, 23, 1)}
                         label='Start Time'
                         value={startTime}
                         onChange={(newTime) => {

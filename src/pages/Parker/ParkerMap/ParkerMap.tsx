@@ -1,41 +1,37 @@
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker,
-  DirectionsRenderer,
-} from "react-google-maps";
-import { useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { getSpotsAroundDestination } from "../../../store/Spot/spotActions";
+// import {
+//   GoogleMap,
+//   withScriptjs,
+//   withGoogleMap,
+//   Marker,
+//   DirectionsRenderer,
+// } from "react-google-maps";
 
-const ParkerMap = ({coordinates}) => {
-  console.log("Parker Map")
+import React, { useMemo} from "react";
+import { useNavigate } from "react-router-dom";
+
+
+import { GoogleMap, Marker } from '@react-google-maps/api'
+
+const ParkerMap = ({coordinates, spots, zoom}) => {
+  console.log("PARKER MAP RUNNING")
   
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const token = useAppSelector(state => state.authentication.token);
-  const [center, setCenter] = useState(coordinates);
-  const [zoom, setZoom] = useState(14);
-  const [allSpots, setAllSpots] = useState([]);
-
-  console.log("Coordinates:", coordinates);
-
-  const markerClickHandler = (spot, seller) => {
-    let model = spot;
-    model = {...model, seller  }
-    console.log(model);
-    
-    navigate("/parker/spotdetails", { state: model });
+  
+  const markerClickHandler = (spot) => {
+    navigate("/parker/spotdetails", { state: spot });
   };
 
+  // Creating seller map
+  const Map = useMemo( () => {
+    return (
+     <GoogleMap
+       zoom={zoom}
+       center={coordinates}
+       mapContainerStyle={{ width: '100%', height: '100%' }}
+     >
+       {console.log("Parker Google Map!")}
 
-  const Map = withScriptjs(
-    withGoogleMap((props) => (
-      <GoogleMap defaultZoom={zoom} defaultCenter={center}>
-        <Marker
+       {<Marker
           position={coordinates}
           options={{ 
             icon: { 
@@ -43,50 +39,30 @@ const ParkerMap = ({coordinates}) => {
               scaledSize:  new google.maps.Size(50, 50), 
             } 
           }}
-        />
-        {/* {spotList.map((model) => {
-          return model.seller.activeSpots.map(spot => {
-            const lng = spot.location.coordinates[0];
-            const lat = spot.location.coordinates[1];
+        />}
 
-            let seller = {};
-            seller['name'] = model.name;
-            seller['rating'] = model.seller.cumulativeRating;
-            seller['reviews'] = model.seller.reviews;
-  
-            return (
-              <Marker
-                key={spot._id}
-                position={{ lat, lng }}
-                onClick={() => markerClickHandler(spot, seller)}
-              />
-            );
+       {spots.map((spot) => {
+         
+         const lng = spot.location.coordinates[0]
+         const lat = spot.location.coordinates[1]
 
-          })
-        })} */}
-      </GoogleMap>
-    ))
-  );
-
-  // useEffect(() => {
-  //   dispatch(getSpotsAroundDestination(token, coordinates))
-  //     .then( fetchedSpots => {
-  //       setAllSpots(fetchedSpots);
-  //   })
-
-  // }, [])
+         return (
+           <Marker
+             key={spot._id}
+             position={{ lat, lng }}
+             onClick={() => markerClickHandler(spot)}
+           />
+         )
+       })}
+     </GoogleMap>
+   )
+ }, [spots])
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Map
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`} // ${process.env.REACT_APP_MAPS_API_KEY}
-        containerElement={<div style={{ height: `100%` }} />}
-        loadingElement={<div style={{ height: `100%` }} />}
-        mapElement={<div style={{ height: `100%` }} />}
-      />
+      {Map}
     </div>
   );
-
 };
 
-export default ParkerMap;
+export default React.memo(ParkerMap);

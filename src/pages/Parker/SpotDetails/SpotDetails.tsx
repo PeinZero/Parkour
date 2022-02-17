@@ -64,6 +64,8 @@ const SpotDetails = (props) => {
     let spotDetails, address;
     if(location.state){
         spotDetails = location.state;
+        console.log(spotDetails);
+        
         if(!('addressLine2' in spotDetails)){
             spotDetails.addressLine2 = "hello";
         }
@@ -72,8 +74,8 @@ const SpotDetails = (props) => {
             spotDetails.comment = "";
         }
 
-        if(spotDetails.seller.rating === -1){
-           spotDetails.seller.rating = "Not Rated";
+        if(spotDetails.owner.rating === -1){
+           spotDetails.owner.rating = "Not Rated";
         }
 
         address = (
@@ -109,7 +111,7 @@ const SpotDetails = (props) => {
             <br />
             <div className={styles["details"]}>
                 <DetailsBox 
-                    boxClass="primary" name={spotDetails.seller.name} rating={spotDetails.seller.rating}>
+                    boxClass="primary" name={spotDetails.owner.name} rating={spotDetails.owner.rating}>
                 </DetailsBox>
                 <DetailsBox title="location" icon={<RoomIcon/>} iconLink={"/"} iconText="View on map">
                     <ul className={styles['spotInfo']}>
