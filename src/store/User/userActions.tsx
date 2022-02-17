@@ -30,7 +30,7 @@ export const fetchUser = (userId, token) => {
 export const switchRole = (token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      return await axios.get(
+      return await axios.put(
         `${backendLink}/user/switchrole`,
         {
           headers: {
