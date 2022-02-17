@@ -25,7 +25,7 @@ const ParkerHome= () => {
   const [spots, setSpots] = useState(null);
 
   const {geolocation} = navigator;
-  const radius = 3;  // 3 KM
+  const radius = 20;  // 3 KM
   const zoom = 14;
 
   console.log("Current Location: ", currentLocation);

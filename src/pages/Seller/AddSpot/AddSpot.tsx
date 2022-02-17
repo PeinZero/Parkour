@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from 'react'
 
-import convertTimeToString from '../../../helper/convertTimeToString'
+import {convertTimeToString, formatDate} from '../../../helper/timeFunctions'
 
 import Button from '../../../components/UI/Button/Button'
 import Input from '../../../components/UI/Input/Input'
