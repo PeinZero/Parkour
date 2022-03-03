@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
+import { useNavigate } from "react-router-dom";
 
 import {convertTimeToString, formatDate} from '../../../helper/timeFunctions'
 
@@ -23,13 +24,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { MobileDatePicker } from '@mui/lab'
 import { MobileTimePicker } from '@mui/lab'
 import { TextField } from '@mui/material'
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker,
-} from 'react-google-maps'
+
 import Loader from '../../../components/UI/Loader/Loader'
+
+import { addSpot } from '../../../store/Spot/spotActions'
+import { useAppDispatch } from '../../../store/hooks'
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
 const MONTHS = [
@@ -56,11 +55,6 @@ const AddSpot = (props) => {
     addressLine2: 'Karachi, Pakistan',
     nearestLandmark: 'Near Safoora Chowrangi',
     pricePerHour: '100',
-
-    avaliability: [
-      { startTime: '10:00', endTime: '12:00' },
-      { startTime: '12:00', endTime: '14:00' },
-    ],
   }
 
   const [model, setDummyData] = useState(data)
@@ -88,6 +82,9 @@ const AddSpot = (props) => {
   const [endTimeError, setEndTimeError] = useState('')
   const [overlappingError, setOverlappingError] = useState('')
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   // Setting up min times for timePickers
   let minStartTime = new Date()
   let minEndTime = new Date()
@@ -98,56 +95,61 @@ const AddSpot = (props) => {
     minEndTime.setTime(startTime.getTime() + 59 * 60 * 1000)
   }
 
+  if (date.getDate() > minStartTime.getDate() || minStartTime.getTime() > new Date(new Date(minStartTime).setHours(23, 0)).getTime()){
+    console.log(minStartTime.getTime(), new Date(new Date(minStartTime).setHours(23, 0)).getTime());
+    
+    console.log("NULL");
+  }
+  else{
+    console.log(minStartTime)
+  }
+  
   // Sorting the spotList
   const sortedSpotList = useMemo(() => {
-    const list = [...spotList]
-    list.sort(function (ts1, ts2) {
-      ts1.startTime.setSeconds(0, 0)
-      ts2.startTime.setSeconds(0, 0)
+    const list = [...spotList];
 
-      // First compare by start time
-      if (ts1.startTime > ts2.startTime) {
-        if (ts1.date.valueOf() >= ts2.date.valueOf()) {
-          return 1
+    // Sort by Date
+    list.sort( (availibility1, availibility2) => (availibility1.slotDate > availibility2.slotDate) ? 1 : -1);
+
+    // Sort time slots of each Date
+    list.forEach( availibility => {
+      availibility.slots.sort( (ts1, ts2) => {
+        ts1.startTime.setSeconds(0, 0)
+        ts2.startTime.setSeconds(0, 0)
+  
+        // First compare by start time
+        if (ts1.startTime > ts2.startTime) {
+          return 1;
+        } else if (ts1.startTime < ts2.startTime) {
+          return -1;
         }
-        return -1
-      } else if (ts1.startTime < ts2.startTime) {
-        if (ts1.date.valueOf() <= ts2.date.valueOf()) {
+
+        // Else compare by endTime
+        if (ts1.endTime < ts2.endTime) {
           return -1
+        } else if (ts1.endTime > ts2.endTime) {
+          return 1
+        } else {
+          // nothing to split them
+          return 0
         }
-        return 1
-      }
-
-      if (ts1.date.valueOf() < ts2.date.valueOf()) {
-        return -1
-      } else if (ts1.date.valueOf() > ts2.date.valueOf()) {
-        return 1
-      }
-
-      // Else compare by endTime
-      if (ts1.endTime < ts2.endTime) {
-        return -1
-      } else if (ts1.endTime > ts2.endTime) {
-        return 1
-      } else {
-        // nothing to split them
-        return 0
-      }
+      });
     })
-
-    // console.log("Spot List Sorted:", list);
+  
+    console.log("Spot List Sorted:", list);
     return list
   }, [spotList])
 
-  // FOR TESTING PURPOSES
-  // console.log(minStartTime);
-  // console.log(minEndTime);
-  // if (date.getDate() > minStartTime.getDate()){
-  //   console.log("date > minStartTime");
-  // }
-
   // Add & Delete time handlers
   const addTimeSlotHandler = () => {
+    enum Result {
+      listEmpty = "List Empty",
+      dateNotFound = "Date Not Found!",
+      alreadyExist = "Time Slot Already Exists!",
+      addedTimeSlot = "Added a time slot to an existing date time slot list.",
+      updatedTimeSlot = "Updated a time slot of an existing date time slot list."
+    }
+
     if (startTime === null || endTime === null) {
       return
     }
@@ -161,41 +163,51 @@ const AddSpot = (props) => {
     let et = new Date(endTime.setSeconds(0, 0))
     let markedForRemoval = []
     let list = [...sortedSpotList]
+    const formattedDate = formatDate(date);
 
     function CheckTimeSlot() {
-      for (let i = 0; i < list.length; i++) {
-        let { startTime: cst, endTime: cet, date: currentSlotDate } = list[i]
+      if(list.length === 0){
+        return Result.listEmpty;
+      }
+      
+      const filteredAvalibility = list.find( availibility => availibility.slotDate === formattedDate); 
 
-        const d1 = new Date(currentSlotDate.getTime())
-        const d2 = new Date(date.getTime())
+      if(!filteredAvalibility){
+        console.log("Data not found!!!");
+        return Result.dateNotFound;
+      }
+      
+      const existingTimeSlots = filteredAvalibility.slots;
 
-        d1.setHours(0, 0, 0, 0)
-        d2.setHours(0, 0, 0, 0)
+      for (let i = 0; i < existingTimeSlots.length; i++) {
 
-        if (d1.valueOf() !== d2.valueOf()) {
-          // console.log("Different Day", d1, d2);
-          continue
-        }
+        let { startTime: cst, endTime: cet } = existingTimeSlots[i]
 
-        console.log(
-          convertTimeToString(st),
-          convertTimeToString(et),
-          convertTimeToString(cst),
-          convertTimeToString(cet)
-        )
         // check if new slot is smallest isoloted slot.
         if (et < cst) {
           // console.log("1");
-          return 1
+          if (markedForRemoval.length > 0){
+            return Result.updatedTimeSlot;
+          }
+          return Result.addedTimeSlot;
+        }
+        // Move to next time slot if new time slot comes after the current time slot.
+        else if ( cet < st){
+
+          // check if new slot is largest isoloted slot.
+          if (i === existingTimeSlots.length - 1){
+            return Result.addedTimeSlot;
+          }
+          continue;
         }
         // check if new slot is in between some existing slot or same as an existing slot
         else if (cst <= st && et <= cet) {
           // console.log("2");
-          return -1
+          return Result.alreadyExist;
         }
         // check if new slot completely overlaps an existing slot
         else if (st <= cst && cet <= et) {
-          // console.log("3");
+          console.log("3");
           markedForRemoval.push(i)
         }
         // check if new slot endTime is in between an existing slot.
@@ -203,87 +215,145 @@ const AddSpot = (props) => {
           // console.log("4");
           markedForRemoval.push(i)
           et = cet
+          return Result.updatedTimeSlot;
         }
         // check if new slot startTime is in between an existing slot.
         else if (cst <= st && st <= cet && cet < et) {
           // console.log("5");
           markedForRemoval.push(i)
           st = cst
-        } else if (cet < st) {
-          // console.log("6");
-          if (i === list.length - 1) {
-            // console.log("6.1");
-            return 1
-          }
-        }
+        } 
       }
-      return 0
+      console.log("Out of the Loop!");
+      
+      return Result.updatedTimeSlot;
     }
 
     const result = CheckTimeSlot()
-    // console.log("Result:", result);
 
-    if (result === -1) {
-      // console.log("-1");
+    const newTimeSlot = {
+      startTime: st,
+      endTime: et
+    }
+    
+    if (result === Result.dateNotFound || result === Result.listEmpty){
+      const newAvailibility = {
+        slotDate: formatDate(date),
+        slots: []
+      }
+  
+      newAvailibility.slots.push(newTimeSlot);
+      
+      setSpotList((prevState) => {
+        return [...prevState, newAvailibility]
+      })
+    }
+    else if (result === Result.alreadyExist) {
       setOverlappingError('Time slot already exists.')
       return
     }
+    else{
+      
+      const availability = list.find( availibility => availibility.slotDate === formattedDate);
+      let updatedTimeSlots = availability.slots;
 
-    // console.log("markedForRemoval: ", markedForRemoval);
-    if (markedForRemoval.length > 0) {
-      list = list.filter((slot, index) => !markedForRemoval.includes(index))
+      if (result === Result.updatedTimeSlot){
+        console.log("markedForRemoval: ", markedForRemoval);
+        if (markedForRemoval.length > 0) {
+          updatedTimeSlots = updatedTimeSlots.filter((slot, index) => !markedForRemoval.includes(index))
+        } 
+      }
+
+      updatedTimeSlots.push(newTimeSlot);
+
+      const updatedAvalibilityList = list.map( availability => availability.slotDate === formattedDate && {...availability, slots: updatedTimeSlots});
+      setSpotList(updatedAvalibilityList);
     }
-
-    const newTimeSlot = {
-      id: date.getTime(),
-      date,
-      startTime: st,
-      endTime: et,
-    }
-
-    list.push(newTimeSlot)
-
-    setSpotList(list)
+    
     setStartTime(null)
     setEndTime(null)
     setOverlappingError(null)
   }
 
-  const deleteTimeSlotHandler = (slotId) => {
+  const deleteTimeSlotHandler = (slotDate, slotIndex) => {
     let updatedTimeSlots = [...spotList]
-    updatedTimeSlots = updatedTimeSlots.filter(
-      (timeSlot) => timeSlot.id !== slotId
-    )
+    updatedTimeSlots = updatedTimeSlots.find( availibility => availibility.slotDate === slotDate).slots;
 
-    setSpotList(updatedTimeSlots)
+    updatedTimeSlots = updatedTimeSlots.filter( (slot, index) => index !== slotIndex);
+    console.log(updatedTimeSlots)
+
+    let availabilityList = [...spotList];
+    if(updatedTimeSlots.length === 0){
+      availabilityList = availabilityList.filter( availibility => availibility.slotDate !== slotDate)
+      setSpotList(availabilityList)
+    }
+    else{
+      const updatedAvailabilityList = availabilityList.map(availibility => {
+        if(availibility.slotDate === slotDate){
+          return {...availibility, slots: updatedTimeSlots}
+        }
+        return availibility;
+      })
+      setSpotList(updatedAvailabilityList)
+    }
   }
 
   // Form submit Handler
   const onSubmitHandler = (event) => {
     event.preventDefault()
+
+    const addedSpotDetails = {
+      addressLine1: event.target.addressLine1.value,
+      addressLine2: event.target.addressLine2.value,
+      nearestLandmark: event.target.nearestLandmark.value,
+      location: [ 67.189461, 24.900942],
+      pricePerHour: event.target.pricePerHour.value,
+      availability: spotList
+    }
+
+    console.log(addedSpotDetails);
+
+    dispatch(addSpot(addedSpotDetails)).then( res => {
+      navigate("/seller/mySpots")
+    });
   }
 
   // Dynamically creating added slots list
-  let timeSlots = sortedSpotList.map((timeSlot, index) => {
-    const timeSlotDate = timeSlot.date
+  let availabilityList = sortedSpotList.map((availibility, dateIndex) => {
+    const {slotDate, slots} = availibility;
 
     const day =
-      WEEKDAYS[new Date(timeSlotDate).getDay()] +
+      WEEKDAYS[new Date(slotDate).getDay()] +
       ' ' +
-      new Date(timeSlotDate).getDate() +
+      new Date(slotDate).getDate() +
       ' ' +
-      MONTHS[new Date(timeSlotDate).getMonth()]
-    const timeSlotStartTime = convertTimeToString(timeSlot.startTime)
-    const timeSlotEndTime = convertTimeToString(timeSlot.endTime)
+      MONTHS[new Date(slotDate).getMonth()]
+
+    const timeSlots = slots.map( (slot, slotIndex) => {
+      const timeSlotStartTime = convertTimeToString(slot.startTime)
+      const timeSlotEndTime = convertTimeToString(slot.endTime)
+
+      return (
+        <li key={slotIndex}>
+            <div className={styles['timeSlotInfo']}> 
+              <div className={styles['timeSlotContainer']}> {timeSlotStartTime} </div>
+              <span> -- </span>
+              <div className={styles['timeSlotContainer']}> {timeSlotEndTime} </div>
+            </div>
+            <Ripple onClick={() => deleteTimeSlotHandler(slotDate, slotIndex )}>
+              <ClearSharpIcon />
+            </Ripple>
+        </li>
+      )
+    })
+
     return (
-      <li key={index}>
-        <div className={styles['timeSlotInfo']}>
-          <h5>{day}</h5>
-          <p> {`${timeSlotStartTime} - ${timeSlotEndTime}`} </p>
-        </div>
-        <Ripple onClick={() => deleteTimeSlotHandler(timeSlot.id)}>
-          <ClearSharpIcon />
-        </Ripple>
+      <li key={dateIndex} className={styles['day']}>
+        <h3>{day}</h3>
+        <div></div>
+        <ul>
+          {timeSlots}
+        </ul>
       </li>
     )
   })
@@ -385,7 +455,7 @@ const AddSpot = (props) => {
                         minutesStep={30}
                         maxTime={new Date(0, 0, 0, 23, 1)}
                         minTime={
-                          (date.getDate() > minStartTime.getDate() || minStartTime.getTime() > new Date(0,0,0,23, 0).getTime())
+                          (date.getDate() > minStartTime.getDate() || minStartTime.getTime() > new Date(new Date(minStartTime).setHours(23, 0)).getTime())
                             ? null
                             : minStartTime
                         }
@@ -451,16 +521,16 @@ const AddSpot = (props) => {
                 <p className={styles['timeError']}> {overlappingError}</p>
                 
 
-                <Button size='small' onClick={addTimeSlotHandler}>
+                <Button type="button" size='small' onClick={addTimeSlotHandler}>
                   Add Slot
                 </Button>
               </div>
               <div className={styles['addedSlotsBox']}>
                 <h4>Added Slots</h4>
-                {timeSlots.length > 0 && (
-                  <ul className={styles['addedSlots']}>{timeSlots}</ul>
+                {availabilityList.length > 0 && (
+                  <ul className={styles['addedSlots']}>{availabilityList}</ul>
                 )}
-                {timeSlots.length <= 0 && <p> No Slots Added</p>}
+                {availabilityList.length <= 0 && <p> No Slots Added</p>}
               </div>
             </DetailsBox>
 

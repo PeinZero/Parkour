@@ -97,3 +97,37 @@ export const getAllSpots = (token) => {
     }
   };
 };
+
+
+export const addSpot = (addSpotData) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+        return await axios.post(`${backendLink}/spot/addSpot`,
+        addSpotData,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+      console.log(response);
+      
+      return response;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};

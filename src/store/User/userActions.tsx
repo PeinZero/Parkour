@@ -30,18 +30,23 @@ export const fetchUser = (userId, token) => {
 export const switchRole = (token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
+      if(token === localStorage.getItem("token")){
+        console.log(token);
+      }
       return await axios.put(
-        `${backendLink}/user/switchrole`,
-        {
+        `${backendLink}/user/switchrole`, null, {
           headers: {
-            Authorization: "Bearer " + token
-          }
+            Authorization: 'Bearer ' + token,
+          },
         }
       );
     };
 
     try {
       const response = await sendRequest();
+
+      console.log(response);
+      
 
       dispatch(userActions.createUser(response.data.user));
 
