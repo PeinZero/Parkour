@@ -68,7 +68,8 @@
   font-size: 13px;
 }
 
-.addedSlots{
+.addedSlots,
+.addedSlots .day ul{
   /* reset */
   margin: 0;
   padding: 0;
@@ -77,40 +78,63 @@
 }
 
 
-.addedSlots > li {
+.addedSlots .day{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 20px 10px 10px 10px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px 1px var(--card-shadow), 2px 2px 5px 1px var(--card-shadow);
+}
+
+.addedSlots .day h3{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.addedSlots .day > div{
+  border-radius: 0px;
+  height: 3px;
+  width: 35px;
+  background-color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.addedSlots .day ul > li{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 10px 10px;
-  border-radius: 3px;
-  box-shadow: 2px 2px 5px 1px var(--card-shadow), 2px 2px 5px 1px var(--card-shadow);
-
+  margin-bottom: 15px;
+  padding: 6px 4px;
+  border: 1px dashed var(--primary);
+  border-radius: 5px;
 }
 
-/* .addedSlots li .timeSlotInfo{
-  display: flex;
-  align-items: center;
-} */
-
-.addedSlots li .timeSlotInfo *{
+.addedSlots .day ul > li .timeSlotInfo{
   margin: 0;
-  font-size: 14px;
-  /* line-height: 0; */
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
 }
 
-.addedSlots li .timeSlotInfo h5{
-  font-weight: bold;
-  /* margin-right: 10px; */
+.addedSlots .day ul > li .timeSlotInfo .timeSlotContainer{
+  width: 57px;
+  display: flex;
+  justify-content: flex-end;
 }
 
+.addedSlots .day ul > li .timeSlotInfo span{
+  margin: 0 5px 0 7px;
+}
 
-.addedSlots > li > button{
+.addedSlots .day ul > li > button{
   width: auto !important;
 }
 
-.addedSlots > li > button > svg{
+.addedSlots .day ul > li > button > svg{
   color: #FF0000;
+  font-size: 18px;
 }
 
 
