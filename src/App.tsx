@@ -19,7 +19,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useEffect, Fragment } from "react";
+import { useEffect, Fragment, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -30,7 +30,7 @@ import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import Search from "./pages/Search/Search";
-import SpotDetails from "./pages/Parker/SpotDetails/SpotDetails";
+import SpotDetails from "./pages/Parker/BookSpot/BookSpot";
 import MySpots  from "./pages/Seller/MySpots/MySpots";
 import AddSpot from "./pages/Seller/AddSpot/AddSpot";
 import Loader from "./components/UI/Loader/Loader";
@@ -51,11 +51,11 @@ const App: React.FC = (props) => {
   console.log("CurrentRoleParker", currentRoleParker);
 
 
-  const setAutoLogout = (milliseconds) => {
+  const setAutoLogout = useCallback((milliseconds) => {
     setTimeout(() => {
       dispatch(logout());
     }, milliseconds);
-  };
+  }, [dispatch]);
   
   useEffect(() => {
     console.log("APP => useEffect()");
@@ -87,7 +87,7 @@ const App: React.FC = (props) => {
     );
     
     dispatch(fetchUser(userId, token))
-  }, []);
+  }, [dispatch, setAutoLogout]);
 
   return (
     <IonApp className="app">
@@ -114,7 +114,7 @@ const App: React.FC = (props) => {
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
-          <Route path="/parker/spotdetails" element={<SpotDetails/>}/>
+          <Route path="/parker/bookspot" element={<SpotDetails/>}/>
           
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />

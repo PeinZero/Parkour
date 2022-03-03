@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import styles from './SpotDetails.module.css';
+import styles from './BookSpot.module.css';
 
 import DetailsBox from '../../../components/DetailsBox/DetailsBox';
 import DetailsItem from '../../../components/DetailsBox/DetailsItem/DetailsItem';
@@ -9,11 +9,12 @@ import Header from '../../../components/UI/Header/Header';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { MobileDatePicker } from "@mui/lab";
+import { MobileDatePicker, MobileTimePicker } from "@mui/lab";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 import RoomIcon from "@mui/icons-material/Room";
+import { convertTimeToString, formatDate } from '../../../helper/timeFunctions';
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 const MONTHS = [
@@ -47,21 +48,17 @@ const calanderTheme = createTheme({
 });
 
  
-const SpotDetails = (props) => {
-    // Dummy Data [Remove this later]
-    const spots = [
-        {start: new Date(2022, 0, 10, 10), end: new Date(2022, 0, 10, 12)},
-        {start: new Date(2022, 0, 10, 8), end: new Date(2022, 0, 10, 11)},
-    ]
-    // x-----------x
+const SpotDetails = (props) => { 
+    let location = useLocation(); 
+    let spotDetails, address, availabilityList, defaultDate;
 
-    let location = useLocation();
-    const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'));
-    
+    const [date, setDate] = useState(defaultDate);
     const day = WEEKDAYS[new Date(date).getDay()] + " " + new Date(date).getDate() + " " + MONTHS[new Date(date).getMonth()];
 
-    
-    let spotDetails, address;
+    const [startTime, setStartTime] = useState(null)
+    const [endTime, setEndTime] = useState(null)
+    const [firstRadioChecked, setFirstRadioChecked] = useState(0);
+
     if(location.state){
         spotDetails = location.state;
         console.log(spotDetails);
@@ -74,8 +71,11 @@ const SpotDetails = (props) => {
             spotDetails.comment = "";
         }
 
-        if(spotDetails.owner.rating === -1){
-           spotDetails.owner.rating = "Not Rated";
+        availabilityList = spotDetails.availability
+        defaultDate = availabilityList[0].slotDate
+
+        if(spotDetails.owner.cumulativeRating === -1){
+           spotDetails.owner.cumulativeRating = "Not Rated";
         }
 
         address = (
@@ -86,32 +86,52 @@ const SpotDetails = (props) => {
             </>
         )
 
-    }  
+    } 
+    
 
     // Handlers
-    const setDateHandeler = (newValue) => {
-        const newDate = new Date(newValue).toLocaleDateString('en-CA')
+    const setDateHandeler = (newDate) => {
         setDate(newDate);
     }
 
+    const disableDates = (calenderDate) => {
+        const availability = availabilityList.find(availability => formatDate(availability.slotDate) === formatDate(calenderDate))
+        if (availability){
+            return false;
+        }
+        return true;  
+    }
 
-    // Data Manipulation
-    const filterSpots = spots.filter(d => d.start.toISOString().split('T')[0] === date);
-    const availableSpots = filterSpots.map( (d, index) => {
-        // const day = d.start.toISOString().split('T')[0];
-        const start =  d.start.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
-        const end =  d.end.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
-        
-        return <li key={index}> {`${start} - ${end}`} </li>
-    })
+    const selectTimeSlotHandler = (event, index) => {
+        setFirstRadioChecked(index);
+    }
+
+    // Dynamically rendering list
+    let availableSlots = [];
+    if(availabilityList.length > 0){
+        availableSlots = availabilityList.find(availability => formatDate(availability.slotDate) === formatDate(date)).slots;
+    }
     
+    availableSlots = availableSlots.map( (timeSlot, index) => {
+        const name = `${convertTimeToString(new Date(timeSlot.startTime))} - ${convertTimeToString(new Date(timeSlot.endTime))}`;
+
+        return (
+            <div className={styles['availableSlotsFormControl']}>
+                <input key={index} type="radio" name={name} value={timeSlot} onChange={(e) => selectTimeSlotHandler(e, index)} checked={index === firstRadioChecked ? true : false}/>
+                <label htmlFor={name}> {name} </label>
+            </div>
+        )
+    })
+
+    console.log(availableSlots);
+
     return (
         <div className={styles["spotDetails"]}>
             <Header backLink="/" content="Spot Details" className="small"/>
             <br />
             <div className={styles["details"]}>
                 <DetailsBox 
-                    boxClass="primary" name={spotDetails.owner.name} rating={spotDetails.owner.rating}>
+                    boxClass="primary" name={spotDetails.owner.name} rating={spotDetails.owner.cumulativeRating}>
                 </DetailsBox>
                 <DetailsBox title="location" icon={<RoomIcon/>} iconLink={"/"} iconText="View on map">
                     <ul className={styles['spotInfo']}>
@@ -128,17 +148,33 @@ const SpotDetails = (props) => {
                             <MobileDatePicker
                                 label={`Showing available time slots for`}
                                 value={date}
+                                shouldDisableDate={disableDates}
                                 onChange={setDateHandeler}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </ThemeProvider>
                     </LocalizationProvider>
-                    <div className={styles['availableSlotsBox']}>
+                    <form className={styles['availableSlotsBox']}>
                         <h5>{day}</h5>
-                        <ul className={styles['availableSlots']}>
-                            {availableSpots.length > 0 ? availableSpots : <p>No Slots Available</p>}
-                        </ul>
+                        { availableSlots.length === 0 && <p>No Slots Available</p>}
+                        { availableSlots.length > 0 && availableSlots }
+                    </form>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <div className={styles['timePickers']}>
+                      <MobileTimePicker
+                        className='timePicker'
+                        value={startTime}
+                        renderInput={(params) => <TextField {...params} />}
+                        onChange = {(newTime => setStartTime(newTime))}
+                      />
+                      <MobileTimePicker
+                        className='timePicker'
+                        value={endTime}
+                        onChange = {(newTime => setEndTime(newTime))}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
                     </div>
+                    </LocalizationProvider>
 
                 </DetailsBox>
                 {/* <DetailsBox boxClass="Images"></DetailsBox> */}

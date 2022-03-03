@@ -6,7 +6,7 @@
 //   DirectionsRenderer,
 // } from "react-google-maps";
 
-import React, { useMemo} from "react";
+import React, { useCallback, useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -17,9 +17,9 @@ const ParkerMap = ({coordinates, spots, zoom}) => {
   
   const navigate = useNavigate();
   
-  const markerClickHandler = (spot) => {
-    navigate("/parker/spotdetails", { state: spot });
-  };
+  const markerClickHandler = useCallback((spot) => {
+    navigate("/parker/bookspot", { state: spot });
+  }, []);
 
   // Creating seller map
   const Map = useMemo( () => {
@@ -56,7 +56,7 @@ const ParkerMap = ({coordinates, spots, zoom}) => {
        })}
      </GoogleMap>
    )
- }, [spots])
+ }, [coordinates, markerClickHandler, zoom, spots])
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
