@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from "../../../store/hooks";
 import { getSpotsByRadius } from "../../../store/Spot/spotActions";
@@ -48,7 +48,7 @@ const ParkerHome= () => {
         setCurrentLocation(currentPosition);  
       })
     }
-  }, [geolocation, searchedLocation, currentLocation])
+  }, [currentLocation, searchedLocation, geolocation])
 
 
   // Fetching spots arourd the current or searched location...
@@ -66,7 +66,7 @@ const ParkerHome= () => {
           }
         })
     } 
-  }, [currentLocation, radius])
+  }, [currentLocation, dispatch])
   
   return(
     <Fragment>
