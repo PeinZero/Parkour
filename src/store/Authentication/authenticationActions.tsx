@@ -50,7 +50,7 @@ export const sendLoginData = (loginData) => {
 export const sendSignupData = (signupData) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = axios.post(`${backendLink}/auth/signup`, signupData);
+      axios.post(`${backendLink}/auth/signup`, signupData);
     };
 
     try {

@@ -30,9 +30,6 @@ export const fetchUser = (userId, token) => {
 export const switchRole = (token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      if(token === localStorage.getItem("token")){
-        console.log(token);
-      }
       return await axios.put(
         `${backendLink}/user/switchrole`, null, {
           headers: {
@@ -58,3 +55,40 @@ export const switchRole = (token) => {
     }
   };
 };
+
+
+export const getUserByRole = (userId) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem('token');
+
+    const sendRequest = async () => {
+      const response = await axios.get(
+        `${backendLink}/user/getUserByRole/${userId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          }
+        }
+      );
+
+      return response;
+    };
+
+
+    try{
+      const response = await sendRequest();
+      return response;
+    }
+    catch(err){
+      console.log("(Thunk) getUserByRole => Error: ", err);
+      
+      if (err.response.status === 404) {
+        console.log("(Thunk) getUserByRole => User not found");
+      }
+
+      if (err.response.status === 401) {
+        console.log("(Thunk) getUserByRole => Not Authorised");
+      }
+    }
+  }
+}
