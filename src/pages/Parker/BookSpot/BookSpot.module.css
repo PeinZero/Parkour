@@ -1,100 +1,186 @@
-.spotDetails{
-    overflow: auto;
-    height: 100%;
+.spotDetails {
+  overflow: auto;
+  height: 100%;
 }
-.details{
-    width: 90%;
-    margin: 10px 5% 20px 5%;
+.details {
+  width: 90%;
+  margin: 10px 5% 20px 5%;
 }
 
 /* Location Bottom Box  */
-.spotInfo{
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.spotInfo {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 /* x-----x */
 
-.availibilityBottom > div:first-of-type{
-    margin-top: 20px;
-    width: 100%;
+/* .carSelectBox .carSelectForm{
+  margin-top: 10px;
 }
 
-.availibilityBottom > div:first-of-type > label{
-    color: var(--exmaple-lable);
-    font-size: 16px;
+.carSelectLabel{
+  color: var(--exmaple-lable);
 }
 
-.availableSlotsBox{
-    margin-top: 10px;
-    padding: 5px;
+.carSelect,
+.carItem{
+  font-size: 14px;
+} */
+
+.availibilityBottom > div:first-of-type {
+  margin-top: 20px;
+  width: 100%;
 }
 
-.availableSlotsBox > h5{
-    margin: 10px 0 15px 0;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 0.05em;
+.availibilityBottom > div:first-of-type > label {
+  color: var(--exmaple-lable);
+  font-size: 16px;
 }
 
-.availableSlotsBox > p{
-    text-align: center;
-    font-style: italic;
-    color: var(--exmaple-lable);
-    font-size: 13px;
-    
+.availableSlotsBox {
+  margin-top: 10px;
+  padding: 5px;
 }
 
-.availableSlotsFormControl{
-    display: flex;
-    margin-bottom: 10px;
+.availableSlotsBox > h5 {
+  margin: 10px 0 15px 0;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.05em;
 }
 
-.availableSlotsFormControl input[type="radio"]{
-    appearance: none;
-    background-color: inherit;
-    border-radius: 50%;
-    border: 0.15em solid black;
-    height: 16px;
-    width: 16px;
-    color: var(--primary);
-    transform: translateY(-0.075em);
-
-    display: grid;
-    place-content: center;
+.availableSlotsBox > p {
+  text-align: center;
+  font-style: italic;
+  color: var(--exmaple-lable);
+  font-size: 13px;
 }
 
-.availableSlotsFormControl input[type="radio"]::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: 0.1s transform ease-in-out;
-    box-shadow: inset 1em 1em var(--primary);
-    background-color: CanvasText;
+.availableSlotsFormControl {
+  display: flex;
+  margin-bottom: 10px;
 }
 
+.availableSlotsFormControl input[type='radio'] {
+  appearance: none;
+  background-color: inherit;
+  border-radius: 50%;
+  border: 0.15em solid black;
+  height: 16px;
+  width: 16px;
+  color: var(--primary);
+  transform: translateY(-0.075em);
 
-.availableSlotsFormControl input[type="radio"]:checked::before {
-    transform: scale(1);
+  display: grid;
+  place-content: center;
 }
 
-.availableSlotsFormControl label{
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    margin: 0 !important;
-    margin-left: 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    height: 16px;
+.availableSlotsFormControl input[type='radio']::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 0.1s transform ease-in-out;
+  box-shadow: inset 1em 1em var(--primary);
+  background-color: CanvasText;
+}
+
+.availableSlotsFormControl input[type='radio']:checked{
+  border: 0.15em solid var(--primary);
+}
+
+.availableSlotsFormControl input[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+.availableSlotsFormControl label {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  margin-left: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 16px;
 }
 
 .timePickers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.addedSlotsBox {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.addedSlotsBox h4 {
+  margin: 20px 15%;
+  text-align: center;
+  font-size: 15px;
+  color: black;
+  background-color: var(--image-placeholder);
+  padding: 10px;
+  width: 70%;
+  border-radius: 8px;
+  letter-spacing: 1px;
+}
+
+.addedSlotsBox > p {
+  text-align: center;
+  font-style: italic;
+  color: var(--exmaple-lable);
+  font-size: 13px;
+}
+
+.addedSlotsBox ul{
+    /* reset */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.addedSlotsBox ul > li{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    margin-bottom: 10px;
     width: 100%;
-    gap: 10px;
-    margin-top: 20px;
+    padding: 10px;
+    box-shadow: 2px 2px 5px 1px var(--card-shadow), 2px 2px 5px 1px var(--card-shadow);
+}
+
+.addedSlotsBox ul > li > p{
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.addedSlotsBox ul > li > button {
+  width: auto !important;
+}
+
+.addedSlotsBox ul > li > button > svg {
+  color: #ff0000;
+  font-size: 18px;
+}
+
+.messageBox textarea{
+  width: 100%;
+  background-color: initial;
+  height: auto;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+.messageBox textarea:focus{
+  outline: 1px solid var(--primary);
+  border: none;
 }

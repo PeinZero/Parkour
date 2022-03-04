@@ -306,7 +306,7 @@ const AddSpot = (props) => {
       addressLine1: event.target.addressLine1.value,
       addressLine2: event.target.addressLine2.value,
       nearestLandmark: event.target.nearestLandmark.value,
-      location: [ 67.189461, 24.901942],
+      location: [ 67.109461, 24.901942],
       pricePerHour: event.target.pricePerHour.value,
       availability: spotList
     }
