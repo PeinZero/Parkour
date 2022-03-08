@@ -2,6 +2,11 @@ li{
     padding: 10px 0;
 }
 
+li p{
+    margin: 0;
+    margin-bottom: 5px;
+}
+
 li .infoType{
     text-transform: capitalize;
     color: var(--cardlabels);
