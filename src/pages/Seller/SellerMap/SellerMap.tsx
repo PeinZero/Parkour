@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { GoogleMap, Marker } from '@react-google-maps/api'
@@ -9,7 +9,7 @@ const SellerMap = ({coordinates, activeSpots, zoom}) => {
   const navigate = useNavigate()
 
   const markerClickHandler = (spot) => {
-    navigate('/parker/spotdetails', { state: spot })
+    navigate('/seller/addSpot', { state: spot })
   }
 
   // Creating seller map

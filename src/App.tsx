@@ -19,20 +19,21 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useEffect, Fragment, useCallback } from "react";
+import { useEffect, Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
-import MyCars from "./pages/Parker/MyCars/MyCars";
-import AddCar from "./pages/Parker/AddCar/AddCar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
-import SellerHome from "./pages/Seller/Home/SellerHome";
 import Search from "./pages/Search/Search";
-import SpotDetails from "./pages/Parker/BookSpot/BookSpot";
+import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
+import MyCars from "./pages/Parker/MyCars/MyCars";
+import AddCar from "./pages/Parker/AddCar/AddCar";
+import BookSpot from "./pages/Parker/BookSpot/BookSpot";
+import SellerHome from "./pages/Seller/Home/SellerHome";
 import MySpots  from "./pages/Seller/MySpots/MySpots";
 import AddSpot from "./pages/Seller/AddSpot/AddSpot";
+import SpotDetails from "./pages/Seller/SpotDetails/SpotDetails";
 import Loader from "./components/UI/Loader/Loader";
 
 import { useAppSelector, useAppDispatch } from "./store/hooks";
@@ -51,11 +52,13 @@ const App: React.FC = (props) => {
   console.log("CurrentRoleParker", currentRoleParker);
 
 
-  const setAutoLogout = useCallback((milliseconds) => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, milliseconds);
-  }, [dispatch]);
+  // const setAutoLogout = useCallback((milliseconds) => {
+  //   setTimeout(() => {
+  //     dispatch(logout()).then( () => {
+  //       navigate('/');
+  //     });
+  //   }, milliseconds);
+  // }, [dispatch]);
   
   useEffect(() => {
     console.log("APP => useEffect()");
@@ -73,10 +76,10 @@ const App: React.FC = (props) => {
     }
 
     const userId = localStorage.getItem("userId");
-    const remainingTimeInMs =
-      new Date(expiryDate).getTime() - new Date().getTime();
+    // const remainingTimeInMs =
+    //   new Date(expiryDate).getTime() - new Date().getTime();
       
-    setAutoLogout(remainingTimeInMs);
+    // setAutoLogout(remainingTimeInMs);
 
     dispatch(
       authActions.login({
@@ -87,7 +90,7 @@ const App: React.FC = (props) => {
     );
     
     dispatch(fetchUser(userId, token))
-  }, [dispatch, setAutoLogout]);
+  }, [dispatch]);
 
   return (
     <IonApp className="app">
@@ -114,10 +117,11 @@ const App: React.FC = (props) => {
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
-          <Route path="/parker/bookspot" element={<SpotDetails/>}/>
+          <Route path="/parker/bookspot" element={<BookSpot/>}/>
           
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />
+          <Route path="/seller/spotdetails" element={<SpotDetails />} />
         </Routes>
       </Router>
     </IonApp>

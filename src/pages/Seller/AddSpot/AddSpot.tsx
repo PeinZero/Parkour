@@ -2,10 +2,11 @@ import React, {
   Fragment,
   useState,
   useEffect,
+  useReducer,
   useCallback,
   useMemo,
 } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {convertTimeToString, formatDate} from '../../../helper/timeFunctions'
 
@@ -46,34 +47,69 @@ const MONTHS = [
   'Dec',
 ]
 
+// function spotInfoInit(spotInfo){
+//   return {
+//     addressLine1: spotInfo.addressLine1,
+//     addressLine2: spotInfo.addressLine2,
+//     nearestLandmark: spotInfo.nearestLandmark,
+//     pricePerHour: spotInfo.pricePerHour,
+//   }
+// }
+
+function spotInfoReducer(spotInfoState, action){
+  switch (action.type) {
+    case 'addressLine1':
+      return {...spotInfoState, addressLine1: action.value};
+    case 'addressLine2':
+      return {...spotInfoState, addressLine2: action.value};;
+    case 'nearestLandmark':
+      return {...spotInfoState, nearestLandmark: action.value};;
+    case 'pricePerHour':
+      return {...spotInfoState, pricePerHour: action.value};;
+    case 'set_spotInfo':
+      return {
+        addressLine1: action.value.addressLine1,
+        addressLine2: action.value.addressLine2,
+        nearestLandmark: action.value.nearestLandmark,
+        pricePerHour: action.value.pricePerHour,
+      };
+    default:
+      return {addressLine1: '', addressLine2: '', nearestLandmark: '', pricePerHour: 10};
+  }
+}
+
+
 const AddSpot = (props) => {
-  // FORM dummy data =============================================================================
-  let data = {
-    // empty this in production, keeping only the structure
-    addressLine1:
-      'House # C26-A, Rim Jhim Flats, Safoora Chowrangi Next to KESC Society, 2nd Street to the left',
-    addressLine2: 'Karachi, Pakistan',
-    nearestLandmark: 'Near Safoora Chowrangi',
-    pricePerHour: '100',
-  }
-
-  const [model, setDummyData] = useState(data)
-
-  // if props.mode == 'edit' then call API "getSpotById"
-  const modelHandler = (event) => {
-    setDummyData((prevState) => {
-      return { ...prevState, [event.target.name]: event.target.value }
-    })
-  }
-
   // ===========================================================================================
-  console.log('ADD SPOT RUNNING')
+  console.log('ADD SPOT RUNNING');
 
-  let defaultStartTime = new Date()
-  defaultStartTime.setMinutes(30, 0, 0) // Resets also seconds and milliseconds
+  const location = useLocation();
+  const {state} = location;
+  const locationState:any = state;
+  console.log(locationState);
 
+  let spotInfo = {addressLine1: '', addressLine2: '', nearestLandmark: '', pricePerHour: 10};
+  let defaultStartTime = new Date();
+  let defaultSlotList = [];
+  let pageName = 'Add Spot';
+  let spotId = null;
+
+  if(locationState){
+    pageName = 'Edit Spot';
+    defaultSlotList = locationState.availability;
+    spotId = locationState._id;
+  }
+
+  if (defaultStartTime.getMinutes() < 30){
+    defaultStartTime.setMinutes(30, 0, 0) // Resets also seconds and milliseconds
+  }
+  else{
+    defaultStartTime.setMinutes(60, 0, 0);
+  }
+
+  const [spotInfoState, spotInfoDispatch] = useReducer(spotInfoReducer, spotInfo);
   const [currentPosition, setCurrentPosition] = useState(null)
-  const [spotList, setSpotList] = useState([])
+  const [slotList, setSlotList] = useState(defaultSlotList)
   const [startTime, setStartTime] = useState(defaultStartTime)
   const [endTime, setEndTime] = useState(null)
   const [date, setDate] = useState(new Date()) // .toLocaleDateString("en-CA")
@@ -85,6 +121,9 @@ const AddSpot = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // Extracting Spot Info form field values
+  const {addressLine1, addressLine2, nearestLandmark, pricePerHour} = spotInfoState;
+
   // Setting up min times for timePickers
   let minStartTime = new Date()
   let minEndTime = new Date()
@@ -95,18 +134,9 @@ const AddSpot = (props) => {
     minEndTime.setTime(startTime.getTime() + 59 * 60 * 1000)
   }
 
-  if (date.getDate() > minStartTime.getDate() || minStartTime.getTime() > new Date(new Date(minStartTime).setHours(23, 0)).getTime()){
-    console.log(minStartTime.getTime(), new Date(new Date(minStartTime).setHours(23, 0)).getTime());
-    
-    console.log("NULL");
-  }
-  else{
-    console.log(minStartTime)
-  }
-  
-  // Sorting the spotList
+  // Sorting the slotList
   const sortedSpotList = useMemo(() => {
-    const list = [...spotList];
+    const list = [...slotList];
 
     // Sort by Date
     list.sort( (availibility1, availibility2) => (availibility1.slotDate > availibility2.slotDate) ? 1 : -1);
@@ -138,7 +168,12 @@ const AddSpot = (props) => {
   
     console.log("Spot List Sorted:", list);
     return list
-  }, [spotList])
+  }, [slotList])
+
+  // Spot Info Handler
+  const spotInfoHandler = (event) => {
+    spotInfoDispatch({type: event.target.name, value: event.target.value});
+  }
 
   // Add & Delete time handlers
   const addTimeSlotHandler = () => {
@@ -244,7 +279,7 @@ const AddSpot = (props) => {
   
       newAvailibility.slots.push(newTimeSlot);
       
-      setSpotList((prevState) => {
+      setSlotList((prevState) => {
         return [...prevState, newAvailibility]
       })
     }
@@ -267,7 +302,7 @@ const AddSpot = (props) => {
       updatedTimeSlots.push(newTimeSlot);
 
       const updatedAvalibilityList = list.map( availability => availability.slotDate === formattedDate && {...availability, slots: updatedTimeSlots});
-      setSpotList(updatedAvalibilityList);
+      setSlotList(updatedAvalibilityList);
     }
     
     setStartTime(null)
@@ -276,16 +311,16 @@ const AddSpot = (props) => {
   }
 
   const deleteTimeSlotHandler = (slotDate, slotIndex) => {
-    let updatedTimeSlots = [...spotList]
+    let updatedTimeSlots = [...slotList]
     updatedTimeSlots = updatedTimeSlots.find( availibility => availibility.slotDate === slotDate).slots;
 
     updatedTimeSlots = updatedTimeSlots.filter( (slot, index) => index !== slotIndex);
     console.log(updatedTimeSlots)
 
-    let availabilityList = [...spotList];
+    let availabilityList = [...slotList];
     if(updatedTimeSlots.length === 0){
       availabilityList = availabilityList.filter( availibility => availibility.slotDate !== slotDate)
-      setSpotList(availabilityList)
+      setSlotList(availabilityList)
     }
     else{
       const updatedAvailabilityList = availabilityList.map(availibility => {
@@ -294,7 +329,7 @@ const AddSpot = (props) => {
         }
         return availibility;
       })
-      setSpotList(updatedAvailabilityList)
+      setSlotList(updatedAvailabilityList)
     }
   }
 
@@ -303,19 +338,20 @@ const AddSpot = (props) => {
     event.preventDefault()
 
     const addedSpotDetails = {
+      _id: spotId,
       addressLine1: event.target.addressLine1.value,
       addressLine2: event.target.addressLine2.value,
       nearestLandmark: event.target.nearestLandmark.value,
-      location: [ 67.109461, 24.901942],
+      location: [ currentPosition.lng, currentPosition.lat],
       pricePerHour: event.target.pricePerHour.value,
-      availability: spotList
+      availability: slotList
     }
 
     console.log(addedSpotDetails);
 
-    dispatch(addSpot(addedSpotDetails)).then( res => {
-      navigate("/seller/mySpots")
-    });
+    // dispatch(addSpot(addedSpotDetails)).then( res => {
+    //   navigate("/seller/mySpots")
+    // });
   }
 
   // Dynamically creating added slots list
@@ -330,8 +366,8 @@ const AddSpot = (props) => {
       MONTHS[new Date(slotDate).getMonth()]
 
     const timeSlots = slots.map( (slot, slotIndex) => {
-      const timeSlotStartTime = convertTimeToString(slot.startTime)
-      const timeSlotEndTime = convertTimeToString(slot.endTime)
+      const timeSlotStartTime = convertTimeToString(new Date(slot.startTime));
+      const timeSlotEndTime = convertTimeToString(new Date(slot.endTime));
 
       return (
         <li key={slotIndex}>
@@ -369,7 +405,17 @@ const AddSpot = (props) => {
   useEffect(() => {
     console.log('ADD SPOT => useEffect()')
 
-    if (geolocation) {
+    if (locationState) {
+
+      const currentPosition = {
+        lat: locationState.location.coordinates[1],
+        lng: locationState.location.coordinates[0],
+      }
+  
+      spotInfoDispatch({type: 'set_spotInfo', value: locationState});
+      setCurrentPosition(currentPosition)
+    }
+    else if (geolocation){
       geolocation.getCurrentPosition((position) => {
         const currentPosition = {
           lat: position.coords.latitude,
@@ -378,12 +424,12 @@ const AddSpot = (props) => {
         setCurrentPosition(currentPosition)
       })
     }
-  }, [geolocation])
+  }, [spotInfoDispatch, locationState, geolocation])
 
   return (
     <Fragment>
       <div className={styles['wrapper']}>
-        <Header backLink='/seller/mySpots' content='Add Spot' />
+        <Header backLink='/seller/mySpots' content={pageName} />
         <div className={styles['content']}>
           <div className={styles['mapContainer']}>
             {currentPosition === null && <Loader />}
@@ -403,8 +449,8 @@ const AddSpot = (props) => {
               type='text'
               placeholder='e.g. R-44 Saima Arabian Villas'
               className={styles['registerSpot']}
-              onChange={modelHandler}
-              value={model.addressLine1}
+              onChange={spotInfoHandler}
+              value={addressLine1}
             />
             <Input
               label='Address Line 2'
@@ -412,8 +458,8 @@ const AddSpot = (props) => {
               type='text'
               placeholder='e.g. Next to Rim Jhim flats'
               className={styles['registerSpot']}
-              onChange={modelHandler}
-              value={model.addressLine2}
+              onChange={spotInfoHandler}
+              value={addressLine2}
             />
             <Input
               label='Nearest Landmark'
@@ -421,8 +467,8 @@ const AddSpot = (props) => {
               type='text'
               placeholder='e.g. ABC Masjid/Park'
               className={styles['registerSpot']}
-              onChange={modelHandler}
-              value={model.nearestLandmark}
+              onChange={spotInfoHandler}
+              value={nearestLandmark}
             />
             <Input
               label='Price Per Hour'
@@ -430,8 +476,8 @@ const AddSpot = (props) => {
               type='text'
               placeholder='e.g. 10, 20, 30 ... 100'
               className={styles['registerSpot']}
-              onChange={modelHandler}
-              value={model.pricePerHour}
+              onChange={spotInfoHandler}
+              value={pricePerHour}
             />
             <DetailsBox title='availability'>
               <div className={styles['addTimeSlot']}>
@@ -535,7 +581,7 @@ const AddSpot = (props) => {
             </DetailsBox>
 
             <Button btnClass='primary' className={styles['submitBtn']}>
-              Add Spot
+              {pageName}
             </Button>
           </form>
         </div>

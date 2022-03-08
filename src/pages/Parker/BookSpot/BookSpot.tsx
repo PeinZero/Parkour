@@ -63,17 +63,14 @@ interface TimeSlot {
   endTime: Date;
 }
 
-const SpotDetails = (props) => {
-  const user = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+const BookSpot = (props) => {
+  console.log("BOOK SPOT RUNNING!");
+  
   const navigate = useNavigate();
-  let location = useLocation();
-  let spotDetails,
-    address,
-    availabilityList,
-    sellerId = '',
-    defaultDate: Date,
-    cars: any[] = [];
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+
+  let cars: any[] = [];
 
   if ('parker' in user && user.parker !== null) {
     cars = user.parker.cars;
@@ -83,64 +80,65 @@ const SpotDetails = (props) => {
     navigate('/parker/mycars');
   }
 
-  if (location.state) {
-    spotDetails = location.state;
+  const {state} = useLocation();  
+  const locationState:any = state;
+  console.log(locationState);
 
-    if (!('addressLine2' in spotDetails)) {
-      spotDetails.addressLine2 = 'hello';
-    }
-
-    if ('comment' in spotDetails) {
-      spotDetails.comment = '';
-    }
-
-    availabilityList = spotDetails.availability;
-    defaultDate = availabilityList[0].slotDate;
-    sellerId = spotDetails.owner._id;
-
-    if (spotDetails.owner.cumulativeRating === -1) {
-      spotDetails.owner.cumulativeRating = 'Not Rated';
-    }
-
-    address = (
-      <>
-        {spotDetails.addressLine1}
-        <br />
-        {spotDetails.addressLine2}
-      </>
-    );
+  const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, availability: availabilityList, owner: spotOwner} = locationState;
+  const defaultDate: Date = availabilityList.length > 0 ? availabilityList[0].slotDate: new Date();
+  const address = (
+    <>
+      <p>{addressLine1}</p>
+      <p>{addressLine2}</p>
+    </>
+  );
+  const day =
+    WEEKDAYS[new Date(defaultDate).getDay()] +
+    ' ' +
+    new Date(defaultDate).getDate() +
+    ' ' +
+    MONTHS[new Date(defaultDate).getMonth()];
+  
+    
+  let startMinTime: Date = null;
+  let startMaxTime: Date = null;
+  let endMinTime: Date = null;
+  let endMaxTime: Date = null;
+  let {_id: sellerId, cumulativeRating: sellerRating} = spotOwner;
+    
+  if (sellerRating === -1) {
+    sellerRating= 'Not Rated';
   }
 
+  // States
   const [sellerName, setSellerName] = useState(null);
   const [sellerPhone, setSellerPhone] = useState(null);
   const [date, setDate] = useState(defaultDate);
   const [selectedRadioButton, setSelectedRadioButton] = useState(-1);
   const [selectedCar, setSelectedCar] = useState('');
   const [message, setMessage] = useState(null);
+  const [addedTimeSlots, setAddedTimeSlots] = useState([]);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-  const [addedTimeSlots, setAddedTimeSlots] = useState([]);
+  const [alreadyExistError, setAlreadyExistError] = useState(null);
+  const [validationParaMsg, setvalidationParaMsg] = useState('');
 
-  const day =
-    WEEKDAYS[new Date(date).getDay()] +
-    ' ' +
-    new Date(date).getDate() +
-    ' ' +
-    MONTHS[new Date(date).getMonth()];
-
-  let startMinTime: Date = null,
-    startMaxTime: Date = null,
-    endMinTime: Date = null,
-    endMaxTime: Date = null;
 
   if (selectedRadioButton >= 0) {
-    startMinTime = new Date(new Date(startTime).setSeconds(0, 0));
-    endMaxTime = new Date(new Date(endTime).setSeconds(0, 0));
+    const availability = availabilityList.find( availability => availability.slotDate === date);
+    const selectedTimeSlots = availability.slots[selectedRadioButton];
+
+    startMinTime = new Date(new Date(selectedTimeSlots.startTime).setSeconds(0, 0));
+    endMaxTime = new Date(new Date(selectedTimeSlots.endTime).setSeconds(0, 0));
+
+    const et = new Date(endTime);
     startMaxTime = new Date(
-      new Date(endMaxTime).setHours(endMaxTime.getHours() - 1)
+      new Date(et).setHours(et.getHours() - 1)
     );
+    
+    const st = new Date(startTime);
     endMinTime = new Date(
-      new Date(startMinTime).setHours(startMinTime.getHours() + 1)
+      new Date(st).setHours(st.getHours() + 1)
     );
   }
 
@@ -172,11 +170,76 @@ const SpotDetails = (props) => {
   };
 
   const addTimeSlotHandler = () => {
-    const timeSlot: TimeSlot = { startTime, endTime };
+    if(selectedRadioButton === -1){
+      return;
+    }
+    
+    enum Result {
+      overlapping = "New Added Time Slot already Exists",
+      modifyExistingTimeSlot = "Adjusting the existing time slot",
+      goodTimeSlot = "New Added Time Slot can be added successfully"
+    }
 
-    setAddedTimeSlots((prevState) => {
-      return [...prevState, timeSlot];
-    });
+    const markedForRemoval = [];
+
+    // st = startTime
+    // et = endTime
+    // cst = currentTraversed startTime of addedTimeSlots list 
+    // cet = currentTraversed endTime of addedTimeSlots list 
+
+    let st:Date = new Date(new Date(startTime).setSeconds(0, 0));
+    let et:Date = new Date(new Date(endTime).setSeconds(0, 0));
+
+    let status = Result.goodTimeSlot;
+
+    // Checking st & et validity by comparing with all timeSlots in addedTimeSlots list.
+    for (let i = 0; i < addedTimeSlots.length; i++){
+      const currentTimeSlot = addedTimeSlots[i];
+      const cst:Date = new Date(new Date(currentTimeSlot.startTime).setSeconds(0, 0));
+      const cet:Date = new Date(new Date(currentTimeSlot.endTime).setSeconds(0, 0));
+
+      // Overlapping Conditions
+      if( (cst <= st && st < cet) && (cst < et && et <= cet)){
+        status = Result.overlapping;
+        break;
+      }
+
+      // Current time slot is in between new time slot
+      if( (st < cst) && (cet < et)){
+        markedForRemoval.push(i);
+      }
+      // Modifying cst
+      else if( (st < cst) && (cst <= et && et <= cet)){
+        et = cet;
+        markedForRemoval.push(i);
+      }
+      // Modifying cet
+      else if( (cst <= st && st <= cet) && (cet < et)){
+        st = cst;
+        markedForRemoval.push(i);
+      }
+    }
+
+    let updatedAddedTimeSlots = [];
+
+    if(status === Result.overlapping){
+      setAlreadyExistError(true);
+      setvalidationParaMsg('Time slot already added!');
+      return
+    }
+
+    if(markedForRemoval.length > 0){
+      updatedAddedTimeSlots = addedTimeSlots.filter( (timeSlot, index) => !markedForRemoval.includes(index))
+    }
+
+
+    const timeSlot: TimeSlot = { startTime: st, endTime: et };
+    updatedAddedTimeSlots.push(timeSlot);
+
+    setAddedTimeSlots(updatedAddedTimeSlots);
+    setAlreadyExistError(false);
+    setvalidationParaMsg('Time slot added!');
+    setSelectedRadioButton(-1);
   };
 
   const deleteTimeSlotHandler = (slotIndex) => {
@@ -246,15 +309,28 @@ const SpotDetails = (props) => {
   });
 
   // Use Effects
-
   useEffect(() => {
     console.log("BookSpot => useEffect()");
-    console.log("Seller Id: ", sellerId)
+    // console.log("Seller Id: ", sellerId)
     dispatch(getUserByRole(sellerId))
         .then((response) => {
           sellerInfoHandler(response.data.user);
         });
   }, [dispatch, sellerId]);
+
+  useEffect(() => {
+    let timer = null;
+
+    if(alreadyExistError === false || alreadyExistError === true){
+      timer = setTimeout( () => {
+        setAlreadyExistError(null)
+      } , 5000)
+    }
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [alreadyExistError]);
 
   return (
     <div className={styles['spotDetails']}>
@@ -264,7 +340,7 @@ const SpotDetails = (props) => {
         <DetailsBox
           boxClass='primary'
           name={sellerName}
-          rating={spotDetails.owner.cumulativeRating}
+          rating={sellerRating}
         ></DetailsBox>
         <DetailsBox
           title='location'
@@ -276,13 +352,13 @@ const SpotDetails = (props) => {
             <DetailsItem label='Address' info={address} />
             <DetailsItem
               label='Nearest Landmark'
-              info={spotDetails.nearestLandmark}
+              info={nearestLandmark}
             />
             <DetailsItem
               label='Price Per Hour'
-              info={spotDetails.pricePerHour}
+              info={pricePerHour}
             />
-            <DetailsItem label='Comment' info={spotDetails.comment} />
+            <DetailsItem label='Comment' info={comment} />
           </ul>
         </DetailsBox>
 
@@ -342,6 +418,7 @@ const SpotDetails = (props) => {
             <div className={styles['timePickers']}>
               <MobileTimePicker
                 className='timePicker'
+                ampm={true}
                 disabled={startMinTime === null ? true : false}
                 minTime={startMinTime}
                 maxTime={startMaxTime}
@@ -359,6 +436,9 @@ const SpotDetails = (props) => {
                 renderInput={(params) => <TextField {...params} />}
               />
             </div>
+            <p className={`${styles['status']} ${alreadyExistError && styles['error']} ${alreadyExistError === false && styles['added']}`}>
+                  {validationParaMsg}
+            </p>
             <Button type='button' size='small' onClick={addTimeSlotHandler}>
               {' '}
               Add Time Slot{' '}
@@ -388,4 +468,4 @@ const SpotDetails = (props) => {
   );
 };
 
-export default SpotDetails;
+export default BookSpot;
