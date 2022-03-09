@@ -4,18 +4,26 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OTP = () => {
   const [OTP, setOTP] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [OTPBtnStatus, setOTPBtnStatus] = useState(true);
+
+  //Conformation Object Passed back by Firebase after OTP is sent Sucessfully
   const [confirmationResult, setConfirmationResult] = useState(null);
+
+  //This is messing up (not sure how to make this global throughout the component)
   let recaptchaVerifier;
 
   const navigate = useNavigate();
 
+  // Firebase Requires This function to be called in order to verify if the user is human
   const configureCaptcha = () => {
     const auth = getAuth();
+
+    //Please Make recaptchaVerifier global here
     recaptchaVerifier = new RecaptchaVerifier(
       "sign-in-button",
       {
@@ -24,7 +32,6 @@ const OTP = () => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
           onSignUpSubmit(response);
           console.log("reCAPTCHA solved, allow signInWithPhoneNumber.");
-          console.log(response);
         },
         defaultCountry: "PK",
       },
@@ -35,22 +42,49 @@ const OTP = () => {
   const onSignUpSubmit = (e) => {
     e.preventDefault();
     configureCaptcha();
-    let TempPhoneNumber = "+" + phoneNumber;
 
-    console.log("onSignUpSubmit");
-    console.log("Phone Number: ", TempPhoneNumber);
-    const appVerifier = recaptchaVerifier;
+    let TempPhoneNumber = phoneNumber;
 
-    const auth = getAuth();
-    signInWithPhoneNumber(auth, TempPhoneNumber, appVerifier)
-      .then((_confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        setConfirmationResult(_confirmationResult);
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        console.log("SMS not sent", error);
-      });
+    //Phone Number Validation and Adding Country Code
+    if (TempPhoneNumber.length < 11 || TempPhoneNumber.length > 12) {
+      console.log("Invalid Phone Number");
+      setOTPBtnStatus(true);
+    }
+
+    //Number length can only be 11 only if it starts with 0
+    else if (
+      TempPhoneNumber.length === 11 &&
+      TempPhoneNumber.charAt(0) !== "0"
+    ) {
+      console.log("Invalid Phone Number");
+      setOTPBtnStatus(true);
+    } else {
+      setOTPBtnStatus(false);
+      if (TempPhoneNumber[0] === "0") {
+        //Removing 0 from the number
+        TempPhoneNumber = TempPhoneNumber.substring(1, TempPhoneNumber.length);
+        TempPhoneNumber = "+92" + TempPhoneNumber;
+      } else {
+        TempPhoneNumber = "+" + TempPhoneNumber;
+      }
+
+      // Testing Console Logs (remove if wished)
+      console.log("onSignUpSubmit");
+      console.log("Phone Number: ", TempPhoneNumber);
+
+      const appVerifier = recaptchaVerifier;
+      const auth = getAuth();
+
+      signInWithPhoneNumber(auth, TempPhoneNumber, appVerifier)
+        .then((_confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          setConfirmationResult(_confirmationResult);
+        })
+        .catch((error) => {
+          // Error; SMS not sent
+          console.log("SMS not sent", error);
+        });
+    }
   };
 
   const verifyOTP = (e) => {
@@ -59,9 +93,10 @@ const OTP = () => {
       .confirm(OTP)
       .then((result) => {
         // User signed in successfully.
-        // console.log(result);
+
+        //Set User here
         // const user = result.user;
-        // console.log(user);
+        // CALL Signup POST API Here.
         navigate("/login");
       })
       .catch((error) => {
@@ -92,7 +127,9 @@ const OTP = () => {
           onChange={(e) => setOTP(e.target.value)}
           value={OTP}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={OTPBtnStatus}>
+          Submit
+        </button>
       </form>
     </Fragment>
   );
