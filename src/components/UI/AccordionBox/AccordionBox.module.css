@@ -1,12 +1,19 @@
-.car{
+.accordion{
     box-shadow: none !important;
     background-color: var(--image-placeholder) !important;
     margin-bottom: 7px;
 }
 
-.carHeader{
+.header{
     display: flex !important;
     justify-content: space-between !important;
     width: 90% !important;
     margin: 0 5% !important;
+    padding: 0 !important;
 }
+
+/* .details{
+    width: 90% !important;
+    margin: 0 5% !important;
+    padding: 0 !important;
+} */

@@ -1,7 +1,26 @@
+.filterBox{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.filterBox select{
+  background-color: inherit;
+  padding: 5px 5px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.filterBox select:focus{
+  border: none;
+  outline: 2px solid var(--primary);
+}
+
 .accordionDetails {
   display: flex;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 4px;
 }
 
 .accordionDetails .leftButtons,
@@ -9,14 +28,6 @@
   display: flex;
   gap: 10px;
 }
-
-/* .accordionDetails .leftButtons:first-child {
-  margin-right: 5px;
-}
-
-.accordionDetails .edit {
-  justify-self: flex-end;
-} */
 
 .addSpot {
   display: flex;

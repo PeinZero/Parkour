@@ -1,71 +1,119 @@
-import { Fragment } from "react";
-// import { Link } from "react-router-dom";
+import { Fragment, useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from "../../../store/hooks";
+import { getSpotsBySeller } from "../../../store/Spot/spotActions";
 
 import styles from "./MySpots.module.css";
 import Button from "../../../components/UI/Button/Button";
 import Anchor from "../../../components/UI/Anchor/Anchor";
-
-// import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import Header from "../../../components/UI/Header/Header";
+import Loader from "../../../components/UI/Loader/Loader";
 import AccordionBox from "../../../components/UI/AccordionBox/AccordionBox";
-import AccordionHeader from "../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader";
+
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Header from "../../../components/UI/Header/Header";
+
+enum Filters {
+  activeSpots = 1,
+  inActiceSpots = -1,
+  allSpots = 0
+}
 
 const MySpots = () => {
-  let price = 100;
+  console.log("MY SPOTS RUNNING");
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [sellerSpots, setSellerSpots] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState(Filters.activeSpots);
+
+  if(!loading){
+    console.log(sellerSpots);
+  }
+
+  // Handlers
+  const filterChangeHandler = (event) => {
+    setLoading(true);
+    setFilter(event.target.value);
+  }
+
+  const viewSpotHandler = (spot) => {
+    navigate('/seller/addSpot', { state: spot })
+  }
+
+  // Dynamically Rendering spots
+  const renderedSellerSpots = sellerSpots.map( (spot, index) => {
+    return(
+      <AccordionBox 
+        key={spot._id}
+        spotInfo = {{
+          spotName: `Spot ${index + 1}`,
+          pricePerHour: spot.pricePerHour,
+          nearestLandmark: spot.nearestLandmark
+        }}
+      >
+        <div className={styles["accordionDetails"]}>
+          <div className={styles["leftButtons"]}>
+            <Button btnClass="delete-icon" size="small">
+              <DeleteOutlineRoundedIcon />
+            </Button>
+            <Button btnClass="negative-outline" size="small"> Deactivate</Button>
+          </div>
+          <div className={styles["rightButtons"]}>
+            <Button btnClass="primary" size="small" onClick={() => {viewSpotHandler(spot)}}>Edit</Button>
+          </div>
+        </div>
+      </AccordionBox>
+    );
+  });
+
+  useEffect(() => {
+    console.log("My Spots => useEffect()");
+    dispatch(getSpotsBySeller(filter))
+      .then( fetchedData => {
+        ReactDOM.unstable_batchedUpdates( () => {
+          console.log("Fetching spots...");
+          const fetchedSpots = fetchedData.activeSpots;
+          setLoading(false);
+          setSellerSpots(fetchedSpots)
+        });
+      })
+      
+  },[dispatch, filter]);
+  
   return (
     <Fragment>
       <Header backLink="/" content="My Spots"/>
-      <div className={styles["carList"]}>
-        <AccordionBox
-          header={
-            <AccordionHeader
-              spotNumber={"1"}
-              location={"R-44 Saima Arabian Villas, Gadap Town, Karachi."}
-              price={`RS ${price}/hr`}
-            />
+      <div  className={styles["filterBox"]}>
+        <select name="typeOfSpots" value={filter} onChange={filterChangeHandler}>
+          <option value={Filters.activeSpots} > Active Spots </option>
+          <option value={Filters.inActiceSpots}> Inactive Spots </option>
+          <option value={Filters.allSpots}> All Spots </option>
+        </select>
+      </div>
+      {loading && <Loader screen= {"subScreen"} size={"60"}/>}
+      {!loading &&
+        <>
+          {sellerSpots.length > 0 ?
+            <div className={styles["carList"]}>
+              {renderedSellerSpots}
+            </div>
+            :
+            <p>No Spots available</p>
           }
-        >
-          <div className={styles["accordionDetails"]}>
-            <div className={styles["leftButtons"]}>
-              <Button btnClass="delete-icon" size="small">
-                <DeleteOutlineRoundedIcon />
-              </Button>
-              <Button btnClass="negative-outline" size="small"> Deactivate</Button>
-            </div>
-            <div className={styles["rightButtons"]}>
-              <Button btnClass="primary" size="small">Edit</Button>
+
+          <div className={styles["addSpot"]}>
+            <div>
+              <Anchor path="/seller/addSpot">
+                {" "}
+                <AddCircleIcon />{" "}
+              </Anchor>
             </div>
           </div>
-        </AccordionBox>
-
-        <AccordionBox
-          header={<AccordionHeader spotNumber={"2"} location={""} />}
-        >
-          <div className={styles["accordionDetails"]}>
-            <div className={styles["leftButtons"]}>
-              <Button btnClass="delete-icon" size="small">
-                <DeleteOutlineRoundedIcon />
-              </Button>
-              <Button btnClass="negative-outline" size="small">Deactivate</Button>
-            </div>
-            <div className={styles["rightButtons"]}>
-              <Button btnClass="primary" size="small">Edit</Button>
-            </div>
-          </div>
-        </AccordionBox>
-      </div>
-
-      <div className={styles["addSpot"]}>
-        <div>
-          <Anchor path="/seller/addSpot">
-            {" "}
-            <AddCircleIcon />{" "}
-          </Anchor>
-        </div>
-      </div>
+        </>
+      }
     </Fragment>
   );
 };

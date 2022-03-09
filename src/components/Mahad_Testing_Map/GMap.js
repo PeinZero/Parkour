@@ -22,6 +22,10 @@ const GMap = (props) => {
       mapContainerClassName={props.className}
       zoom={props.zoom}
       center={ markerPosition }
+      options={{
+        fullscreenControl: false,
+        zoomControl: false
+      }}
     >
       {
         <Marker

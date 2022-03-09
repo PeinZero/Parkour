@@ -1,5 +1,9 @@
+import ReactDOM from "react-dom"
+
 import { useAppDispatch } from '../../store/hooks';
 import {sendLoginData} from '../../store/Authentication/authenticationActions';
+import { authActions } from "../../store/Authentication/authentication";
+import { userActions } from "../../store/User/user";
 
 import styles from './Login.module.css'
 
@@ -17,7 +21,20 @@ const Login: React.FC = () => {
         dispatch(sendLoginData({
             phone: e.target.phone.value,
             password: e.target.password.value,
-        })) 
+        })).then( response => {
+            ReactDOM.unstable_batchedUpdates( () => {
+                dispatch(
+                    authActions.login({
+                        isAuth: true,
+                        token: response.data.token,
+                        userId: response.data.user._id
+                    })
+                );
+
+                dispatch(userActions.createUser(response.data.user))
+                console.log(response.data.message);
+            });
+        })
     }
 
     return (

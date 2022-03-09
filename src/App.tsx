@@ -39,11 +39,12 @@ import Loader from "./components/UI/Loader/Loader";
 import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { authActions } from "./store/Authentication/authentication";
 import { fetchUser } from "./store/User/userActions";
-import { logout } from "./store/Authentication/authenticationActions";
+import {  } from "./store/Authentication/authenticationActions";
 
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING")
+
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
   const currentRoleParker = useAppSelector((state) => state.user.currentRoleParker);
@@ -51,36 +52,17 @@ const App: React.FC = (props) => {
   console.log("AUTH", isAuth);
   console.log("CurrentRoleParker", currentRoleParker);
 
-
-  // const setAutoLogout = useCallback((milliseconds) => {
-  //   setTimeout(() => {
-  //     dispatch(logout()).then( () => {
-  //       navigate('/');
-  //     });
-  //   }, milliseconds);
-  // }, [dispatch]);
-  
   useEffect(() => {
     console.log("APP => useEffect()");
 
     const token = localStorage.getItem("token");
     const expiryDate = localStorage.getItem("expiryDate");
+    const userId = localStorage.getItem("userId");
 
     if (!token || !expiryDate) {
       return;
     }
-
-    if (new Date(expiryDate) <= new Date()) {
-      dispatch(logout());
-      return;
-    }
-
-    const userId = localStorage.getItem("userId");
-    // const remainingTimeInMs =
-    //   new Date(expiryDate).getTime() - new Date().getTime();
-      
-    // setAutoLogout(remainingTimeInMs);
-
+ 
     dispatch(
       authActions.login({
         isAuth: true,

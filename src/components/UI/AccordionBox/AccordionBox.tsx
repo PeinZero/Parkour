@@ -5,18 +5,20 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import AccordionHeader from "./AccordionHeader/AccordionHeader";
+
 const AccordionBox = (props) => {
     return (
-        <Accordion className={styles['car']}>
+        <Accordion className={styles['accordion']}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-                className={styles['carHeader']}
+                className={styles['header']}
             >
-                {props.header}
+                <AccordionHeader spotInfo={props.spotInfo} carInfo={props.carInfo} />
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className={styles['details']}>
                     {props.children}
             </AccordionDetails>
         </Accordion>

@@ -38,16 +38,19 @@ export const getSpotsByRadius = (coordinates, radius) => {
   };
 };
 
-export const getAllSpotsBySeller = () => {
+export const getSpotsBySeller = (filter) => {
   return async (dispatch) => {
     const token = localStorage.getItem("token");
     
     const sendRequest = async () => {
         return await axios.get(`${backendLink}/spot/getAllSpotsBySeller`,
         {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
+          params: {
+            filter
+          },
+          headers: {
+            Authorization: "Bearer " + token,
+          }
         });
 
     };

@@ -14,12 +14,12 @@ const AccordionHeader = (props) => {
         <div className={`${styles["avatar"]} ${isParker && styles["Parker"]}`}>
           <DirectionsCarRoundedIcon />
         </div>
-        <div className={styles["content"]}>
-          <h4>{props.name || "Corolla"}</h4>
+        <div className={styles["contentCar"]}>
+          <h4>{props.carInfo.carName}</h4>
           <div></div>
-          <p>{props.color || "Black"}</p>
+          <p>{props.carInfo.color}</p>
           <div></div>
-          <p>{props.numPlate || "ABC-123"}</p>
+          <p>{props.carInfo.numPlate}</p>
         </div>
       </div>
     );
@@ -29,10 +29,13 @@ const AccordionHeader = (props) => {
         <div className={`${styles["avatar"]} ${!isParker && styles["Seller"]}`}>
           <LocationOnIcon />
         </div>
-        <div className={styles["content"]}>
-          <p>
-            {props.location || "Nagan Chowrangi, Sector 11-E, North Karachi."}
-          </p>
+        <div className={styles["contentSpot"]}>
+          <div className={styles["head"]}>
+            <h4> {props.spotInfo.spotName}</h4>
+            <div></div>
+            <p> {`${props.spotInfo.pricePerHour} / hour`}</p>
+          </div>
+          <p> near {props.spotInfo.nearestLandmark}</p>
         </div>
       </div>
     );
