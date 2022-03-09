@@ -4,33 +4,39 @@ import { sendSignupData } from "../../store/Authentication/authenticationActions
 
 import styles from "./Signup.module.css";
 
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
-import Header from '../../components/UI/Header/Header';
+import Button from "../../components/UI/Button/Button";
+import Input from "../../components/UI/Input/Input";
+import Header from "../../components/UI/Header/Header";
 
 const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // const formSubmitHandler = (e) => {
+  //   e.preventDefault();
+
+  //   dispatch(
+  //     sendSignupData({
+  //       name: e.target.name.value,
+  //       phone: e.target.phone.value,
+  //       email: e.target.email.value,
+  //       password: e.target.password.value,
+  //       confirmPassword: e.target.confirmPassword.value,
+  //     })
+  //   );
+
+  //   navigate("/login");
+  // };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(
-      sendSignupData({
-        name: e.target.name.value,
-        phone: e.target.phone.value,
-        email: e.target.email.value,
-        password: e.target.password.value,
-        confirmPassword: e.target.confirmPassword.value,
-      })
-    );
-
-    navigate("/login");
+    navigate("/otp");
   };
 
   return (
     <div className={styles["signupPage"]}>
-      <Header backLink="/" content="Register"/>
+      <Header backLink="/" content="Register" />
       <form onSubmit={formSubmitHandler} className={styles["form"]}>
         <Input
           label="Full Name"
