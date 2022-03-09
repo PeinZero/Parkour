@@ -27,6 +27,7 @@ const ParkerHome= () => {
   const {geolocation} = navigator;
   const radius = 20;  // 3 KM
   const zoom = 14;
+  const loaderScreenType = "empty";
 
   console.log("Current Location: ", currentLocation);
   console.log("Spots: ", spots);
@@ -70,7 +71,7 @@ const ParkerHome= () => {
   
   return(
     <Fragment>
-      { (currentLocation === null || spots === null) && <Loader/> }
+      { (currentLocation === null || spots === null) && <Loader screen={loaderScreenType}/> }
       { (currentLocation && spots) && 
         <>
         <Hamburger />

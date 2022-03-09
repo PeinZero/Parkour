@@ -138,15 +138,17 @@ const AddSpot = (props) => {
   const sortedSpotList = useMemo(() => {
     const list = [...slotList];
 
+    if(list.length === 0){
+      return [];
+    }
+
     // Sort by Date
     list.sort( (availibility1, availibility2) => (availibility1.slotDate > availibility2.slotDate) ? 1 : -1);
 
     // Sort time slots of each Date
     list.forEach( availibility => {
       availibility.slots.sort( (ts1, ts2) => {
-        ts1.startTime.setSeconds(0, 0)
-        ts2.startTime.setSeconds(0, 0)
-  
+
         // First compare by start time
         if (ts1.startTime > ts2.startTime) {
           return 1;
@@ -349,9 +351,9 @@ const AddSpot = (props) => {
 
     console.log(addedSpotDetails);
 
-    // dispatch(addSpot(addedSpotDetails)).then( res => {
-    //   navigate("/seller/mySpots")
-    // });
+    dispatch(addSpot(addedSpotDetails)).then( res => {
+      navigate("/seller/mySpots")
+    });
   }
 
   // Dynamically creating added slots list

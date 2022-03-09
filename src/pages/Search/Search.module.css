@@ -57,4 +57,9 @@
     padding: 0 3px;
 }
 
+.searchInputBar .inputBar,
+.searchInputBar select{
+    font-size: 14px;
+}
+
 

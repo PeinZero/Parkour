@@ -1,26 +1,16 @@
 import axios from "axios";
 import { authActions } from "./authentication";
-import { userActions } from "../User/user";
+import { } from "../User/user";
 import { backendLink } from "../../helper/backendLink";
 
 export const sendLoginData = (loginData) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = await axios.post(`${backendLink}/auth/login`, loginData);
-
-      return response;
+      return await axios.post(`${backendLink}/auth/login`, loginData);
     };
 
     try {
       const response = await sendRequest();
-
-      dispatch(
-        authActions.login({
-          isAuth: true,
-          token: response.data.token,
-          userId: response.data.user._id
-        })
-      );
 
       const remainingTimeInMs = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainingTimeInMs);
@@ -28,9 +18,9 @@ export const sendLoginData = (loginData) => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("expiryDate", expiryDate.toISOString());
       localStorage.setItem("userId", response.data.user._id);
-      
-      dispatch(userActions.createUser(response.data.user))
-      console.log(response.data.message);
+
+      return response;
+
     } catch (err) {
       // Validation Check.
       if (err.response.status === 422) {

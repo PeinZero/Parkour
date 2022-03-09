@@ -84,7 +84,7 @@ const BookSpot = (props) => {
   const locationState:any = state;
   console.log(locationState);
 
-  const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, availability: availabilityList, owner: spotOwner} = locationState;
+  const {_id: spotId, addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, availability: availabilityList, owner: spotOwner} = locationState;
   const defaultDate: Date = availabilityList.length > 0 ? availabilityList[0].slotDate: new Date();
   const address = (
     <>
@@ -260,7 +260,7 @@ const BookSpot = (props) => {
   };
 
   const bookSpotHandler = () => {
-    console.log(user.parker._id);
+    console.log(spotId)
     console.log(selectedCar);
     console.log(formatDate(date));
     console.log(addedTimeSlots);

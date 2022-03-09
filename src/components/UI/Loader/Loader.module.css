@@ -1,7 +1,14 @@
 .loader{
     width: 100%;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.subScreen{
+    margin-top: 100px;
+}
+
+.loader.empty{
+    height: 100vh !important;
 }

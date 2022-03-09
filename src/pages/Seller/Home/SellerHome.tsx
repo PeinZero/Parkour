@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch } from "../../../store/hooks";
-import { getAllSpotsBySeller } from "../../../store/Spot/spotActions";
+import { getSpotsBySeller } from "../../../store/Spot/spotActions";
 import styles from "./SellerHome.module.css";
 
 import SellerMap from "../SellerMap/SellerMap";
@@ -18,6 +18,7 @@ const SellerHome = () => {
   
   const {geolocation} = navigator;
   const zoom = 14;
+  const loaderScreenType = "empty";
 
   console.log("Current Location: ", currentLocation);
   console.log("Seller Spots: ", sellerSpots);
@@ -44,17 +45,17 @@ const SellerHome = () => {
   useEffect(() => {
     console.log("SELLER HOME => useEffect() 2");
     
-    dispatch(getAllSpotsBySeller())
+    dispatch(getSpotsBySeller(1))
       .then( fetchedData => {
         console.log("Fetching spots...");
         const fetchedSpots = fetchedData.activeSpots;
         setSellerSpots(fetchedSpots);
       })
-  },[]);
+  },[dispatch]);
 
   return (
     <Fragment>
-      { (currentLocation === null || sellerSpots === null) && <Loader/> }
+      { (currentLocation === null || sellerSpots === null) && <Loader screen = {loaderScreenType} /> }
       { (currentLocation && sellerSpots) && 
       <>
         <Hamburger />

@@ -9,7 +9,6 @@ import Anchor from '../../../components/UI/Anchor/Anchor';
 import Header from '../../../components/UI/Header/Header';
 import Ripple from '../../../components/UI/Button/Ripple/Ripple';
 import AccordionBox from '../../../components/UI/AccordionBox/AccordionBox';
-import AccordionHeader from '../../../components/UI/AccordionBox/AccordionHeader/AccordionHeader';
 
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -34,11 +33,14 @@ const RegisteredCars = () => {
     
     const carsMapped = cars.map( car => {;
         return (
-            <AccordionBox key={car._id} header={<AccordionHeader 
-                name={car.make}
-                color={car.color}
-                numPlate={car.numberPlate}
-            />}>
+            <AccordionBox 
+                key={car._id}
+                carInfo={{
+                    carName: car.make,
+                    color: car.color,
+                    numPlate: car.numberPlate
+                }}
+            >
                 <div className={styles['accordionDetails']}>
                     <div></div>
                     <div className={styles['buttons']}>

@@ -19,6 +19,10 @@ const SellerMap = ({coordinates, activeSpots, zoom}) => {
         zoom={zoom}
         center={coordinates}
         mapContainerStyle={{ width: '100%', height: '100%' }}
+        options={{
+          fullscreenControl: false,
+          zoomControl: false
+        }}
       >
         {console.log("Seller Google Map!")}
 

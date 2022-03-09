@@ -3,12 +3,20 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Rings } from  'react-loader-spinner'
 import styles from './Loader.module.css'
 
-const Loader = () => {
+interface Props{
+  size?: string,
+  screen?: string
+}
+
+const Loader = (props:Props) => {
+  console.log("LOADER RUNNING")
+  let size = props.size || "100";
+
   return (
-    <div className={styles['loader']}>
+    <div className={`${styles['loader']} ${styles[props.screen]}`}>
         <Rings
-            height="100"
-            width="100"
+            height={size}
+            width={size}
             color='grey'
             ariaLabel='loading'
         />
@@ -16,4 +24,4 @@ const Loader = () => {
   )
 }
 
-export default React.memo(Loader)
+export default React.memo(Loader);
