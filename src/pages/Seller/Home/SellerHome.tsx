@@ -48,7 +48,8 @@ const SellerHome = () => {
     dispatch(getSpotsBySeller(1))
       .then( fetchedData => {
         console.log("Fetching spots...");
-        const fetchedSpots = fetchedData.activeSpots;
+        console.log(fetchedData)
+        const fetchedSpots = fetchedData;
         setSellerSpots(fetchedSpots);
       })
   },[dispatch]);

@@ -23,6 +23,7 @@ import Button from '../../../components/UI/Button/Button';
 import Ripple from '../../../components/UI/Button/Ripple/Ripple';
 import { convertTimeToString, formatDate } from '../../../helper/timeFunctions';
 import { getUserByRole } from '../../../store/User/userActions';
+import { bookingRequest } from '../../../store/Spot/spotActions';
 
 import RoomIcon from '@mui/icons-material/Room';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
@@ -260,11 +261,19 @@ const BookSpot = (props) => {
   };
 
   const bookSpotHandler = () => {
-    console.log(spotId)
-    console.log(selectedCar);
-    console.log(formatDate(date));
-    console.log(addedTimeSlots);
-    console.log(message);
+    const bookingData = {
+      spotId: spotId,
+      carId: selectedCar,
+      slots: addedTimeSlots,
+      day: formatDate(date),
+      message: message
+    }
+
+    console.log(bookingData)
+
+    dispatch(bookingRequest(bookingData)).then( (response) => {
+      navigate('/');
+    });
   };
 
   // Dynamically rendering list

@@ -35,6 +35,7 @@ import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
 import MyCars from "./pages/Parker/MyCars/MyCars";
 import AddCar from "./pages/Parker/AddCar/AddCar";
 import BookSpot from "./pages/Parker/BookSpot/BookSpot";
+import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import MySpots from "./pages/Seller/MySpots/MySpots";
 import AddSpot from "./pages/Seller/AddSpot/AddSpot";
@@ -64,10 +65,11 @@ const App: React.FC = (props) => {
     console.log("APP => useEffect()");
 
     const token = localStorage.getItem("token");
-    const expiryDate = localStorage.getItem("expiryDate");
+    // const expiryDate = localStorage.getItem("expiryDate");
     const userId = localStorage.getItem("userId");
 
-    if (!token || !expiryDate) {
+    // if (!token || !expiryDate) {
+    if (!token) {
       return;
     }
 
@@ -86,36 +88,30 @@ const App: React.FC = (props) => {
     <IonApp className="app">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Fragment>
-                {isAuth && currentRoleParker === null && <Loader />}
-                {isAuth && currentRoleParker === true && <ParkerHome />}
-                {isAuth && currentRoleParker === false && <SellerHome />}
-                {!isAuth && <Home />}
-              </Fragment>
-            }
-          />
+          <Route path="/" element={
+            <Fragment>
+              { (isAuth && currentRoleParker === null) && <Loader/>}
+              { (isAuth && currentRoleParker === true) && <ParkerHome />}
+              { (isAuth && currentRoleParker === false) && <SellerHome />}
+              { !isAuth && <Home />}
+            </Fragment>
+          }/>
+            
+          <Route path="/login" element={
+            <Fragment>
+              {isAuth && <Navigate to="/" />}
+              {!isAuth && <Login />}
+            </Fragment>
+          }/>
+          <Route path="/signup" element={<Signup/>} />
 
-          <Route
-            path="/login"
-            element={
-              <Fragment>
-                {isAuth && <Navigate to="/" />}
-                {!isAuth && <Login />}
-              </Fragment>
-            }
-          />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/otp" element={<OTP />} />
+          <Route path="/search" element={<Search/>} />
+          <Route path="/bookingRequest" element={<BookingRequest/>}/>
 
-          <Route path="/search" element={<Search />} />
-
-          <Route path="/parker/mycars" element={<MyCars />} />
-          <Route path="/parker/registerCar" element={<AddCar />} />
-          <Route path="/parker/bookspot" element={<BookSpot />} />
-
+          <Route path="/parker/mycars" element={<MyCars/>} />
+          <Route path="/parker/registerCar" element={<AddCar/>}/>
+          <Route path="/parker/bookspot" element={<BookSpot/>}/>
+          
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />
           <Route path="/seller/spotdetails" element={<SpotDetails />} />

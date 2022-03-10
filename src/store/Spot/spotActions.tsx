@@ -43,10 +43,10 @@ export const getSpotsBySeller = (filter) => {
     const token = localStorage.getItem("token");
     
     const sendRequest = async () => {
-        return await axios.get(`${backendLink}/spot/getAllSpotsBySeller`,
+        return await axios.get(`${backendLink}/spot/getSpotsBySeller`,
         {
           params: {
-            filter
+            filter: filter
           },
           headers: {
             Authorization: "Bearer " + token,
@@ -57,7 +57,7 @@ export const getSpotsBySeller = (filter) => {
 
     try {
       const response =  await sendRequest();
-      return response.data.data;
+      return response.data.spots;
 
     } catch (err) {
       console.log(err.message);
@@ -72,7 +72,164 @@ export const getSpotsBySeller = (filter) => {
   };
 };
 
+export const addSpot = (addSpotData) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
 
+    const sendRequest = async () => {
+        return await axios.post(`${backendLink}/spot`,
+        addSpotData,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+    
+      return response;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+export const editSpot = (spotId, addSpotData) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+        return await axios.put(`${backendLink}/spot/${spotId}`,
+        addSpotData,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+    
+      return response;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+export const deleteSpot = (spotId) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+        return await axios.delete(`${backendLink}/spot/${spotId}`,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+      return response;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+export const deactivateSpot = (spotId) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+        return await axios.put(`${backendLink}/spot/switchStatus/${spotId}`,
+        null,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+      return response;
+      
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+export const bookingRequest = (bookingData) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+        return await axios.post(`${backendLink}/bookingRequest`,
+        bookingData,
+        {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+        });
+    };
+
+    try {
+      const response =  await sendRequest();
+    
+      return response;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+//  Dev Api
 export const getAllSpots = (token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
@@ -87,40 +244,6 @@ export const getAllSpots = (token) => {
     try {
       const response =  await sendRequest();
       return response.data.data;
-
-    } catch (err) {
-      console.log(err.message);
-      if (err.response.status === 404) {
-        console.log("Validation Failed!");
-      }
-
-      if (err.response.status === 401) {
-        console.log("Not Authorized!");
-      }
-    }
-  };
-};
-
-
-export const addSpot = (addSpotData) => {
-  return async (dispatch) => {
-    const token = localStorage.getItem("token");
-
-    const sendRequest = async () => {
-        return await axios.post(`${backendLink}/spot/addSpot`,
-        addSpotData,
-        {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-        });
-    };
-
-    try {
-      const response =  await sendRequest();
-      console.log(response);
-      
-      return response;
 
     } catch (err) {
       console.log(err.message);
