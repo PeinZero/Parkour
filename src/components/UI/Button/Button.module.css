@@ -58,6 +58,10 @@
   font-size: 1.2rem;
 }
 
+.button:disabled{
+  background-color: #aaa !important;
+}
+
 /* RESET */
 .reset{
   display: flex !important;

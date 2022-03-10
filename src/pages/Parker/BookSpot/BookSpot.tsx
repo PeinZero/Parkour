@@ -124,9 +124,15 @@ const BookSpot = (props) => {
   const [alreadyExistError, setAlreadyExistError] = useState(null);
   const [validationParaMsg, setvalidationParaMsg] = useState('');
 
+  let isDisabled = true;
+
+  if(addedTimeSlots.length > 0 && selectedCar !== ''){
+    isDisabled = false;
+  }
 
   if (selectedRadioButton >= 0) {
-    const availability = availabilityList.find( availability => availability.slotDate === date);
+  
+    const availability = availabilityList.find( availability => formatDate(availability.slotDate) === formatDate(date));
     const selectedTimeSlots = availability.slots[selectedRadioButton];
 
     startMinTime = new Date(new Date(selectedTimeSlots.startTime).setSeconds(0, 0));
@@ -150,6 +156,7 @@ const BookSpot = (props) => {
   };
 
   const setDateHandeler = (newDate) => {
+    setSelectedRadioButton(-1);
     setDate(newDate);
   };
 
@@ -221,8 +228,8 @@ const BookSpot = (props) => {
       }
     }
 
-    let updatedAddedTimeSlots = [];
-
+    let updatedAddedTimeSlots = [...addedTimeSlots];
+      
     if(status === Result.overlapping){
       setAlreadyExistError(true);
       setvalidationParaMsg('Time slot already added!');
@@ -232,7 +239,6 @@ const BookSpot = (props) => {
     if(markedForRemoval.length > 0){
       updatedAddedTimeSlots = addedTimeSlots.filter( (timeSlot, index) => !markedForRemoval.includes(index))
     }
-
 
     const timeSlot: TimeSlot = { startTime: st, endTime: et };
     updatedAddedTimeSlots.push(timeSlot);
@@ -469,7 +475,7 @@ const BookSpot = (props) => {
             onChange={messageChangeHandler}
           ></textarea>
         </DetailsBox>
-        <Button type='button' btnClass='primary' onClick={bookSpotHandler}>
+        <Button type='button' btnClass='primary' onClick={bookSpotHandler} disabled={isDisabled}>
           Request Spot
         </Button>
       </div>
