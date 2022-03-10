@@ -26,7 +26,7 @@ const ParkerHome= () => {
 
   const {geolocation} = navigator;
   const radius = 20;  // 3 KM
-  const zoom = 14;
+  const zoom = 13.5;
   const loaderScreenType = "empty";
 
   console.log("Current Location: ", currentLocation);

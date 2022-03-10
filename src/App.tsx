@@ -30,6 +30,7 @@ import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
 import MyCars from "./pages/Parker/MyCars/MyCars";
 import AddCar from "./pages/Parker/AddCar/AddCar";
 import BookSpot from "./pages/Parker/BookSpot/BookSpot";
+import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import SellerHome from "./pages/Seller/Home/SellerHome";
 import MySpots  from "./pages/Seller/MySpots/MySpots";
 import AddSpot from "./pages/Seller/AddSpot/AddSpot";
@@ -56,10 +57,11 @@ const App: React.FC = (props) => {
     console.log("APP => useEffect()");
 
     const token = localStorage.getItem("token");
-    const expiryDate = localStorage.getItem("expiryDate");
+    // const expiryDate = localStorage.getItem("expiryDate");
     const userId = localStorage.getItem("userId");
 
-    if (!token || !expiryDate) {
+    // if (!token || !expiryDate) {
+    if (!token) {
       return;
     }
  
@@ -96,6 +98,7 @@ const App: React.FC = (props) => {
           <Route path="/signup" element={<Signup/>} />
 
           <Route path="/search" element={<Search/>} />
+          <Route path="/bookingRequest" element={<BookingRequest/>}/>
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>

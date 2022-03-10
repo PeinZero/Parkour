@@ -1,0 +1,32 @@
+.filterBox{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.filterBox select{
+  background-color: inherit;
+  padding: 5px 5px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.filterBox select:focus{
+  border: none;
+  outline: 2px solid var(--primary);
+}
+
+.requestList{
+  width: 95%;
+  margin: 0 2.5%;
+}
+
+.noRequests{
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 30px;
+  color: var(--example-label); 
+}

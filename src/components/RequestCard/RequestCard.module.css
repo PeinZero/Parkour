@@ -1,0 +1,91 @@
+.requestCard{
+  background-color: var(--card-background);
+  border-radius: 5px;
+}
+
+.requestCard .top,
+.requestCard .bottom{
+  padding: 15px;
+}
+/* .requestCard .top{
+  padding-bottom: 0;
+} */
+
+.requestCard .headingBox{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+.requestCard .headingBox .date{
+  font-size: 18px;
+}
+
+.requestCard .headingBox .date .day{
+  font-weight: 700;
+}
+
+#requestDateComma{
+  margin: 0;
+}
+
+.requestCard .headingBox .status{
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.status.pending{
+  color: #ff5e00;
+}
+
+.status.accepted{
+  color: #038C00;
+}
+
+.requestCard .address,
+.requestCard .nearestLandmark{
+  font-size: 13px;
+  width: 70%;
+  color: var(--example-label);
+  font-weight: 400;
+}
+
+.requestCard .address{
+  font-size: 13px;
+  height: 40px;
+}
+
+.requestCard .address > p{
+  margin: 0;
+}
+
+.requestCard .nearestLandmark{
+  font-size: 13px;
+  height: 20px;
+}
+
+.requestCard .bottom{
+  background-color: var(--image-placeholder);
+  border-radius: 0 0 5px 5px;
+}
+
+.requestCard .bottom .bottomContent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.requestCard .bottom .bottomContent .time,
+.requestCard .bottom .bottomContent .price{
+  font-size: 15px;
+}
+
+.requestCard .bottom .bottomContent .time{
+  font-weight: 500;
+}
+
+.requestCard .bottom .bottomContent .price span{
+  font-weight: 700;
+}

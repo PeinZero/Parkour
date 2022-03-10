@@ -1,8 +1,8 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from "../../../store/hooks";
-import { getSpotsBySeller } from "../../../store/Spot/spotActions";
+import { getSpotsBySeller, deleteSpot, deactivateSpot } from "../../../store/Spot/spotActions";
 
 import styles from "./MySpots.module.css";
 import Button from "../../../components/UI/Button/Button";
@@ -15,9 +15,9 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 enum Filters {
-  activeSpots = 1,
-  inActiceSpots = -1,
-  allSpots = 0
+  activeSpots = "1",
+  inActiveSpots = "-1",
+  allSpots = "0"
 }
 
 const MySpots = () => {
@@ -34,10 +34,35 @@ const MySpots = () => {
   }
 
   // Handlers
+  const deactivateSpotHandler = (spotId) => {
+    setLoading(true);
+    dispatch(deactivateSpot(spotId)).then( (response) => {
+      getSellerSpots(filter);
+    });
+  } 
+
+  const deleteSpotHandler = (spotId) => {
+    setLoading(true);
+    dispatch(deleteSpot(spotId)).then( (response) => {
+      getSellerSpots(filter);
+    });
+  }
+
   const filterChangeHandler = (event) => {
     setLoading(true);
     setFilter(event.target.value);
   }
+
+  const getSellerSpots = useCallback((filter) => {
+    dispatch(getSpotsBySeller(filter))
+      .then( fetchedSpots => {
+        ReactDOM.unstable_batchedUpdates( () => {
+          console.log("Fetching spots...");
+          setLoading(false);
+          setSellerSpots(fetchedSpots)
+        });
+      })
+  },[dispatch])
 
   const viewSpotHandler = (spot) => {
     navigate('/seller/addSpot', { state: spot })
@@ -49,17 +74,17 @@ const MySpots = () => {
       <AccordionBox 
         key={spot._id}
         spotInfo = {{
-          spotName: `Spot ${index + 1}`,
+          spotName: spot.spotName,
           pricePerHour: spot.pricePerHour,
           nearestLandmark: spot.nearestLandmark
         }}
       >
         <div className={styles["accordionDetails"]}>
           <div className={styles["leftButtons"]}>
-            <Button btnClass="delete-icon" size="small">
+            <Button btnClass="delete-icon" size="small" onClick={() => deleteSpotHandler(spot._id)}>
               <DeleteOutlineRoundedIcon />
             </Button>
-            <Button btnClass="negative-outline" size="small"> Deactivate</Button>
+            <Button btnClass="negative-outline" size="small" onClick={() => deactivateSpotHandler(spot._id)}> Deactivate</Button>
           </div>
           <div className={styles["rightButtons"]}>
             <Button btnClass="primary" size="small" onClick={() => {viewSpotHandler(spot)}}>Edit</Button>
@@ -71,17 +96,9 @@ const MySpots = () => {
 
   useEffect(() => {
     console.log("My Spots => useEffect()");
-    dispatch(getSpotsBySeller(filter))
-      .then( fetchedData => {
-        ReactDOM.unstable_batchedUpdates( () => {
-          console.log("Fetching spots...");
-          const fetchedSpots = fetchedData.activeSpots;
-          setLoading(false);
-          setSellerSpots(fetchedSpots)
-        });
-      })
+    getSellerSpots(filter);
       
-  },[dispatch, filter]);
+  },[dispatch, filter, getSellerSpots]);
   
   return (
     <Fragment>
@@ -89,7 +106,7 @@ const MySpots = () => {
       <div  className={styles["filterBox"]}>
         <select name="typeOfSpots" value={filter} onChange={filterChangeHandler}>
           <option value={Filters.activeSpots} > Active Spots </option>
-          <option value={Filters.inActiceSpots}> Inactive Spots </option>
+          <option value={Filters.inActiveSpots}> Inactive Spots </option>
           <option value={Filters.allSpots}> All Spots </option>
         </select>
       </div>
@@ -101,17 +118,17 @@ const MySpots = () => {
               {renderedSellerSpots}
             </div>
             :
-            <p>No Spots available</p>
+            <p className={styles["noSpots"]}>No Spots available</p>
           }
-
-          <div className={styles["addSpot"]}>
-            <div>
-              <Anchor path="/seller/addSpot">
-                {" "}
-                <AddCircleIcon />{" "}
-              </Anchor>
+          { (filter !== Filters.inActiveSpots) &&
+            <div className={styles["addSpot"]}>
+              <div>
+                <Anchor path="/seller/addSpot">
+                  <AddCircleIcon />
+                </Anchor>
+              </div>
             </div>
-          </div>
+          } 
         </>
       }
     </Fragment>

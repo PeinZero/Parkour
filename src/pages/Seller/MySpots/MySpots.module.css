@@ -29,6 +29,14 @@
   gap: 10px;
 }
 
+.noSpots{
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+  margin: 30px 0 10px 0;
+}
+
 .addSpot {
   display: flex;
   justify-content: center;
