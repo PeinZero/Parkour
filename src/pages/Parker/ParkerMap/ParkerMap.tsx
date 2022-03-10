@@ -10,26 +10,11 @@ import React, { useCallback, useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 
 
-import { GoogleMap, GroundOverlay, Marker } from '@react-google-maps/api'
+import { GoogleMap, Circle, Marker } from '@react-google-maps/api'
 
 const ParkerMap = ({coordinates, spots, zoom}) => {
   console.log("PARKER MAP RUNNING")
   const navigate = useNavigate();
-
-
-  const bounds = useMemo( () => {
-    return(
-      new google.maps.LatLngBounds(
-        {
-          lat: 32.698335045970396,
-          lng: -92.0217273125
-        }, 
-        {
-          lat: 50.01038826014866,
-          lng: -118.6525866875
-        })
-    )
-  }, [])
   
   const markerClickHandler = useCallback((spot) => {
     navigate("/parker/bookspot", { state: spot });
@@ -73,15 +58,22 @@ const ParkerMap = ({coordinates, spots, zoom}) => {
          )
        })}
 
-      <GroundOverlay
-        url= "/images/1920x1080-light-green-solid-color-background.jpg"
-        bounds= {bounds}
-        opacity = {1}
-      />
+        <Circle
+          center={coordinates}
+          radius={3000}
+          options = {{
+            strokeColor: '#6bbaff',
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: '#9efa9b',
+            fillOpacity: 0.3,
+            zIndex: 1
+          }}
+        />
       
      </GoogleMap>
    )
- }, [coordinates, markerClickHandler, zoom, spots, bounds])
+ }, [coordinates, markerClickHandler, zoom, spots])
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>

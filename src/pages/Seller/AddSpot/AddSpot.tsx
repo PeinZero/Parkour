@@ -28,7 +28,7 @@ import { TextField } from '@mui/material'
 
 import Loader from '../../../components/UI/Loader/Loader'
 
-import { addSpot } from '../../../store/Spot/spotActions'
+import { addSpot, editSpot } from '../../../store/Spot/spotActions'
 import { useAppDispatch } from '../../../store/hooks'
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
@@ -58,6 +58,8 @@ const MONTHS = [
 
 function spotInfoReducer(spotInfoState, action){
   switch (action.type) {
+    case 'spotName':
+      return {...spotInfoState, spotName: action.value};
     case 'addressLine1':
       return {...spotInfoState, addressLine1: action.value};
     case 'addressLine2':
@@ -68,6 +70,7 @@ function spotInfoReducer(spotInfoState, action){
       return {...spotInfoState, pricePerHour: action.value};;
     case 'set_spotInfo':
       return {
+        spotName: action.value.spotName,
         addressLine1: action.value.addressLine1,
         addressLine2: action.value.addressLine2,
         nearestLandmark: action.value.nearestLandmark,
@@ -86,9 +89,9 @@ const AddSpot = (props) => {
   const location = useLocation();
   const {state} = location;
   const locationState:any = state;
-  console.log(locationState);
+  // console.log(locationState);
 
-  let spotInfo = {addressLine1: '', addressLine2: '', nearestLandmark: '', pricePerHour: 10};
+  let spotInfo = {spotName: '', addressLine1: '', addressLine2: '', nearestLandmark: '', pricePerHour: 10};
   let defaultStartTime = new Date();
   let defaultSlotList = [];
   let pageName = 'Add Spot';
@@ -122,7 +125,9 @@ const AddSpot = (props) => {
   const navigate = useNavigate();
 
   // Extracting Spot Info form field values
-  const {addressLine1, addressLine2, nearestLandmark, pricePerHour} = spotInfoState;
+  console.log(spotInfoState);
+  
+  const {spotName, addressLine1, addressLine2, nearestLandmark, pricePerHour} = spotInfoState;
 
   // Setting up min times for timePickers
   let minStartTime = new Date()
@@ -337,23 +342,33 @@ const AddSpot = (props) => {
 
   // Form submit Handler
   const onSubmitHandler = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const addedSpotDetails = {
-      _id: spotId,
-      addressLine1: event.target.addressLine1.value,
-      addressLine2: event.target.addressLine2.value,
-      nearestLandmark: event.target.nearestLandmark.value,
-      location: [ currentPosition.lng, currentPosition.lat],
-      pricePerHour: event.target.pricePerHour.value,
-      availability: slotList
+    const addedSpotData = {
+      spotName: spotInfoState.spotName,
+      addressLine1: spotInfoState.addressLine1,
+      addressLine2: spotInfoState.addressLine2,
+      nearestLandmark: spotInfoState.nearestLandmark,
+      pricePerHour: spotInfoState.pricePerHour,
+      availability: slotList,
+      location: [currentPosition.lng, currentPosition.lat]
     }
+    console.log(addedSpotData);
 
-    console.log(addedSpotDetails);
-
-    dispatch(addSpot(addedSpotDetails)).then( res => {
-      navigate("/seller/mySpots")
-    });
+    if(spotId !== null){
+      console.log("Spot Edited!")
+      dispatch(editSpot(spotId, addedSpotData)).then( res => {
+        console.log(res)
+        navigate("/seller/mySpots")
+      });
+    }
+    else{
+      console.log("Spot Added!")
+      dispatch(addSpot(addedSpotData)).then( res => {
+        navigate("/seller/mySpots")
+      });
+    }
+    
   }
 
   // Dynamically creating added slots list
@@ -404,6 +419,8 @@ const AddSpot = (props) => {
     setCurrentPosition({ lat, lng })
   }, [])
 
+  console.log(currentPosition);
+  
   useEffect(() => {
     console.log('ADD SPOT => useEffect()')
 
@@ -413,7 +430,7 @@ const AddSpot = (props) => {
         lat: locationState.location.coordinates[1],
         lng: locationState.location.coordinates[0],
       }
-  
+      
       spotInfoDispatch({type: 'set_spotInfo', value: locationState});
       setCurrentPosition(currentPosition)
     }
@@ -445,6 +462,15 @@ const AddSpot = (props) => {
             }
           </div>
           <form onSubmit={onSubmitHandler} className={styles['form']}>
+            <Input
+              label='Spot Name'
+              name='spotName'
+              type='text'
+              placeholder='e.g. My Spot 1'
+              className={styles['registerSpot']}
+              onChange={spotInfoHandler}
+              value={spotName}
+            />
             <Input
               label='Address Line 1'
               name='addressLine1'

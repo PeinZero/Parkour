@@ -109,27 +109,17 @@ const Menu: React.FC<MenuProps> = (props): JSX.Element => {
               <ArrowForwardIosRoundedIcon />
             </Ripple>
           </Anchor>
-          {isParker ? (
-            <Anchor path="#">
-              <Ripple>
-                <div>
-                  <HistoryIcon />
-                  <p>Your Past Bookings</p>
-                </div>
-                <ArrowForwardIosRoundedIcon />
-              </Ripple>
-            </Anchor>
-          ) : (
-            <Anchor path="#">
-              <Ripple>
-                <div>
-                  <HistoryIcon />
-                  <p>Booking Requests</p>
-                </div>
-                <ArrowForwardIosRoundedIcon />
-              </Ripple>
-            </Anchor>
-          )}
+
+          <Anchor path="/bookingRequest">
+            <Ripple>
+              <div>
+                <HistoryIcon />
+                <p>Booking Requests</p>
+              </div>
+              <ArrowForwardIosRoundedIcon />
+            </Ripple>
+          </Anchor>
+      
           <Anchor path="#">
             <Ripple>
               <div>
