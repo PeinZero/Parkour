@@ -1,6 +1,7 @@
 .requestCard{
   background-color: var(--card-background);
   border-radius: 5px;
+  margin-bottom: 15px;
 }
 
 .requestCard .top,

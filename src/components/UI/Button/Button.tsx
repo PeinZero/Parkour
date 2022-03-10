@@ -1,12 +1,20 @@
-import styles from './Button.module.css'
-import {ButtonBase} from '@material-ui/core';
+import styles from './Button.module.css';
+import { ButtonBase } from '@material-ui/core';
 
 const Button = (props) => {
-    return (
-        <ButtonBase className={`${styles['button']} ${styles[props.btnClass]} ${styles[props.size]} ${props.className}`} type={props.type || 'submit'} onClick={props.onClick} style={props.style}>
-            {props.children}
-        </ButtonBase>
-    )
-}
+  return (
+    <ButtonBase
+      className={`${styles['button']} ${styles[props.btnClass]} ${
+        styles[props.size]
+      } ${props.className}`}
+      type={props.type || 'submit'}
+      onClick={props.onClick}
+      style={props.style}
+      disabled={props.disabled}
+    >
+      {props.children}
+    </ButtonBase>
+  );
+};
 
-export default Button
+export default Button;
