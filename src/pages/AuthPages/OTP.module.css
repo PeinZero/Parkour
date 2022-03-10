@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 80%;
+  margin: 0 10%;
+  /* padding: 20px; */
+  /* align-items: space-around; */
+  /* justify-content: center; */
+}
+
+.container h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.container p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: var(--example-label);
+  /* font-style: italic; */
+}
+
+.userInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+.OTPInput {
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+  background: #eef2f3;
+  height: 40px;
+}
+
+.OTPInput:focus {
+  outline: 1px solid var(--primary);
+  /* user-select: all; */
+}
+
+.Header {
+  text-align: center;
+}
+
+.submit {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ConfirmButton {
+  width: 50% !important;
+}

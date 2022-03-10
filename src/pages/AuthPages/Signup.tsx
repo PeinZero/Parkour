@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
 import { sendSignupData } from "../../store/Authentication/authenticationActions";
+import { useIonAlert } from "@ionic/react";
+import { useState } from "react";
 
 import styles from "./Signup.module.css";
 
@@ -9,8 +11,8 @@ import Input from "../../components/UI/Input/Input";
 import Header from "../../components/UI/Header/Header";
 
 const Signup: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [present] = useIonAlert();
 
   // const formSubmitHandler = (e) => {
   //   e.preventDefault();
@@ -28,10 +30,66 @@ const Signup: React.FC = () => {
   //   navigate("/login");
   // };
 
+  const setPresent = (errorHeader, errorBody, buttons) => {
+    present({
+      cssClass: "my-css",
+      header: errorHeader,
+      message: errorBody,
+      buttons: [...buttons],
+      // onDidDismiss: (e) => console.log("did dismiss"),
+    });
+  };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    navigate("/otp");
+    let phoneNumber = e.target.phone.value;
+    let name = e.target.name.value;
+    let email = e.target.email.value;
+    let password = e.target.password.value;
+    let confirmPassword = e.target.confirmPassword.value;
+
+    if (password === "" || confirmPassword === "") {
+      setPresent("Error", "Password can not be empty", ["OK"]);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setPresent("Error", "Passwords do not match", ["OK"]);
+      return;
+    }
+
+    //Removing Spaces and Whitespaces from Number
+    phoneNumber = phoneNumber.trim();
+    phoneNumber = phoneNumber.replace(/\s/g, "");
+
+    //Removing + from the phone number
+    if (phoneNumber.charAt(0) === "+") {
+      phoneNumber = phoneNumber.substring(1, phoneNumber.length);
+    }
+
+    //Phone Number Validation and Adding Country Code
+    if (phoneNumber.length < 11 || phoneNumber.length > 12) {
+      setPresent("Error", "Invalid Phone Number", ["OK"]);
+      return;
+    }
+    //Number length can only be 11 only if it starts with 0
+    else if (phoneNumber.length === 11 && phoneNumber.charAt(0) !== "0") {
+      setPresent("Error", "Invalid Phone Number", ["OK"]);
+      return;
+    } else {
+      if (phoneNumber[0] === "0") {
+        //Removing 0 from the number
+        phoneNumber = phoneNumber.substring(1, phoneNumber.length);
+        phoneNumber = "+92" + phoneNumber;
+      } else {
+        phoneNumber = "+" + phoneNumber;
+      }
+
+      navigate("/otp", {
+        state: { phoneNumber, name, email, password, confirmPassword },
+      });
+    }
   };
 
   return (

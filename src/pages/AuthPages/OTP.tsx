@@ -1,15 +1,28 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   getAuth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./OTP.module.css";
+import Button from "../../components/UI/Button/Button";
+import Header from "../../components/UI/Header/Header";
+import { useIonAlert } from "@ionic/react";
+import { useAppDispatch } from "../../store/hooks";
+import { sendSignupData } from "../../store/Authentication/authenticationActions";
 
 const OTP = () => {
-  const [OTP, setOTP] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [OTPBtnStatus, setOTPBtnStatus] = useState(true);
+  const [firstDigit, setFirstDigit] = useState("");
+  const [secondDigit, setSecondDigit] = useState("");
+  const [thirdDigit, setThirdDigit] = useState("");
+  const [fourthDigit, setFourthDigit] = useState("");
+  const [fifthDigit, setFifthDigit] = useState("");
+  const [sixthDigit, setSixthDigit] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [present] = useIonAlert();
+  const dispatch = useAppDispatch();
 
   //Conformation Object Passed back by Firebase after OTP is sent Sucessfully
   const [confirmationResult, setConfirmationResult] = useState(null);
@@ -17,7 +30,17 @@ const OTP = () => {
   //This is messing up (not sure how to make this global throughout the component)
   let recaptchaVerifier;
 
-  const navigate = useNavigate();
+  const { state } = location;
+  const locationState: any = state;
+  let phoneNumber, name, email, password, confirmPassword;
+
+  if (locationState) {
+    phoneNumber = locationState.phoneNumber;
+    name = locationState.name;
+    email = locationState.email;
+    password = locationState.password;
+    confirmPassword = locationState.confirmPassword;
+  }
 
   // Firebase Requires This function to be called in order to verify if the user is human
   const configureCaptcha = () => {
@@ -30,7 +53,7 @@ const OTP = () => {
         size: "invisible",
         callback: (response) => {
           // reCAPTCHA solved, allow signInWithPhoneNumber.
-          onSignUpSubmit(response);
+          onSignUpSubmit();
           console.log("reCAPTCHA solved, allow signInWithPhoneNumber.");
         },
         defaultCountry: "PK",
@@ -39,43 +62,18 @@ const OTP = () => {
     );
   };
 
-  const onSignUpSubmit = (e) => {
-    e.preventDefault();
+  const onSignUpSubmit = () => {
+    // e.preventDefault();
     configureCaptcha();
 
-    let TempPhoneNumber = phoneNumber;
+    // Testing Console Logs (remove if wished)
+    console.log("onSignUpSubmit");
+    console.log("Phone Number: ", phoneNumber);
 
-    //Phone Number Validation and Adding Country Code
-    if (TempPhoneNumber.length < 11 || TempPhoneNumber.length > 12) {
-      console.log("Invalid Phone Number");
-      setOTPBtnStatus(true);
-    }
-
-    //Number length can only be 11 only if it starts with 0
-    else if (
-      TempPhoneNumber.length === 11 &&
-      TempPhoneNumber.charAt(0) !== "0"
-    ) {
-      console.log("Invalid Phone Number");
-      setOTPBtnStatus(true);
-    } else {
-      setOTPBtnStatus(false);
-      if (TempPhoneNumber[0] === "0") {
-        //Removing 0 from the number
-        TempPhoneNumber = TempPhoneNumber.substring(1, TempPhoneNumber.length);
-        TempPhoneNumber = "+92" + TempPhoneNumber;
-      } else {
-        TempPhoneNumber = "+" + TempPhoneNumber;
-      }
-
-      // Testing Console Logs (remove if wished)
-      console.log("onSignUpSubmit");
-      console.log("Phone Number: ", TempPhoneNumber);
-
-      const appVerifier = recaptchaVerifier;
-      const auth = getAuth();
-
-      signInWithPhoneNumber(auth, TempPhoneNumber, appVerifier)
+    const appVerifier = recaptchaVerifier;
+    const auth = getAuth();
+    if (phoneNumber) {
+      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
         .then((_confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           setConfirmationResult(_confirmationResult);
@@ -87,16 +85,59 @@ const OTP = () => {
     }
   };
 
+  const setPresent = (errorHeader, errorBody, buttons) => {
+    present({
+      cssClass: "my-css",
+      header: errorHeader,
+      message: errorBody,
+      buttons: [...buttons],
+      // onDidDismiss: (e) => console.log("did dismiss"),
+    });
+  };
+
+  useEffect(() => {
+    onSignUpSubmit();
+  }, []);
+
   const verifyOTP = (e) => {
     e.preventDefault();
+
+    //OTP Validation
+    if (
+      firstDigit === "" ||
+      secondDigit === "" ||
+      thirdDigit === "" ||
+      fourthDigit === "" ||
+      fifthDigit === "" ||
+      sixthDigit === ""
+    ) {
+      setPresent("Error", "Please Enter All Digits", ["OK"]);
+      return;
+    }
+
+    //OTP Formating
+    let OTP =
+      firstDigit +
+      secondDigit +
+      thirdDigit +
+      fourthDigit +
+      fifthDigit +
+      sixthDigit;
+
     confirmationResult
       .confirm(OTP)
       .then((result) => {
-        // User signed in successfully.
+        dispatch(
+          sendSignupData({
+            name,
+            phone: phoneNumber,
+            email,
+            password,
+            confirmPassword,
+          })
+        );
 
-        //Set User here
-        // const user = result.user;
-        // CALL Signup POST API Here.
+        console.log("User Signed Up Sucessfully");
         navigate("/login");
       })
       .catch((error) => {
@@ -105,32 +146,94 @@ const OTP = () => {
       });
   };
 
+  const onChangeHandler = (e) => {
+    if (e.target.nextSibling) {
+      e.target.nextSibling.focus();
+    }
+  };
+
   return (
     <Fragment>
-      <h2>Enter Phone Number</h2>
-      <form onSubmit={onSignUpSubmit}>
-        <div id="sign-in-button"></div>
-        <input
-          type="number"
-          placeholder="Phone Number"
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          value={phoneNumber}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <Header backLink="/" content="Confirm Registration" className="small" />
+      <div id="sign-in-button"></div>
+      <div className={styles["container"]}>
+        <h3>Enter your 6 digit code</h3>
+        <p>We sent you a 6 digit code at this number {phoneNumber}</p>
 
-      <h2>Enter OTP</h2>
-      <form onSubmit={verifyOTP}>
-        <input
-          type="text"
-          placeholder="OTP"
-          onChange={(e) => setOTP(e.target.value)}
-          value={OTP}
-        />
-        <button type="submit" disabled={OTPBtnStatus}>
-          Submit
-        </button>
-      </form>
+        <div className={styles["userInput"]}>
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="1"
+            value={firstDigit}
+            onChange={onChangeHandler}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setFirstDigit(digit);
+            }}
+          />
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="2"
+            onChange={onChangeHandler}
+            value={secondDigit}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setSecondDigit(digit);
+            }}
+          />
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="3"
+            onChange={onChangeHandler}
+            value={thirdDigit}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setThirdDigit(digit);
+            }}
+          />
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="4"
+            onChange={onChangeHandler}
+            value={fourthDigit}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setFourthDigit(digit);
+            }}
+          />
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="5"
+            onChange={onChangeHandler}
+            value={fifthDigit}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setFifthDigit(digit);
+            }}
+          />
+          <input
+            className={styles["OTPInput"]}
+            type="number"
+            id="6"
+            onChange={onChangeHandler}
+            value={sixthDigit}
+            onInput={(e) => {
+              let digit = (e.target as HTMLInputElement).value[0];
+              setSixthDigit(digit);
+            }}
+          />
+        </div>
+        <div className={styles["submit"]}>
+          <Button className={styles["ConfirmButton"]} onClick={verifyOTP}>
+            Verify
+          </Button>
+        </div>
+      </div>
     </Fragment>
   );
 };
