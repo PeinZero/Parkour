@@ -13,6 +13,7 @@ import Header from '../../components/UI/Header/Header';
 
 
 const Login: React.FC = () => {
+    console.log("LOGIN RUNNING!")
     const dispatch = useAppDispatch();
 
     const formSubmitHandler = (e) => {

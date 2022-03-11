@@ -12,11 +12,7 @@ export const sendLoginData = (loginData) => {
     try {
       const response = await sendRequest();
 
-      const remainingTimeInMs = 60 * 60 * 1000;
-      // const expiryDate = new Date(new Date().getTime() + remainingTimeInMs);
-
       localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("expiryDate", expiryDate.toISOString());
       localStorage.setItem("userId", response.data.user._id);
 
       return response;

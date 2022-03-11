@@ -11,6 +11,12 @@ const setAutoLogout = useCallback((milliseconds) => {
 
 // Add this in the App component useEffect()
 
+  const expiryDate = localStorage.getItem("expiryDate");
+  
+  if (!token || !expiryDate) {
+    return;
+  }
+
   if (new Date(expiryDate) <= new Date()) {
     dispatch(logout());
     return;
@@ -20,3 +26,8 @@ const setAutoLogout = useCallback((milliseconds) => {
     new Date(expiryDate).getTime() - new Date().getTime();
   
   setAutoLogout(remainingTimeInMs);
+
+// Add this in the sendLoginData function in authenticationActions 
+const remainingTimeInMs = 60 * 60 * 1000;
+const expiryDate = new Date(new Date().getTime() + remainingTimeInMs);
+localStorage.setItem("expiryDate", expiryDate.toISOString()); 

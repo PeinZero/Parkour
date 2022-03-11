@@ -5,7 +5,7 @@ import { backendLink } from "../../helper/backendLink";
 export const fetchUser = (userId, token) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = await axios.get(
+      return await axios.get(
         `${backendLink}/user/getUser/${userId}`,
         {
           headers: {
@@ -13,13 +13,11 @@ export const fetchUser = (userId, token) => {
           },
         }
       );
-
-      return response;
     };
 
     try {
       const response = await sendRequest();
-      dispatch(userActions.createUser(response.data.user));
+      return response;
       
     } catch (error) {
       console.log("Failed to fetch user data!");

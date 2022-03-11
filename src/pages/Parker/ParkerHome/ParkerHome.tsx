@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from "../../../store/hooks";
 import { getSpotsByRadius } from "../../../store/Spot/spotActions";
@@ -13,6 +13,7 @@ import Loader from "../../../components/UI/Loader/Loader";
 
 import RoomIcon from "@mui/icons-material/Room";
 import SearchIcon from "@mui/icons-material/Search";
+import ReactDOM from "react-dom";
 
 
 const ParkerHome= () => {
@@ -22,57 +23,52 @@ const ParkerHome= () => {
 
   const {state: searchedLocation} = useLocation();
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [spots, setSpots] = useState(null);
+  const [spots, setSpots] = useState([]);
 
   const {geolocation} = navigator;
-  const radius = 5;  // 3 KM
+  const radius = 5;  // in KM
   const zoom = 13.5;
   const loaderScreenType = "empty";
 
   console.log("Current Location: ", currentLocation);
   console.log("Spots: ", spots);
+
+  const FetchSpots = useCallback( (currentLocation, radius) => {
+    dispatch(getSpotsByRadius(currentLocation, radius))
+      .then( fetchedData => {
+        const fetchedSpots = fetchedData.spots;
+
+        ReactDOM.unstable_batchedUpdates( () => {
+          setCurrentLocation(currentLocation);
+          setSpots(fetchedSpots); 
+        });
+      })
+  }, [dispatch])
+  
   
   // Fetching the current or searched location...
   useEffect(() => {
     console.log("PARKER HOME => useEffect() 1");
+
     if(searchedLocation){
-      console.log("Fetching searched location...");
-      setCurrentLocation(searchedLocation);
+      FetchSpots(searchedLocation, radius);
     }
-    else if (geolocation && currentLocation === null) {
-      console.log("Fetching current location...");
+    else{
       geolocation.getCurrentPosition(position => {
-        const currentPosition = {
+        const fetchedLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        }  
-        setCurrentLocation(currentPosition);  
+        } 
+        
+        FetchSpots(fetchedLocation, radius);  
       })
     }
-  }, [currentLocation, searchedLocation, geolocation])
+  }, [FetchSpots, searchedLocation, geolocation])
 
-
-  // Fetching spots arourd the current or searched location...
-  useEffect(() => {
-    console.log("PARKER HOME => useEffect() 2");
-    
-    if (currentLocation !== null){
-      console.log("Fetching spots...");
-      dispatch(getSpotsByRadius(currentLocation, radius))
-        .then( fetchedData => {
-          const fetchedSpots = fetchedData.spots;
-
-          if(fetchedSpots.length > 0 || spots === null){
-            setSpots(fetchedSpots);
-          }
-        })
-    } 
-  }, [currentLocation, dispatch])
-  
   return(
     <Fragment>
-      { (currentLocation === null || spots === null) && <Loader screen={loaderScreenType}/> }
-      { (currentLocation && spots) && 
+      { currentLocation === null  && <Loader screen={loaderScreenType}/> }
+      { currentLocation && 
         <>
         <Hamburger />
 
