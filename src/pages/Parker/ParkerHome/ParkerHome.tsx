@@ -25,7 +25,7 @@ const ParkerHome= () => {
   const [spots, setSpots] = useState(null);
 
   const {geolocation} = navigator;
-  const radius = 20;  // 3 KM
+  const radius = 5;  // 3 KM
   const zoom = 13.5;
   const loaderScreenType = "empty";
 

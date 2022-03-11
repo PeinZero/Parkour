@@ -54,7 +54,7 @@ const RegisterCar = () => {
                     <Input label="Year" name="year" type="text" 
                         placeholder="2019" className={styles["registerCarFormControl"]}
                     />
-                    <Input2Column label="Mileage" name="mileage" type="text" 
+                    <Input2Column label="Fuel Average" name="mileage" type="text" 
                         placeholder="12" className={styles["registerCarFormControl"]}
                         sideContent="km/litre"
                     />

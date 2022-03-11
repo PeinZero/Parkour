@@ -135,10 +135,10 @@ const OTP = () => {
             password,
             confirmPassword,
           })
-        );
-
-        console.log("User Signed Up Sucessfully");
-        navigate("/login");
+        ).then( response => {
+          console.log("User Signed Up Sucessfully");
+          navigate("/login");
+        });
       })
       .catch((error) => {
         // User couldn't sign in (bad verification code?)

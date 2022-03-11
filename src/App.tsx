@@ -105,6 +105,7 @@ const App: React.FC = (props) => {
           }/>
           <Route path="/signup" element={<Signup/>} />
 
+          <Route path="/otp" element={<OTP/>} />
           <Route path="/search" element={<Search/>} />
           <Route path="/bookingRequest" element={<BookingRequest/>}/>
 

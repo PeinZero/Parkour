@@ -60,7 +60,7 @@ const ParkerMap = ({coordinates, spots, zoom}) => {
 
         <Circle
           center={coordinates}
-          radius={3000}
+          radius={5000}
           options = {{
             strokeColor: '#6bbaff',
             strokeOpacity: 0.8,

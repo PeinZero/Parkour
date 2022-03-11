@@ -44,8 +44,10 @@ export const sendSignupData = (signupData) => {
     };
 
     try {
-      await sendRequest();
+      const response = await sendRequest();
       dispatch(authActions.signup());
+
+      return response;
     } catch (err) {
       if (err.response.status === 422) {
         console.log("Validation Failed!");
