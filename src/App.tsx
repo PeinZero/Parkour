@@ -8,18 +8,10 @@ import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
 
-/* Optional CSS utils that can be commented out */
-import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
-import "@ionic/react/css/text-alignment.css";
-import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
-
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useEffect, Fragment } from "react";
+import { useEffect, Fragment, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -48,11 +40,15 @@ import { fetchUser } from "./store/User/userActions";
 import {} from "./store/Authentication/authenticationActions";
 import OTP from "./pages/AuthPages/OTP";
 import firebase from "./firebaseConfig";
+import { userActions } from "./store/User/user";
+import ReactDOM from "react-dom";
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING");
   let _firebase = firebase;
+  
   const dispatch = useAppDispatch();
+  
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
   const currentRoleParker = useAppSelector(
     (state) => state.user.currentRoleParker
@@ -65,23 +61,27 @@ const App: React.FC = (props) => {
     console.log("APP => useEffect()");
 
     const token = localStorage.getItem("token");
-    // const expiryDate = localStorage.getItem("expiryDate");
     const userId = localStorage.getItem("userId");
 
-    // if (!token || !expiryDate) {
-    if (!token) {
-      return;
+    if (token) {
+      console.log("Token found!");
+
+      dispatch(fetchUser(userId, token))
+        .then( response => {
+          ReactDOM.unstable_batchedUpdates( () => {
+
+            dispatch(userActions.createUser(response.data.user));
+            dispatch(
+              authActions.login({
+                isAuth: true,
+                token: token,
+                userId: userId,
+              })
+            ) 
+            
+          });
+        })
     }
-
-    dispatch(
-      authActions.login({
-        isAuth: true,
-        token: token,
-        userId: userId,
-      })
-    );
-
-    dispatch(fetchUser(userId, token));
   }, [dispatch]);
 
   return (
@@ -90,10 +90,9 @@ const App: React.FC = (props) => {
         <Routes>
           <Route path="/" element={
             <Fragment>
-              { (isAuth && currentRoleParker === null) && <Loader/>}
               { (isAuth && currentRoleParker === true) && <ParkerHome />}
               { (isAuth && currentRoleParker === false) && <SellerHome />}
-              { !isAuth && <Home />}
+              { !isAuth &&  <Home /> }
             </Fragment>
           }/>
             

@@ -16,18 +16,17 @@ import SearchResult from '../../components/SearchResult/SearchResult';
 
 const Search = () => {
 
-    const [address, setAddress] = useState("");
-    const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
-    const [suggestions, setSuggestions] = useState([]);
+    // const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
     const navigate = useNavigate();
 
-    const handleSelect = (address) => {
+    const [address, setAddress] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
 
+    const handleSelect = (address) => {
         geocodeByAddress(address)
             .then((results) => getLatLng(results[0]))
             .then((latLng) => {
                 console.log("Success", latLng);
-                setCoordinates(latLng);
                 navigate('/', {state: latLng})
             })
             .catch((error) => console.error("Error", error));
