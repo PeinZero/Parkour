@@ -21,7 +21,7 @@ import {
 
 // Custom Components
 // --- Global
-import Home from "./pages/MainPage/MainPage";
+import Home from "./pages/Home/Home";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import Search from "./pages/Search/Search";
