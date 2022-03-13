@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 
-import styles from './Home.module.css'
+import styles from './MainPage.module.css'
 
 import Anchor from '../../components/UI/Anchor/Anchor';
 import Button from '../../components/UI/Button/Button';
 
-const Home = () => {
-    console.log("Home Running");
+const MainPage = () => {
+    console.log("MAIN Running");
     
     return (
         <Fragment>
@@ -36,4 +36,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default MainPage;

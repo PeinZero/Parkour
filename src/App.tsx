@@ -1,5 +1,3 @@
-import { IonApp } from "@ionic/react";
-
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -11,7 +9,9 @@ import "@ionic/react/css/typography.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { useEffect, Fragment, useState } from "react";
+import { IonApp } from "@ionic/react";
+import { useEffect, Fragment} from "react";
+import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,29 +19,34 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Home from "./pages/Home/Home";
+// Custom Components
+// --- Global
+import Home from "./pages/MainPage/MainPage";
 import Login from "./pages/AuthPages/Login";
 import Signup from "./pages/AuthPages/Signup";
 import Search from "./pages/Search/Search";
+import OTP from "./pages/AuthPages/OTP";
+import BookingRequest from "./pages/BookingRequest/BookingRequest";
+
+// --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
 import MyCars from "./pages/Parker/MyCars/MyCars";
 import AddCar from "./pages/Parker/AddCar/AddCar";
 import BookSpot from "./pages/Parker/BookSpot/BookSpot";
-import BookingRequest from "./pages/BookingRequest/BookingRequest";
-import SellerHome from "./pages/Seller/Home/SellerHome";
+
+// --- Seller
+import SellerHome from "./pages/Seller/SellerHome/SellerHome";
 import MySpots from "./pages/Seller/MySpots/MySpots";
 import AddSpot from "./pages/Seller/AddSpot/AddSpot";
 import SpotDetails from "./pages/Seller/SpotDetails/SpotDetails";
-import Loader from "./components/UI/Loader/Loader";
 
+// Other Imports
 import { useAppSelector, useAppDispatch } from "./store/hooks";
-import { authActions } from "./store/Authentication/authentication";
 import { fetchUser } from "./store/User/userActions";
-import {} from "./store/Authentication/authenticationActions";
-import OTP from "./pages/AuthPages/OTP";
-import firebase from "./firebaseConfig";
+import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
-import ReactDOM from "react-dom";
+import firebase from "./firebaseConfig";
+
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING");
@@ -50,9 +55,7 @@ const App: React.FC = (props) => {
   const dispatch = useAppDispatch();
   
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
-  const currentRoleParker = useAppSelector(
-    (state) => state.user.currentRoleParker
-  );
+  const currentRoleParker = useAppSelector((state) => state.user.currentRoleParker);
 
   console.log("AUTH", isAuth);
   console.log("CurrentRoleParker", currentRoleParker);
@@ -63,7 +66,8 @@ const App: React.FC = (props) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    if (token) {
+    // If token and userId is found, then fetch user and setup the redux store.
+    if (token && userId) {
       console.log("Token found!");
 
       dispatch(fetchUser(userId, token))

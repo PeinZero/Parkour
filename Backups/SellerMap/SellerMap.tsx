@@ -1,16 +1,17 @@
-import { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { GoogleMap, Marker } from '@react-google-maps/api'
+
 
 const SellerMap = ({coordinates, activeSpots, zoom}) => {
   console.log("SELLER MAP RUNNING");
   
   const navigate = useNavigate()
 
-  const markerClickHandler = (spot) => {
-    navigate('/seller/addSpot', { state: spot })
-  }
+  const markerClickHandler = useCallback((spot) => {
+    navigate("/seller/addSpot", { state: spot });
+  }, [navigate]);
 
   // Creating seller map
   const Map = useMemo( () => {
@@ -51,7 +52,7 @@ const SellerMap = ({coordinates, activeSpots, zoom}) => {
         })}
       </GoogleMap>
     )
-  }, [activeSpots])
+  }, [coordinates, markerClickHandler, zoom, activeSpots])
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -60,4 +61,4 @@ const SellerMap = ({coordinates, activeSpots, zoom}) => {
   )
 }
 
-export default SellerMap
+export default React.memo(SellerMap);

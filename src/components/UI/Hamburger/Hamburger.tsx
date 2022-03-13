@@ -1,13 +1,16 @@
+import React from 'react'
 import { Fragment, useState } from 'react'
 import Menu from '../../Menu/Menu'
 import styles from './Hamburger.module.css'
 
 
-const Hamburger = (props) => {
+const Hamburger = () => {
+    const [clicked, setClicked] = useState(false);
 
-    const [clicked, setClicked] = useState(false)
     const clickHandler = () => {
-        setClicked(!clicked);
+        setClicked((prevState => {
+            return !prevState
+        }));
     }
 
     return (
@@ -22,5 +25,5 @@ const Hamburger = (props) => {
     )
 }
 
-export default Hamburger
+export default Hamburger;
 
