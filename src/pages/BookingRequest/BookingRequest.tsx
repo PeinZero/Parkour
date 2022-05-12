@@ -51,6 +51,7 @@ const BookingRequest = () => {
   const getRequests = useCallback((filter) => {
     dispatch(fetchRequests(filter, currentRoleParker))
       .then( (fetchedRequests) => {
+        console.log("FR: ", fetchedRequests);
         ReactDOM.unstable_batchedUpdates( () => {
           console.log("Fetching requests...");
           setLoading(false);
@@ -59,12 +60,12 @@ const BookingRequest = () => {
       })
   },[dispatch, currentRoleParker])
 
-  // const viewRequestHandler = (spot) => {
-  //   navigate('/seller/addSpot', { state: spot })
-  // }
+  const viewRequestHandler = (request) => {
+    navigate('/requestDetails', { state: request })
+  }
 
   // Dynamically Rendering requests
-  const renderedRequests = requests.map( (request, index) => {
+  const renderedRequests = requests.map( (request) => {
     const formattedDate = {
       year: new Date(request.day).getFullYear(),
       month: MONTHS[new Date(request.day).getMonth()],
@@ -72,8 +73,8 @@ const BookingRequest = () => {
     }
 
     const address = {
-      addressLine1: request.spot.addressLine1,
-      addressLine2: request.spot.addressLine2
+      addressLine1: request.spot ? request.spot.addressLine1 : null,
+      addressLine2: request.spot ? request.spot.addressLine2 : null
     }
 
     const startTime = new Date(request.slots[0].startTime);
@@ -85,7 +86,7 @@ const BookingRequest = () => {
     }
 
     return(
-      <RequestCard key={request._id} day={formattedDate} status={request.status} address= {address} nearestLandmark={request.spot.nearestLandmark} time={time} pricePerHour={request.spot.pricePerHour}/>
+      <RequestCard key={request._id} day={formattedDate} status={request.status} address= {address} nearestLandmark={request.spot ? request.spot.nearestLandmark : null} time={time} pricePerHour={request.spot ? request.spot.pricePerHour : null} onClick={()=> {viewRequestHandler(request)}}/>
     );
   });
 
@@ -113,7 +114,7 @@ const BookingRequest = () => {
           </div>
       }
       { (!loading && requests.length === 0) &&
-          <p className={styles["noRequests"]}>No Spots available</p>
+          <p className={styles["noRequests"]}>No Requests available</p>
       }
     </Fragment>
   );

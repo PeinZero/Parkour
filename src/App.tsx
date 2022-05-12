@@ -27,6 +27,7 @@ import Signup from "./pages/AuthPages/Signup";
 import Search from "./pages/Search/Search";
 import OTP from "./pages/AuthPages/OTP";
 import BookingRequest from "./pages/BookingRequest/BookingRequest";
+import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails";
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -46,6 +47,7 @@ import { fetchUser } from "./store/User/userActions";
 import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
 import firebase from "./firebaseConfig";
+
 
 
 const App: React.FC = (props) => {
@@ -111,6 +113,7 @@ const App: React.FC = (props) => {
           <Route path="/otp" element={<OTP/>} />
           <Route path="/search" element={<Search/>} />
           <Route path="/bookingRequest" element={<BookingRequest/>}/>
+          <Route path="/requestDetails" element={<RequestDetails/>}/>
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>

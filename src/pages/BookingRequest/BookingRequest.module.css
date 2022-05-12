@@ -3,6 +3,7 @@
   justify-content: flex-end;
   margin-bottom: 20px;
   padding: 0 20px;
+  
 }
 
 .filterBox select{
@@ -15,6 +16,10 @@
 .filterBox select:focus{
   border: none;
   outline: 2px solid var(--primary);
+}
+
+.filterBox select > option{
+  border: none;
 }
 
 .requestList{
