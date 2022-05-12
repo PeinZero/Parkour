@@ -1,15 +1,15 @@
 import styles from './RequestCard.module.css'
 
-const RequestCard = ({day, status, address, nearestLandmark, time, pricePerHour}) => {
+const RequestCard = ({day, status, address, nearestLandmark, time, pricePerHour, onClick}) => {
   return (
-    <div className={styles['requestCard']}>
+    <div className={styles['requestCard']} onClick={onClick}>
       <div className={styles['top']}>
         <div className={styles['headingBox']}>
           <div className={styles['date']}>
             <span className={styles['day']}> {day.date} </span> {day.month},  {day.year}
           </div>
           <div className={`${styles['status']} ${styles[status]}`}>
-            pending
+            {status}
           </div>
         </div>
         <div className={styles['address']}>

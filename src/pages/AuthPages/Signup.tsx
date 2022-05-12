@@ -14,22 +14,6 @@ const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [present] = useIonAlert();
 
-  // const formSubmitHandler = (e) => {
-  //   e.preventDefault();
-
-  //   dispatch(
-  //     sendSignupData({
-  //       name: e.target.name.value,
-  //       phone: e.target.phone.value,
-  //       email: e.target.email.value,
-  //       password: e.target.password.value,
-  //       confirmPassword: e.target.confirmPassword.value,
-  //     })
-  //   );
-
-  //   navigate("/login");
-  // };
-
   const setPresent = (errorHeader, errorBody, buttons) => {
     present({
       cssClass: "my-css",
@@ -136,9 +120,5 @@ const Signup: React.FC = () => {
     </div>
   );
 };
-
-// interface SignupProps {
-//     onSignup: (event: React.FormEvent<HTMLInputElement>, authData: {}) => void
-// }
 
 export default Signup;

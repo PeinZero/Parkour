@@ -60,7 +60,7 @@ export const getUserByRole = (userId) => {
     const token = localStorage.getItem('token');
 
     const sendRequest = async () => {
-      const response = await axios.get(
+      return await axios.get(
         `${backendLink}/user/getUserByRole/${userId}`,
         {
           headers: {
@@ -68,14 +68,11 @@ export const getUserByRole = (userId) => {
           }
         }
       );
-
-      return response;
     };
-
 
     try{
       const response = await sendRequest();
-      return response;
+      return response.data;
     }
     catch(err){
       console.log("(Thunk) getUserByRole => Error: ", err);

@@ -16,7 +16,7 @@ import Header from '../../../components/UI/Header/Header'
 import styles from './AddSpot.module.css'
 import DetailsBox from '../../../components/DetailsBox/DetailsBox'
 import Ripple from '../../../components/UI/Button/Ripple/Ripple'
-import GMap from '../../../components/Mahad_Testing_Map/GMap'
+import GMap from '../../../components/GMap/SelectSpotMap/GMap'
 
 import ClearSharpIcon from '@mui/icons-material/ClearSharp'
 

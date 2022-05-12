@@ -1,11 +1,3 @@
-// import {
-//   GoogleMap,
-//   withScriptjs,
-//   withGoogleMap,
-//   Marker,
-//   DirectionsRenderer,
-// } from "react-google-maps";
-
 import React, { useCallback, useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +6,14 @@ import { GoogleMap, Circle, Marker } from '@react-google-maps/api'
 
 const ParkerMap = ({coordinates, spots, zoom}) => {
   console.log("PARKER MAP RUNNING")
+  
   const navigate = useNavigate();
   
   const markerClickHandler = useCallback((spot) => {
     navigate("/parker/bookspot", { state: spot });
-  }, []);
+  }, [navigate]);
 
-  // Creating seller map
+  // Creating parker map
   const Map = useMemo( () => {
     return (
      <GoogleMap

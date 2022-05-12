@@ -13,11 +13,6 @@
     z-index: 9000;
 }
 
-.hamburgerWrapper.open{
-    box-shadow: none;
-    border-radius: 0; 
-}
-
 .hamburger{
     display: flex;
     justify-content: center;

@@ -1,0 +1,20 @@
+.menuItem button{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px !important;
+  font-weight: 300 !important;
+}
+
+.menuItem button div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menuItem button svg,
+.menuItem button div p,
+.menuItem button div svg {
+  margin: 0;
+  font-size: 16px;
+}

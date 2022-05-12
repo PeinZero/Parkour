@@ -72,27 +72,6 @@ img {
   margin-top: 20px;
 }
 
-.content a button{
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 10px !important;
-  font-weight: 300 !important;
-}
-
-.content a button div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.content a button svg,
-.content a button div p,
-.content a button div svg {
-  margin: 0;
-  font-size: 16px;
-}
-
 .footer {
   position: absolute;
   width: 100%;
