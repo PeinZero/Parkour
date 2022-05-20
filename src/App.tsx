@@ -10,14 +10,9 @@ import "@ionic/react/css/typography.css";
 import "./theme/variables.css";
 
 import { IonApp } from "@ionic/react";
-import { useEffect, Fragment} from "react";
+import { useEffect, Fragment } from "react";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 // Custom Components
 // --- Global
@@ -47,15 +42,15 @@ import { fetchUser } from "./store/User/userActions";
 import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
 import firebase from "./firebaseConfig";
-
-
+import Chat from "./pages/Chat/Chat";
+import ChatUser from "./components/ChatUser/ChatUser";
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING");
   let _firebase = firebase;
-  
+
   const dispatch = useAppDispatch();
-  
+
   const isAuth = useAppSelector((state) => state.authentication.isAuth);
   const currentRoleParker = useAppSelector((state) => state.user.currentRoleParker);
 
@@ -72,21 +67,18 @@ const App: React.FC = (props) => {
     if (token && userId) {
       console.log("Token found!");
 
-      dispatch(fetchUser(userId, token))
-        .then( response => {
-          ReactDOM.unstable_batchedUpdates( () => {
-
-            dispatch(userActions.createUser(response.data.user));
-            dispatch(
-              authActions.login({
-                isAuth: true,
-                token: token,
-                userId: userId,
-              })
-            ) 
-            
-          });
-        })
+      dispatch(fetchUser(userId, token)).then((response) => {
+        ReactDOM.unstable_batchedUpdates(() => {
+          dispatch(userActions.createUser(response.data.user));
+          dispatch(
+            authActions.login({
+              isAuth: true,
+              token: token,
+              userId: userId,
+            })
+          );
+        });
+      });
     }
   }, [dispatch]);
 
@@ -94,34 +86,43 @@ const App: React.FC = (props) => {
     <IonApp className="app">
       <Router>
         <Routes>
-          <Route path="/" element={
-            <Fragment>
-              { (isAuth && currentRoleParker === true) && <ParkerHome />}
-              { (isAuth && currentRoleParker === false) && <SellerHome />}
-              { !isAuth &&  <Home /> }
-            </Fragment>
-          }/>
-            
-          <Route path="/login" element={
-            <Fragment>
-              {isAuth && <Navigate to="/" />}
-              {!isAuth && <Login />}
-            </Fragment>
-          }/>
-          <Route path="/signup" element={<Signup/>} />
+          <Route
+            path="/"
+            element={
+              <Fragment>
+                {isAuth && currentRoleParker === true && <ParkerHome />}
+                {isAuth && currentRoleParker === false && <SellerHome />}
+                {!isAuth && <Home />}
+              </Fragment>
+            }
+          />
 
-          <Route path="/otp" element={<OTP/>} />
-          <Route path="/search" element={<Search/>} />
-          <Route path="/bookingRequest" element={<BookingRequest/>}/>
-          <Route path="/requestDetails" element={<RequestDetails/>}/>
+          <Route
+            path="/login"
+            element={
+              <Fragment>
+                {isAuth && <Navigate to="/" />}
+                {!isAuth && <Login />}
+              </Fragment>
+            }
+          />
+          <Route path="/signup" element={<Signup />} />
 
-          <Route path="/parker/mycars" element={<MyCars/>} />
-          <Route path="/parker/registerCar" element={<AddCar/>}/>
-          <Route path="/parker/bookspot" element={<BookSpot/>}/>
-          
+          <Route path="/otp" element={<OTP />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/bookingRequest" element={<BookingRequest />} />
+          <Route path="/requestDetails" element={<RequestDetails />} />
+
+          <Route path="/parker/mycars" element={<MyCars />} />
+          <Route path="/parker/registerCar" element={<AddCar />} />
+          <Route path="/parker/bookspot" element={<BookSpot />} />
+
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />
           <Route path="/seller/spotdetails" element={<SpotDetails />} />
+
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat/:userID" element={<ChatUser />} />
         </Routes>
       </Router>
     </IonApp>

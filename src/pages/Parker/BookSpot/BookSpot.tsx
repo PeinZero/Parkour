@@ -1,47 +1,41 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 
-import styles from './BookSpot.module.css';
+import styles from "./BookSpot.module.css";
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { MobileDatePicker, MobileTimePicker } from '@mui/lab';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {
-  TextField,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-} from '@mui/material';
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { MobileDatePicker, MobileTimePicker } from "@mui/lab";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { TextField, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 
-import DetailsBox from '../../../components/DetailsBox/DetailsBox';
-import DetailsItem from '../../../components/DetailsBox/DetailsItem/DetailsItem';
-import Header from '../../../components/UI/Header/Header';
-import Button from '../../../components/UI/Button/Button';
-import Ripple from '../../../components/UI/Button/Ripple/Ripple';
-import { convertTimeToString, formatDate } from '../../../helper/timeFunctions';
-import { getUserByRole } from '../../../store/User/userActions';
-import { bookingRequest } from '../../../store/Spot/spotActions';
+import DetailsBox from "../../../components/DetailsBox/DetailsBox";
+import DetailsItem from "../../../components/DetailsBox/DetailsItem/DetailsItem";
+import Header from "../../../components/UI/Header/Header";
+import Button from "../../../components/UI/Button/Button";
+import Ripple from "../../../components/UI/Button/Ripple/Ripple";
+import { convertTimeToString, formatDate } from "../../../helper/timeFunctions";
+import { getUserByRole } from "../../../store/User/userActions";
+import { bookingRequest } from "../../../store/Spot/spotActions";
 
-import RoomIcon from '@mui/icons-material/Room';
-import ClearSharpIcon from '@mui/icons-material/ClearSharp';
+import RoomIcon from "@mui/icons-material/Room";
+import ClearSharpIcon from "@mui/icons-material/ClearSharp";
 
-const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
 const MONTHS = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 const calanderTheme = createTheme({
@@ -52,7 +46,7 @@ const calanderTheme = createTheme({
         // Name of the slot
         root: {
           // Some CSS
-          width: '600px',
+          width: "600px",
         },
       },
     },
@@ -66,27 +60,37 @@ interface TimeSlot {
 
 const BookSpot = (props) => {
   console.log("BOOK SPOT RUNNING!");
-  
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
   let cars: any[] = [];
 
-  if ('parker' in user && user.parker !== null) {
+  if ("parker" in user && user.parker !== null) {
     cars = user.parker.cars;
   }
 
   if (cars.length === 0) {
-    navigate('/parker/mycars');
+    navigate("/parker/mycars");
   }
 
-  const {state} = useLocation();  
-  const locationState:any = state;
+  const { state } = useLocation();
+  const locationState: any = state;
   console.log(locationState);
 
-  const {_id: spotId, addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, availability: availabilityList, owner: spotOwner} = locationState;
-  const defaultDate: Date = availabilityList.length > 0 ? availabilityList[0].slotDate: new Date();
+  const {
+    _id: spotId,
+    addressLine1,
+    addressLine2,
+    nearestLandmark,
+    pricePerHour,
+    comment,
+    availability: availabilityList,
+    owner: spotOwner,
+  } = locationState;
+  const defaultDate: Date =
+    availabilityList.length > 0 ? availabilityList[0].slotDate : new Date();
   const address = (
     <>
       <p>{addressLine1}</p>
@@ -95,20 +99,19 @@ const BookSpot = (props) => {
   );
   const day =
     WEEKDAYS[new Date(defaultDate).getDay()] +
-    ' ' +
+    " " +
     new Date(defaultDate).getDate() +
-    ' ' +
+    " " +
     MONTHS[new Date(defaultDate).getMonth()];
-  
-    
+
   let startMinTime: Date = null;
   let startMaxTime: Date = null;
   let endMinTime: Date = null;
   let endMaxTime: Date = null;
-  let {_id: sellerId, cumulativeRating: sellerRating} = spotOwner;
-    
+  let { _id: sellerId, cumulativeRating: sellerRating } = spotOwner;
+
   if (sellerRating === -1) {
-    sellerRating= 'Not Rated';
+    sellerRating = "Not Rated";
   }
 
   // States
@@ -116,41 +119,38 @@ const BookSpot = (props) => {
   const [sellerPhone, setSellerPhone] = useState(null);
   const [date, setDate] = useState(defaultDate);
   const [selectedRadioButton, setSelectedRadioButton] = useState(-1);
-  const [selectedCar, setSelectedCar] = useState('');
+  const [selectedCar, setSelectedCar] = useState("");
   const [message, setMessage] = useState(null);
   const [addedTimeSlots, setAddedTimeSlots] = useState([]);
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [alreadyExistError, setAlreadyExistError] = useState(null);
-  const [validationParaMsg, setvalidationParaMsg] = useState('');
+  const [validationParaMsg, setvalidationParaMsg] = useState("");
 
   let isDisabled = true;
 
-  if(addedTimeSlots.length > 0 && selectedCar !== ''){
+  if (addedTimeSlots.length > 0 && selectedCar !== "") {
     isDisabled = false;
   }
 
   if (selectedRadioButton >= 0) {
-  
-    const availability = availabilityList.find( availability => formatDate(availability.slotDate) === formatDate(date));
+    const availability = availabilityList.find(
+      (availability) => formatDate(availability.slotDate) === formatDate(date)
+    );
     const selectedTimeSlots = availability.slots[selectedRadioButton];
 
     startMinTime = new Date(new Date(selectedTimeSlots.startTime).setSeconds(0, 0));
     endMaxTime = new Date(new Date(selectedTimeSlots.endTime).setSeconds(0, 0));
 
     const et = new Date(endTime);
-    startMaxTime = new Date(
-      new Date(et).setHours(et.getHours() - 1)
-    );
-    
+    startMaxTime = new Date(new Date(et).setHours(et.getHours() - 1));
+
     const st = new Date(startTime);
-    endMinTime = new Date(
-      new Date(st).setHours(st.getHours() + 1)
-    );
+    endMinTime = new Date(new Date(st).setHours(st.getHours() + 1));
   }
 
   // Handlers
-  const sellerInfoHandler = (user) => {   
+  const sellerInfoHandler = (user) => {
     setSellerName(user.name);
     setSellerPhone(user.phone);
   };
@@ -162,8 +162,7 @@ const BookSpot = (props) => {
 
   const disableDates = (calenderDate) => {
     const availability = availabilityList.find(
-      (availability) =>
-        formatDate(availability.slotDate) === formatDate(calenderDate)
+      (availability) => formatDate(availability.slotDate) === formatDate(calenderDate)
     );
     if (availability) {
       return false;
@@ -178,66 +177,68 @@ const BookSpot = (props) => {
   };
 
   const addTimeSlotHandler = () => {
-    if(selectedRadioButton === -1){
+    if (selectedRadioButton === -1) {
       return;
     }
-    
+
     enum Result {
       overlapping = "New Added Time Slot already Exists",
       modifyExistingTimeSlot = "Adjusting the existing time slot",
-      goodTimeSlot = "New Added Time Slot can be added successfully"
+      goodTimeSlot = "New Added Time Slot can be added successfully",
     }
 
     const markedForRemoval = [];
 
     // st = startTime
     // et = endTime
-    // cst = currentTraversed startTime of addedTimeSlots list 
-    // cet = currentTraversed endTime of addedTimeSlots list 
+    // cst = currentTraversed startTime of addedTimeSlots list
+    // cet = currentTraversed endTime of addedTimeSlots list
 
-    let st:Date = new Date(new Date(startTime).setSeconds(0, 0));
-    let et:Date = new Date(new Date(endTime).setSeconds(0, 0));
+    let st: Date = new Date(new Date(startTime).setSeconds(0, 0));
+    let et: Date = new Date(new Date(endTime).setSeconds(0, 0));
 
     let status = Result.goodTimeSlot;
 
     // Checking st & et validity by comparing with all timeSlots in addedTimeSlots list.
-    for (let i = 0; i < addedTimeSlots.length; i++){
+    for (let i = 0; i < addedTimeSlots.length; i++) {
       const currentTimeSlot = addedTimeSlots[i];
-      const cst:Date = new Date(new Date(currentTimeSlot.startTime).setSeconds(0, 0));
-      const cet:Date = new Date(new Date(currentTimeSlot.endTime).setSeconds(0, 0));
+      const cst: Date = new Date(new Date(currentTimeSlot.startTime).setSeconds(0, 0));
+      const cet: Date = new Date(new Date(currentTimeSlot.endTime).setSeconds(0, 0));
 
       // Overlapping Conditions
-      if( (cst <= st && st < cet) && (cst < et && et <= cet)){
+      if (cst <= st && st < cet && cst < et && et <= cet) {
         status = Result.overlapping;
         break;
       }
 
       // Current time slot is in between new time slot
-      if( (st < cst) && (cet < et)){
+      if (st < cst && cet < et) {
         markedForRemoval.push(i);
       }
       // Modifying cst
-      else if( (st < cst) && (cst <= et && et <= cet)){
+      else if (st < cst && cst <= et && et <= cet) {
         et = cet;
         markedForRemoval.push(i);
       }
       // Modifying cet
-      else if( (cst <= st && st <= cet) && (cet < et)){
+      else if (cst <= st && st <= cet && cet < et) {
         st = cst;
         markedForRemoval.push(i);
       }
     }
 
     let updatedAddedTimeSlots = [...addedTimeSlots];
-      
-    if(status === Result.overlapping){
+
+    if (status === Result.overlapping) {
       setAlreadyExistError(true);
-      setvalidationParaMsg('Time slot already added!');
-      return
+      setvalidationParaMsg("Time slot already added!");
+      return;
     }
 
-    if(markedForRemoval.length > 0){
-      updatedAddedTimeSlots = addedTimeSlots.filter( (timeSlot, index) => !markedForRemoval.includes(index))
+    if (markedForRemoval.length > 0) {
+      updatedAddedTimeSlots = addedTimeSlots.filter(
+        (timeSlot, index) => !markedForRemoval.includes(index)
+      );
     }
 
     const timeSlot: TimeSlot = { startTime: st, endTime: et };
@@ -245,7 +246,7 @@ const BookSpot = (props) => {
 
     setAddedTimeSlots(updatedAddedTimeSlots);
     setAlreadyExistError(false);
-    setvalidationParaMsg('Time slot added!');
+    setvalidationParaMsg("Time slot added!");
     setSelectedRadioButton(-1);
   };
 
@@ -272,13 +273,13 @@ const BookSpot = (props) => {
       carId: selectedCar,
       slots: addedTimeSlots,
       day: formatDate(date),
-      message: message
-    }
+      message: message,
+    };
 
-    console.log(bookingData)
+    console.log(bookingData);
 
-    dispatch(bookingRequest(bookingData)).then( (response) => {
-      navigate('/');
+    dispatch(bookingRequest(bookingData)).then((response) => {
+      navigate("/");
     });
   };
 
@@ -291,14 +292,14 @@ const BookSpot = (props) => {
   }
 
   availableSlots = availableSlots.map((timeSlot, index) => {
-    const name = `${convertTimeToString(
-      new Date(timeSlot.startTime)
-    )} - ${convertTimeToString(new Date(timeSlot.endTime))}`;
+    const name = `${convertTimeToString(new Date(timeSlot.startTime))} - ${convertTimeToString(
+      new Date(timeSlot.endTime)
+    )}`;
 
     return (
-      <div key={index} className={styles['availableSlotsFormControl']}>
+      <div key={index} className={styles["availableSlotsFormControl"]}>
         <input
-          type='radio'
+          type="radio"
           name={name}
           onChange={() => selectTimeSlotHandler(index, timeSlot)}
           checked={index === selectedRadioButton ? true : false}
@@ -327,91 +328,64 @@ const BookSpot = (props) => {
   useEffect(() => {
     console.log("BookSpot => useEffect()");
     // console.log("Seller Id: ", sellerId)
-    dispatch(getUserByRole(sellerId))
-        .then((response) => {
-          sellerInfoHandler(response.data.user);
-        });
+    dispatch(getUserByRole(sellerId)).then((response) => {
+      console.log(response);
+      sellerInfoHandler(response.user);
+    });
   }, [dispatch, sellerId]);
 
   useEffect(() => {
     let timer = null;
 
-    if(alreadyExistError === false || alreadyExistError === true){
-      timer = setTimeout( () => {
-        setAlreadyExistError(null)
-      } , 5000)
+    if (alreadyExistError === false || alreadyExistError === true) {
+      timer = setTimeout(() => {
+        setAlreadyExistError(null);
+      }, 5000);
     }
 
     return () => {
       clearTimeout(timer);
-    }
+    };
   }, [alreadyExistError]);
 
   return (
-    <div className={styles['spotDetails']}>
-      <Header backLink='/' content='Spot Details' className='small' />
+    <div className={styles["spotDetails"]}>
+      <Header backLink="/" content="Spot Details" className="small" />
       <br />
-      <div className={styles['details']}>
-        <DetailsBox
-          boxClass='primary'
-          name={sellerName}
-          rating={sellerRating}
-        ></DetailsBox>
-        <DetailsBox
-          title='location'
-          icon={<RoomIcon />}
-          iconLink={'/'}
-          iconText='View on map'
-        >
-          <ul className={styles['spotInfo']}>
-            <DetailsItem label='Address' info={address} />
-            <DetailsItem
-              label='Nearest Landmark'
-              info={nearestLandmark}
-            />
-            <DetailsItem
-              label='Price Per Hour'
-              info={pricePerHour}
-            />
-            <DetailsItem label='Comment' info={comment} />
+      <div className={styles["details"]}>
+        <DetailsBox boxClass="primary" name={sellerName} rating={sellerRating}></DetailsBox>
+        <DetailsBox title="location" icon={<RoomIcon />} iconLink={"/"} iconText="View on map">
+          <ul className={styles["spotInfo"]}>
+            <DetailsItem label="Address" info={address} />
+            <DetailsItem label="Nearest Landmark" info={nearestLandmark} />
+            <DetailsItem label="Price Per Hour" info={pricePerHour} />
+            <DetailsItem label="Comment" info={comment} />
           </ul>
         </DetailsBox>
 
-        <DetailsBox title='Select A Car' className={styles['carSelectBox']}>
-          <FormControl fullWidth className={styles['carSelectForm']}>
-            <InputLabel
-              id='demo-simple-select-label'
-              className={styles['carSelectLabel']}
-            >
+        <DetailsBox title="Select A Car" className={styles["carSelectBox"]}>
+          <FormControl fullWidth className={styles["carSelectForm"]}>
+            <InputLabel id="demo-simple-select-label" className={styles["carSelectLabel"]}>
               Car
             </InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              className={styles['carSelect']}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              className={styles["carSelect"]}
               value={selectedCar}
-              label='Car'
-              onChange={carSelectHandler}
-            >
+              label="Car"
+              onChange={carSelectHandler}>
               {cars.map((car) => (
-                <MenuItem
-                  className={styles['carItem']}
-                  key={car._id}
-                  value={car._id}
-                >
-                  {' '}
-                  {car.model} | {car.color} | {car.numberPlate}{' '}
+                <MenuItem className={styles["carItem"]} key={car._id} value={car._id}>
+                  {" "}
+                  {car.model} | {car.color} | {car.numberPlate}{" "}
                 </MenuItem>
               ))}
-
             </Select>
           </FormControl>
         </DetailsBox>
 
-        <DetailsBox
-          title='availibility'
-          className={styles['availibilityBottom']}
-        >
+        <DetailsBox title="availibility" className={styles["availibilityBottom"]}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <ThemeProvider theme={calanderTheme}>
               <MobileDatePicker
@@ -420,19 +394,19 @@ const BookSpot = (props) => {
                 shouldDisableDate={disableDates}
                 onChange={setDateHandeler}
                 renderInput={(params) => <TextField {...params} />}
-                className={styles['carSelect']}
+                className={styles["carSelect"]}
               />
             </ThemeProvider>
           </LocalizationProvider>
-          <form className={styles['availableSlotsBox']}>
+          <form className={styles["availableSlotsBox"]}>
             <h5>{day}</h5>
             {availableSlots.length === 0 && <p>No Slots Available</p>}
             {availableSlots.length > 0 && availableSlots}
           </form>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <div className={styles['timePickers']}>
+            <div className={styles["timePickers"]}>
               <MobileTimePicker
-                className='timePicker'
+                className="timePicker"
                 ampm={true}
                 disabled={startMinTime === null ? true : false}
                 minTime={startMinTime}
@@ -442,7 +416,7 @@ const BookSpot = (props) => {
                 onChange={(newTime) => setStartTime(newTime)}
               />
               <MobileTimePicker
-                className='timePicker'
+                className="timePicker"
                 disabled={startMinTime === null ? true : false}
                 minTime={endMinTime}
                 maxTime={endMaxTime}
@@ -451,31 +425,35 @@ const BookSpot = (props) => {
                 renderInput={(params) => <TextField {...params} />}
               />
             </div>
-            <p className={`${styles['status']} ${alreadyExistError && styles['error']} ${alreadyExistError === false && styles['added']}`}>
-                  {validationParaMsg}
+            <p
+              className={`${styles["status"]} ${alreadyExistError && styles["error"]} ${
+                alreadyExistError === false && styles["added"]
+              }`}>
+              {validationParaMsg}
             </p>
-            <Button type='button' size='small' onClick={addTimeSlotHandler}>
-              {' '}
-              Add Time Slot{' '}
+            <Button type="button" size="small" onClick={addTimeSlotHandler}>
+              {" "}
+              Add Time Slot{" "}
             </Button>
           </LocalizationProvider>
 
-          <div className={styles['addedSlotsBox']}>
+          <div className={styles["addedSlotsBox"]}>
             <h4>Added Time Slots</h4>
             {renderedAddedTimeSlots.length === 0 && <p> No time slots added</p>}
-            <ul>
-              {renderedAddedTimeSlots.length > 0 && renderedAddedTimeSlots}
-            </ul>
+            <ul>{renderedAddedTimeSlots.length > 0 && renderedAddedTimeSlots}</ul>
           </div>
         </DetailsBox>
         {/* <DetailsBox boxClass="Images"></DetailsBox> */}
-        <DetailsBox title='Message' className={styles['messageBox']}>
+        <DetailsBox title="Message" className={styles["messageBox"]}>
           <textarea
-            placeholder='Send a message to the seller...'
-            onChange={messageChangeHandler}
-          ></textarea>
+            placeholder="Send a message to the seller..."
+            onChange={messageChangeHandler}></textarea>
         </DetailsBox>
-        <Button type='button' btnClass='primary' onClick={bookSpotHandler} disabled={isDisabled}>
+        <Button
+          type="button"
+          btnClass="primary"
+          onClick={bookSpotHandler}
+          disabled={isDisabled}>
           Request Spot
         </Button>
       </div>
