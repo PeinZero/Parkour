@@ -1,5 +1,5 @@
 // React Imports
-import React from "react";
+import React, { Fragment } from "react";
 import { useLocation } from "react-router-dom";
 
 // Component Imports
@@ -7,6 +7,8 @@ import Header from "../UI/Header/Header";
 
 // Style / Icon Imports
 import styles from "./ChatUser.module.css";
+import SendIcon from "@mui/icons-material/Send";
+import Input from "../UI/Input/Input";
 
 let allMessages = [
   {
@@ -37,6 +39,8 @@ let allMessages = [
 ];
 
 const ChatUser = () => {
+  const [message, setMessage] = React.useState("");
+
   const location = useLocation();
   const { state } = location;
   let chatInfo: any;
@@ -63,22 +67,23 @@ const ChatUser = () => {
   });
 
   return (
-    <div className={styles["chat-container"]}>
+    <Fragment>
       <Header backLink="/" content="Chat" />
+      <div className={styles["chat-container"]}>
+        <div className={styles["chat-header"]}>
+          <img src={chatInfo.imgSrc} alt="" />
+          <h3>{chatInfo.name}</h3>
+        </div>
 
-      <div className={styles["chat-header"]}>
-        {/* <div className={styles["chat-header-image"]}> */}
-        <img src={chatInfo.imgSrc} alt="" />
-        {/* </div> */}
-        <h3>{chatInfo.name}</h3>
+        <div className={styles["chat-content"]}>{chatList}</div>
+
+        <div className={styles["chat-input"]}>
+          {/* <input type="text" placeholder="send message" /> */}
+          <Input className={styles["input"]}>send</Input>
+          <SendIcon />
+        </div>
       </div>
-
-      <div className={styles["chat-content"]}>{chatList}</div>
-
-      <div className={styles["chat-input"]}>
-        <input type="text" placeholder="send message" />
-      </div>
-    </div>
+    </Fragment>
   );
 };
 
