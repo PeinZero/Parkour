@@ -28,7 +28,7 @@ import { bookingRequest } from '../../../store/Spot/spotActions';
 import RoomIcon from '@mui/icons-material/Room';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 
-const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+const WEEKDAYS = ['Sun','Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 const MONTHS = [
   'Jan',
   'Feb',
@@ -93,14 +93,7 @@ const BookSpot = (props) => {
       <p>{addressLine2}</p>
     </>
   );
-  const day =
-    WEEKDAYS[new Date(defaultDate).getDay()] +
-    ' ' +
-    new Date(defaultDate).getDate() +
-    ' ' +
-    MONTHS[new Date(defaultDate).getMonth()];
-  
-    
+
   let startMinTime: Date = null;
   let startMaxTime: Date = null;
   let endMinTime: Date = null;
@@ -125,6 +118,13 @@ const BookSpot = (props) => {
   const [validationParaMsg, setvalidationParaMsg] = useState('');
 
   let isDisabled = true;
+
+  const day =
+    WEEKDAYS[new Date(date).getDay()] +
+    ' ' +
+    new Date(date).getDate() +
+    ' ' +
+    MONTHS[new Date(date).getMonth()];
 
   if(addedTimeSlots.length > 0 && selectedCar !== ''){
     isDisabled = false;
@@ -157,6 +157,7 @@ const BookSpot = (props) => {
 
   const setDateHandeler = (newDate) => {
     setSelectedRadioButton(-1);
+    setAddedTimeSlots([]);
     setDate(newDate);
   };
 
@@ -184,8 +185,14 @@ const BookSpot = (props) => {
     
     enum Result {
       overlapping = "New Added Time Slot already Exists",
-      modifyExistingTimeSlot = "Adjusting the existing time slot",
+      overLimit = "Only one Timeslot allowed per Booking Request",
       goodTimeSlot = "New Added Time Slot can be added successfully"
+    }
+
+    if(addedTimeSlots.length > 0){
+      setAlreadyExistError(true);
+      setvalidationParaMsg('Only one Timeslot allowed per Booking Request');
+      return
     }
 
     const markedForRemoval = [];
@@ -282,6 +289,41 @@ const BookSpot = (props) => {
     });
   };
 
+  const viewReviewsHandler = () => {
+    const reviews = [
+      {
+        author: {
+          name: "Faizan Shahid"
+        },
+        text: "Such a nice person",
+        providedRating: 5.0
+      },
+      {
+        author: {
+          name: "Atif Siraiki"
+        },
+        text: "MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki.",
+        providedRating: 4.5
+      },
+      {
+        author: {
+          name: "Legend Pizza"
+        },
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, a qui, fugiat explicabo, exercitationem nostrum rerum odio illo inventore excepturi veniam quia quo itaque aut velit doloremque suscipit sapiente. Laudantium recusandae provident non eum autem consequatur modi, corrupti delectus, voluptatum nulla quam debitis hic cum officiis quasi aspernatur repellendus quia?",
+        providedRating: 3.2
+      },
+      {
+        author: {
+          name: "VIP Guy"
+        },
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, a qui, fugiat explicabo, exercitationem nostrum rerum odio illo inventore excepturi veniam quia quo itaque aut velit doloremque suscipit sapiente. Laudantium recusandae provident non eum autem consequatur modi, corrupti delectus, voluptatum nulla quam debitis hic cum officiis quasi aspernatur repellendus quia?",
+        providedRating: 5.0
+      }
+    ]
+    navigate('/reviews', {state: {reviews: reviews, spotDetails: locationState}})
+  }
+
+
   // Dynamically rendering list
   let availableSlots = [];
   if (availabilityList.length > 0) {
@@ -323,13 +365,14 @@ const BookSpot = (props) => {
     );
   });
 
+  
   // Use Effects
   useEffect(() => {
     console.log("BookSpot => useEffect()");
-    // console.log("Seller Id: ", sellerId)
     dispatch(getUserByRole(sellerId))
         .then((response) => {
-          sellerInfoHandler(response.data.user);
+
+          sellerInfoHandler(response.user);
         });
   }, [dispatch, sellerId]);
 
@@ -356,6 +399,7 @@ const BookSpot = (props) => {
           boxClass='primary'
           name={sellerName}
           rating={sellerRating}
+          viewReviews = {viewReviewsHandler}
         ></DetailsBox>
         <DetailsBox
           title='location'

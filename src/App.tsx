@@ -28,12 +28,14 @@ import Search from "./pages/Search/Search";
 import OTP from "./pages/AuthPages/OTP";
 import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails";
+import Reviews from "./pages/Reviews/Reviews";
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
 import MyCars from "./pages/Parker/MyCars/MyCars";
 import AddCar from "./pages/Parker/AddCar/AddCar";
 import BookSpot from "./pages/Parker/BookSpot/BookSpot";
+import Transit from "./pages/Parker/Transit/Transit";
 
 // --- Seller
 import SellerHome from "./pages/Seller/SellerHome/SellerHome";
@@ -114,10 +116,12 @@ const App: React.FC = (props) => {
           <Route path="/search" element={<Search/>} />
           <Route path="/bookingRequest" element={<BookingRequest/>}/>
           <Route path="/requestDetails" element={<RequestDetails/>}/>
+          <Route path="/reviews" element={<Reviews/>}/>
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
           <Route path="/parker/bookspot" element={<BookSpot/>}/>
+          <Route path="/parker/intransit" element={<Transit/>}/>
           
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />

@@ -10,6 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <LoadScript
       googleMapsApiKey={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=`} // ${process.env.REACT_APP_MAPS_API_KEY}
+      libraries = {['places']} 
     >
     <Provider store={store}>
       <App />

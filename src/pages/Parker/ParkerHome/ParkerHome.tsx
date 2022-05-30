@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 const ParkerHome= () => {
   console.log("PARKER HOME RUNNING");
   
-  const {state: searchedLocation} = useLocation();
+  const {state:searchedLocation} = useLocation();
   const dispatch = useAppDispatch();
   
   const [spots, setSpots] = useState([]);
@@ -33,6 +33,16 @@ const ParkerHome= () => {
       })
   }, [dispatch])
 
+  const displayError = error => {
+    var errors = {
+      1: 'Permission denied',
+      2: 'Position unavailable',
+      3: 'Request timeout'
+    };
+    console.log("Error: " + errors[error.code]);
+  }
+  
+
   // Fetching the current or searched location...
   useEffect(() => {
     console.log("PARKER HOME => useEffect()");
@@ -48,7 +58,7 @@ const ParkerHome= () => {
         } 
         
         FetchSpots(fetchedLocation);  
-      })
+      }, displayError, {enableHighAccuracy: true})
     }
   }, [FetchSpots, searchedLocation, geolocation])
 
