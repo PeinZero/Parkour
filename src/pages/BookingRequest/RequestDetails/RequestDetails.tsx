@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment } from 'react';
-import { useLocation} from 'react-router-dom';
-import { useAppDispatch } from '../../../store/hooks';
+import { useLocation, useNavigate} from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import { getUserByRole } from '../../../store/User/userActions';
 import { convertTimeToString } from '../../../helper/timeFunctions';
@@ -11,7 +11,6 @@ import DetailsBox from '../../../components/DetailsBox/DetailsBox';
 import DetailsItem from '../../../components/DetailsBox/DetailsItem/DetailsItem';
 import Header from '../../../components/UI/Header/Header';
 import Button from '../../../components/UI/Button/Button';
-import Ripple from '../../../components/UI/Button/Ripple/Ripple';
 import Loader from '../../../components/UI/Loader/Loader';
 
 
@@ -20,12 +19,15 @@ import RoomIcon from '@mui/icons-material/Room';
 const RequestDetails = (props) => {
   console.log("REQUEST DETAILS RUNNING!");
   
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const userRoleParker = useAppSelector(state => state.user.currentRoleParker);
   const [parker, setParker] = useState(null);
 
   const {state:requestInfo}:any = useLocation();
-  let {bookingRequestor, car, spot, day, slots, message} = requestInfo;
-  const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment} = spot;
+  let {bookingRequestor, car, spot, day, slots, message, spotOwner, status} = requestInfo;
+
+  const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, location} = spot;
 
   const address = (
     <>
@@ -33,6 +35,11 @@ const RequestDetails = (props) => {
       <p>{addressLine2}</p>
     </>
   );
+
+  let userId = bookingRequestor;
+  if(userRoleParker){
+    userId = spotOwner
+  }
 
   let parkerName = null, parkerPhone = null, parkerRating = null, parkerReviews = null;
   if(parker){
@@ -51,18 +58,36 @@ const RequestDetails = (props) => {
     )
   })
 
+  const startBookingHandler = () => {
+    const destination = {
+      lat: location.coordinates[1],
+      lng: location.coordinates[0]
+    }
+    navigate("/parker/intransit", {state: destination})
+  }
+
   useEffect( ()=> {
-    dispatch(getUserByRole(bookingRequestor))
+    dispatch(getUserByRole(userId))
       .then(fetchedUser => {
-        const updatedUser = {
-          name: fetchedUser.user.name,
-          phone: fetchedUser.user.phone,
-          rating: fetchedUser.user.parker.cumulativeRating,
-          reviews: fetchedUser.user.parker.reviews
+        const user = fetchedUser.user;
+        let rating = user.parker.cumulativeRating;
+        let reviews = user.parker.reviews;
+
+        if(userRoleParker){
+          rating = user.seller.cumulativeRating;
+          reviews = user.seller.reviews;
         }
-        setParker(updatedUser)
+
+        const updatedUser = {
+          name: user.name,
+          phone: user.phone,
+          rating: rating,
+          reviews: reviews
+        }
+
+        setParker(updatedUser);
       })
-  }, [dispatch, bookingRequestor])
+  }, [dispatch, userId, userRoleParker])
 
   return (
     <Fragment>
@@ -105,7 +130,7 @@ const RequestDetails = (props) => {
             </DetailsBox>
 
             <DetailsBox
-              title='Requested Time Slots'
+              title='Requested Time Slot'
               className={styles['availibilityBottom']}
             >
               <div  className={styles['day']} > {day} </div>
@@ -121,6 +146,12 @@ const RequestDetails = (props) => {
             <DetailsBox title='Message' className={styles['messageBox']}>
               {message}
             </DetailsBox>
+            {userRoleParker && 
+              // status === "pending" ? true : false
+              <Button type='button' btnClass='primary' onClick={startBookingHandler} disabled={false}> 
+                Start
+              </Button>
+            }
           </div>
         </div>
       }

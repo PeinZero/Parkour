@@ -44,7 +44,7 @@ const DetailsBox = (props) => {
           </Button>
         </div>
         <div className={styles["reviews"]}>
-          <Button btnClass="primary"> REVIEWS </Button>
+          <Button btnClass="primary" onClick={props.viewReviews}> REVIEWS </Button>
         </div>
       </div>
     );
