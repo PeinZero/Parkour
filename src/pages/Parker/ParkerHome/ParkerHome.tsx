@@ -35,6 +35,15 @@ const ParkerHome = () => {
     [dispatch]
   );
 
+  const displayError = (error) => {
+    var errors = {
+      1: "Permission denied",
+      2: "Position unavailable",
+      3: "Request timeout",
+    };
+    console.log("Error: " + errors[error.code]);
+  };
+
   // Fetching the current or searched location...
   useEffect(() => {
     console.log("PARKER HOME => useEffect()");

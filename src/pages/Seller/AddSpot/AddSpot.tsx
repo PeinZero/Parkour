@@ -24,7 +24,7 @@ import Loader from "../../../components/UI/Loader/Loader";
 import { addSpot, editSpot } from "../../../store/Spot/spotActions";
 import { useAppDispatch } from "../../../store/hooks";
 
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 const MONTHS = [
   "Jan",
   "Feb",
@@ -384,6 +384,7 @@ const AddSpot = (props) => {
   let availabilityList = sortedSpotList.map((availibility, dateIndex) => {
     const { slotDate, slots } = availibility;
 
+    console.log("DAY", new Date(slotDate).getDay());
     const day =
       WEEKDAYS[new Date(slotDate).getDay()] +
       " " +
