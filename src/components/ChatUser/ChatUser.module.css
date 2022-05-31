@@ -35,24 +35,6 @@
   overflow: auto;
 }
 
-.chat-msg {
-  margin: 5px;
-  width: fit-content;
-  padding: 10px;
-  border-radius: 7px;
-  max-width: 70%;
-}
-
-.sent {
-  background-color: lightblue;
-  align-self: flex-end;
-}
-
-.received {
-  background-color: rgb(200, 200, 200);
-  align-self: flex-start;
-}
-
 .send-message-container {
   display: grid;
   grid-template-columns: 87% 13%;

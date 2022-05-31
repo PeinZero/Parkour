@@ -23,6 +23,8 @@ import Search from "./pages/Search/Search";
 import OTP from "./pages/AuthPages/OTP";
 import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails";
+import Chat from "./pages/Chat/Chat";
+import ChatUser from "./components/ChatUser/ChatUser";
 import Reviews from "./pages/Reviews/Reviews";
 
 // --- Parker
@@ -44,8 +46,6 @@ import { fetchUser } from "./store/User/userActions";
 import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
 import firebase from "./firebaseConfig";
-import Chat from "./pages/Chat/Chat";
-import ChatUser from "./components/ChatUser/ChatUser";
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING");

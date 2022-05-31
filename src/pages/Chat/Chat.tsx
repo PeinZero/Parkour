@@ -62,7 +62,6 @@ const Chat = () => {
   });
 
   const chatClickHander = (chat: any) => {
-    console.log(chat);
     navigate(`/chat/${chat.id}`, {
       state: { chat },
     });

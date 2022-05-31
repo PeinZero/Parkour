@@ -4,67 +4,71 @@ import { useLocation } from "react-router-dom";
 
 // Component Imports
 import Header from "../UI/Header/Header";
-import Input from "../UI/Input/Input";
-import Button from "../UI/Button/Button";
+import ChatMessage from "../ChatMessage/ChatMessage";
 
 // Style / Icon Imports
 import styles from "./ChatUser.module.css";
 import SendIcon from "@mui/icons-material/Send";
 
+// Util Imports
+import io from "socket.io-client";
+import { formatAMPM } from "../../helper/timeFunctions";
+
 let allMessages = [
   {
     id: 1,
-    sender: "You",
+    sender: "627d6089d0cd1a6120024216",
     message: "Hey, how are you?",
-    time: "12:00",
+    time: "12:00 PM",
   },
   {
     id: 2,
-    sender: "Mahad Khalid",
+    sender: "627d6092d0cd1a612002421d",
     message: "I didn't recieve the payment",
-    time: "12:01",
+    time: "12:01 PM",
   },
   {
     id: 3,
-    sender: "You",
+    sender: "627d6089d0cd1a6120024216",
     message: "You are not here yet",
-    time: "12:02",
+    time: "12:02 PM",
   },
   {
     id: 4,
-    sender: "You",
+    sender: "627d6089d0cd1a6120024216",
     message: "When will you come ?",
-    time: "12:03",
+    time: "12:03 PM",
   },
   {
     id: 5,
-    sender: "Mahad Khalid",
+    sender: "627d6092d0cd1a612002421d",
     message: "Yup the Spot is free !",
-    time: "12:04",
+    time: "12:04 PM",
   },
   {
     id: 6,
-    sender: "You",
+    sender: "627d6089d0cd1a6120024216",
     message:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    time: "12:05",
+    time: "12:05 PM",
   },
   {
     id: 7,
-    sender: "Ammar",
+    sender: "627d6092d0cd1a612002421d",
     message:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    time: "12:06",
+    time: "12:06 PM",
   },
 ];
 
 const ChatUser = () => {
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  const socket = io("http://localhost:5001");
+
   const [messages, setMessages] = React.useState(allMessages);
   const [chat, setChat] = React.useState(null);
 
+  const userId = localStorage.getItem("userId");
   const messagesEnd = useRef(null);
-
   const location = useLocation();
   const { state } = location;
   let chatInfo: any;
@@ -77,23 +81,25 @@ const ChatUser = () => {
   useEffect(() => {
     setChat(
       messages.map((msg) => {
-        if (msg.sender === "You") {
-          return (
-            <div className={`${styles["chat-msg"]} ${styles["sent"]}`} key={msg.id}>
-              {msg.message}
-            </div>
-          );
-        } else {
-          return (
-            <div className={`${styles["chat-msg"]} ${styles["received"]}`} key={msg.id}>
-              {msg.message}
-            </div>
-          );
-        }
+        return <ChatMessage message={msg} key={msg.id} />;
       })
     );
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    socket.on("receiveMessage", (msg) => {
+      setMessages((msgs) => [
+        ...msgs,
+        {
+          id: msgs.length + 1,
+          sender: msg.sender,
+          message: msg.message,
+          time: msg.time,
+        },
+      ]);
+    });
+  }, [socket]);
 
   const scrollToBottom = () => {
     messagesEnd.current.scrollIntoView({ behavior: "smooth" });
@@ -101,16 +107,16 @@ const ChatUser = () => {
 
   const sendMessage = (e: any) => {
     e.preventDefault();
-    console.log(e.target.message.value);
-    setMessages((msgs) => [
-      ...msgs,
-      {
-        id: msgs.length + 1,
-        sender: "You",
-        message: e.target.message.value,
-        time: "12:07",
-      },
-    ]);
+    if (e.target.message.value.length < 0) {
+      return;
+    }
+
+    socket.emit("sendMessage", {
+      id: messages.length + 1,
+      sender: userId,
+      message: e.target.message.value,
+      time: formatAMPM(new Date()),
+    });
   };
 
   return (
