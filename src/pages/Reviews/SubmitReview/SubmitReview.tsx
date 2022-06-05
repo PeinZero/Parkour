@@ -20,7 +20,7 @@ const SubmitReview = () => {
             <div className={styles['Avatar']}>
               <img src="/images/mahad_profile_pic.jpg" alt="" />
             </div>
-          </div>
+          </div>32
           <div className={styles['Name']}>
             Mahad Khalid
           </div>
