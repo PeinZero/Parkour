@@ -15,10 +15,10 @@ const DetailsBox = (props) => {
     topContent = (
       <div className={styles["primaryTopContent"]}>
         <div className={styles["avatar"]}>
-          <img src="/images/mahad_profile_pic.jpg" alt=""/>
+          <img src="/images/mahad_profile_pic.jpg" alt="" />
         </div>
         <div className={styles["name"]}> {props.name}</div>
-        <div className={styles['seperator']}> &bull; </div>
+        <div className={styles["seperator"]}> &bull; </div>
         <div className={styles["rating"]}>
           <div>{props.rating}</div>
           {props.rating !== "Not Rated" && (
@@ -38,13 +38,16 @@ const DetailsBox = (props) => {
             {" "}
             <PhoneIcon /> Call{" "}
           </Button>
-          <Button>
+          <Button onClick={props.openChat}>
             {" "}
             <MessageIcon /> Message{" "}
           </Button>
         </div>
         <div className={styles["reviews"]}>
-          <Button btnClass="primary" onClick={props.viewReviews}> REVIEWS </Button>
+          <Button btnClass="primary" onClick={props.viewReviews}>
+            {" "}
+            REVIEWS{" "}
+          </Button>
         </div>
       </div>
     );
@@ -65,12 +68,8 @@ const DetailsBox = (props) => {
 
   return (
     <div className={styles["detailsBox"]}>
-      <div className={`${styles["top"]} ${styles[props.boxClass]}`}>
-        {topContent}
-      </div>
-      <div className={`${styles["bottom"]} ${props.className}`}>
-        {bottomContent}
-      </div>
+      <div className={`${styles["top"]} ${styles[props.boxClass]}`}>{topContent}</div>
+      <div className={`${styles["bottom"]} ${props.className}`}>{bottomContent}</div>
     </div>
   );
 };
