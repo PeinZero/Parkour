@@ -26,6 +26,7 @@ import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails
 import AllChats from "./pages/Chat/AllChats";
 import Chat from "./components/ChatUser/ChatUser";
 import Reviews from "./pages/Reviews/Reviews";
+import SubmitReview from './pages/Reviews/SubmitReview/SubmitReview';
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -88,37 +89,34 @@ const App: React.FC = (props) => {
     <IonApp className="app">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Fragment>
-                {isAuth && currentRoleParker === true && <ParkerHome />}
-                {isAuth && currentRoleParker === false && <SellerHome />}
-                {!isAuth && <Home />}
-              </Fragment>
-            }
-          />
+          <Route path="/" element={
+            <Fragment>
+              { (isAuth && currentRoleParker === true) && <ParkerHome />}
+              { (isAuth && currentRoleParker === false) && <SellerHome />}
+              { !isAuth &&  <Home /> }
+            </Fragment>
+          }/>
+            
+          <Route path="/login" element={
+            <Fragment>
+              {isAuth && <Navigate to="/" />}
+              {!isAuth && <Login />}
+            </Fragment>
+          }/>
+          <Route path="/signup" element={<Signup/>} />
 
-          <Route
-            path="/login"
-            element={
-              <Fragment>
-                {isAuth && <Navigate to="/" />}
-                {!isAuth && <Login />}
-              </Fragment>
-            }
-          />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/otp" element={<OTP/>} />
+          <Route path="/search" element={<Search/>} />
+          <Route path="/bookingRequest" element={<BookingRequest/>}/>
+          <Route path="/requestDetails" element={<RequestDetails/>}/>
+          <Route path="/reviews" element={<Reviews/>}/>
+          <Route path="/submitReview" element={<SubmitReview/>}/>
 
-          <Route path="/otp" element={<OTP />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/bookingRequest" element={<BookingRequest />} />
-          <Route path="/requestDetails" element={<RequestDetails />} />
-
-          <Route path="/parker/mycars" element={<MyCars />} />
-          <Route path="/parker/registerCar" element={<AddCar />} />
-          <Route path="/parker/bookspot" element={<BookSpot />} />
-
+          <Route path="/parker/mycars" element={<MyCars/>} />
+          <Route path="/parker/registerCar" element={<AddCar/>}/>
+          <Route path="/parker/bookspot" element={<BookSpot/>}/>
+          <Route path="/parker/intransit" element={<Transit/>}/>
+          
           <Route path="/seller/mySpots" element={<MySpots />} />
           <Route path="/seller/addSpot" element={<AddSpot />} />
           <Route path="/seller/spotdetails" element={<SpotDetails />} />
