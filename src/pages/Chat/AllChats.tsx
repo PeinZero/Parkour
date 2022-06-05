@@ -22,20 +22,25 @@ const Chat = () => {
       <div
         className={styles["chat-list-item"]}
         key={chat._id}
-        onClick={() => chatClickHander(chat._id)}>
+        onClick={() => chatClickHander(chat)}>
         <div className={styles["chat-list-image"]}>
           <img src="/images/mahad_profile_pic.jpg" alt="" />
         </div>
         <div className={styles["chat-text"]}>
           <h3>{chat.receiver.name}</h3>
-          <p>{"What a legend!"}</p>
+          <div>
+            <p>{chat.lastMessage.message}</p>
+            <p style={{ fontSize: "9px", margin: "0px" }}>{chat.lastMessage.time}</p>
+          </div>
         </div>
       </div>
     );
   });
 
-  const chatClickHander = (chatId) => {
-    navigate(`/chat/${chatId}`);
+  const chatClickHander = (chat) => {
+    navigate(`/chat/${chat._id}`, {
+      state: { chat },
+    });
   };
 
   useEffect(() => {
