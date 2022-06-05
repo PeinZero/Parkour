@@ -23,8 +23,8 @@ import Search from "./pages/Search/Search";
 import OTP from "./pages/AuthPages/OTP";
 import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails";
-import Chat from "./pages/Chat/Chat";
-import ChatUser from "./components/ChatUser/ChatUser";
+import AllChats from "./pages/Chat/AllChats";
+import Chat from "./components/ChatUser/ChatUser";
 import Reviews from "./pages/Reviews/Reviews";
 
 // --- Parker
@@ -123,8 +123,8 @@ const App: React.FC = (props) => {
           <Route path="/seller/addSpot" element={<AddSpot />} />
           <Route path="/seller/spotdetails" element={<SpotDetails />} />
 
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/chat/:userID" element={<ChatUser />} />
+          <Route path="/allChats" element={<AllChats />} />
+          <Route path="/chat/:chatId" element={<Chat />} />
         </Routes>
       </Router>
     </IonApp>

@@ -16,8 +16,10 @@ import Header from "../../../components/UI/Header/Header";
 import Button from "../../../components/UI/Button/Button";
 import Ripple from "../../../components/UI/Button/Ripple/Ripple";
 import { convertTimeToString, formatDate } from "../../../helper/timeFunctions";
+
 import { getUserByRole } from "../../../store/User/userActions";
 import { bookingRequest } from "../../../store/Spot/spotActions";
+import { createChat } from "../../../store/Chat/chatActions";
 
 import RoomIcon from "@mui/icons-material/Room";
 import ClearSharpIcon from "@mui/icons-material/ClearSharp";
@@ -151,6 +153,13 @@ const BookSpot = (props) => {
   }
 
   // Handlers
+
+  const openChatHandler = () => {
+    dispatch(createChat(sellerId)).then((chatId) => {
+      navigate(`/chat/${chatId}`);
+    });
+  };
+
   const sellerInfoHandler = (user) => {
     setSellerName(user.name);
     setSellerPhone(user.phone);
@@ -399,6 +408,7 @@ const BookSpot = (props) => {
           boxClass="primary"
           name={sellerName}
           rating={sellerRating}
+          openChat={openChatHandler}
           viewReviews={viewReviewsHandler}></DetailsBox>
         <DetailsBox title="location" icon={<RoomIcon />} iconLink={"/"} iconText="View on map">
           <ul className={styles["spotInfo"]}>

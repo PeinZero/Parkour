@@ -4,6 +4,8 @@
   padding: 10px;
   border-radius: 7px;
   max-width: 70%;
+  display: flex;
+  flex-flow: column;
 }
 
 .sent {
@@ -14,4 +16,12 @@
 .received {
   background-color: rgb(200, 200, 200);
   align-self: flex-start;
+}
+
+.chat-msg-time {
+  color: var(--example-label);
+  font-size: 11px;
+  align-self: flex-end;
+  justify-self: flex-end;
+  margin: 1px;
 }
