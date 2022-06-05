@@ -1,0 +1,20 @@
+.routeDetails{
+  position: absolute;
+  bottom: 0vh;
+  height: 120px;
+  width: 90%;
+  margin: 0 5%;
+  z-index: 999;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  padding: 15px;
+}
+
+.routeDetails > p{
+  margin: 0;
+  margin-top: 10px;
+}
+
+.routeDetails > p > span{
+  font-weight: 500;
+}

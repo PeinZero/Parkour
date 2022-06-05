@@ -1,0 +1,67 @@
+.card{
+  margin-top: 50px !important;
+}
+
+.Heading{
+  width: 100%;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--image-placeholder);
+  padding: 20px;
+}
+
+.Content{
+  padding: 15px 15px 35px 15px;
+}
+
+.AvatarBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.AvatarBox .Avatar{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.Name,
+.Description{
+  text-align: center;
+}
+
+.Name{
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.Rating{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.Rating .ratingBar{
+  font-size: 40px;
+}
+
+textarea{
+  margin: 10px 0 15px 0;
+  resize: vertical;
+  min-height: 100px;
+  height: auto;
+  width: 100%;
+  background-color: var(--card-background);
+  border-radius: 3px;
+  padding: 10px 5px;
+}
+
+.Buttons{
+  display: flex;
+  gap: 10px;
+}
