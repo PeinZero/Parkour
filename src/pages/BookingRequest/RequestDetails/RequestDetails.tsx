@@ -63,7 +63,8 @@ const RequestDetails = (props) => {
       lat: location.coordinates[1],
       lng: location.coordinates[0]
     }
-    navigate("/parker/intransit", {state: destination})
+    navigate("/submitReview") 
+    // navigate("/parker/intransit", {state: destination}) 
   }
 
   useEffect( ()=> {

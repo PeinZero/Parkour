@@ -29,6 +29,7 @@ import OTP from "./pages/AuthPages/OTP";
 import BookingRequest from "./pages/BookingRequest/BookingRequest";
 import RequestDetails from "./pages/BookingRequest/RequestDetails/RequestDetails";
 import Reviews from "./pages/Reviews/Reviews";
+import SubmitReview from './pages/Reviews/SubmitReview/SubmitReview';
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -117,6 +118,7 @@ const App: React.FC = (props) => {
           <Route path="/bookingRequest" element={<BookingRequest/>}/>
           <Route path="/requestDetails" element={<RequestDetails/>}/>
           <Route path="/reviews" element={<Reviews/>}/>
+          <Route path="/submitReview" element={<SubmitReview/>}/>
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>
