@@ -1,8 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../store/hooks";
-import { sendSignupData } from "../../store/Authentication/authenticationActions";
 import { useIonAlert } from "@ionic/react";
-import { useState } from "react";
 
 import styles from "./Signup.module.css";
 
@@ -20,7 +17,6 @@ const Signup: React.FC = () => {
       header: errorHeader,
       message: errorBody,
       buttons: [...buttons],
-      // onDidDismiss: (e) => console.log("did dismiss"),
     });
   };
 

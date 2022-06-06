@@ -29,8 +29,8 @@ const Chat = () => {
         <div className={styles["chat-text"]}>
           <h3>{chat.receiver.name}</h3>
           <div>
-            <p>{chat.lastMessage.message}</p>
-            <p style={{ fontSize: "9px", margin: "0px" }}>{chat.lastMessage.time}</p>
+            <p>{chat.lastMessage?.message}</p>
+            <p style={{ fontSize: "9px", margin: "0px" }}>{chat.lastMessage?.time}</p>
           </div>
         </div>
       </div>
@@ -53,7 +53,8 @@ const Chat = () => {
   return (
     <div className={styles["chat-container"]}>
       <Header backLink="/" content="Recent Chat" />
-      {chatList}
+      {chatList.length === 0 && <p className={styles['noChats']}>No Chats Available</p>} 
+      {chatList.length > 0 && chatList} 
     </div>
   );
 };

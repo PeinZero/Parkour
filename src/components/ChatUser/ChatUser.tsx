@@ -25,20 +25,21 @@ const ChatUser = () => {
 
   const { chatId } = useParams();
   const [socket, setSocket] = useState<Socket>(null);
-  const [messages, setMessages] = React.useState([]);
+  const [receiver, setReceiver] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const userId = localStorage.getItem("userId");
   const messagesEnd = useRef(null);
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const { state } = location;
-  const locationState: any = state;
-  let chatData;
+  // const { state } = location;
+  // const locationState: any = state;
+  // let chatData;
 
-  if (locationState) {
-    chatData = locationState.chat;
-  }
+  // if (locationState) {
+  //   chatData = locationState.chat;
+  // }
 
   // console.log("Messages", messages);
   const renderedMessages = messages.map((msg) => {
@@ -79,14 +80,14 @@ const ChatUser = () => {
     console.log("ChatUser => useEffect() => Socket Init");
 
     dispatch(getChat(chatId)).then((fetchedChat) => {
-      const { messages } = fetchedChat.chat;
+      const { messages, receiver } = fetchedChat.chat;
       const mySocket = io("http://localhost:5001");
-
       mySocket.emit("JoinRoom", chatId);
 
       ReactDOM.unstable_batchedUpdates(() => {
         setSocket(mySocket);
         setMessages(messages.reverse());
+        setReceiver(receiver);
       });
     });
   }, [chatId, dispatch]);
@@ -110,7 +111,7 @@ const ChatUser = () => {
         content={
           <div className={styles["chat-header"]}>
             <img src="/images/mahad_profile_pic.jpg" alt="" />
-            <h3>{chatData.receiver.name}</h3>
+            <h3>{receiver?.name}</h3>
           </div>
         }
       />
