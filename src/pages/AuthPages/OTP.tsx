@@ -12,7 +12,10 @@ import { useIonAlert } from "@ionic/react";
 import { useAppDispatch } from "../../store/hooks";
 import { sendSignupData } from "../../store/Authentication/authenticationActions";
 
+import io, { Socket } from "socket.io-client";
+
 const OTP = () => {
+  const [socket, setSocket] = useState(null);
   const [firstDigit, setFirstDigit] = useState("");
   const [secondDigit, setSecondDigit] = useState("");
   const [thirdDigit, setThirdDigit] = useState("");
@@ -95,10 +98,6 @@ const OTP = () => {
     });
   };
 
-  useEffect(() => {
-    onSignUpSubmit();
-  }, []);
-
   const verifyOTP = (e) => {
     e.preventDefault();
 
@@ -127,6 +126,7 @@ const OTP = () => {
     confirmationResult
       .confirm(OTP)
       .then((result) => {
+
         dispatch(
           sendSignupData({
             name,
@@ -134,6 +134,7 @@ const OTP = () => {
             email,
             password,
             confirmPassword,
+            socketId: socket.id
           })
         ).then( response => {
           console.log("User Signed Up Sucessfully");
@@ -151,6 +152,14 @@ const OTP = () => {
       e.target.nextSibling.focus();
     }
   };
+
+  useEffect(() => {
+    onSignUpSubmit();
+  }, []);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+  }, [])
 
   return (
     <Fragment>

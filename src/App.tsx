@@ -28,6 +28,8 @@ import Chat from "./components/ChatUser/ChatUser";
 import Reviews from "./pages/Reviews/Reviews";
 import SubmitReview from './pages/Reviews/SubmitReview/SubmitReview';
 import Help from "./pages/Help/Help";
+import Notifications from "./pages/Notifications/Notifications";
+
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -47,8 +49,10 @@ import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { fetchUser } from "./store/User/userActions";
 import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
+import createSocket from "./helper/createSocket";
 import firebase from "./firebaseConfig";
 import Setting from "./pages/Setting/Setting";
+
 
 const App: React.FC = (props) => {
   console.log("APP RUNNING");
@@ -68,6 +72,8 @@ const App: React.FC = (props) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
+    createSocket();
+
     // If token and userId is found, then fetch user and setup the redux store.
     if (token && userId) {
       console.log("Token found!");
@@ -85,7 +91,7 @@ const App: React.FC = (props) => {
         });
       });
     }
-  }, [dispatch]);
+  }, []);
 
   return (
     <IonApp className="app">
@@ -113,6 +119,7 @@ const App: React.FC = (props) => {
           <Route path="/requestDetails" element={<RequestDetails/>}/>
           <Route path="/reviews" element={<Reviews/>}/>
           <Route path="/submitReview" element={<SubmitReview/>}/>
+          <Route path="/notifications" element={<Notifications/>}/>
 
           <Route path="/parker/mycars" element={<MyCars/>} />
           <Route path="/parker/registerCar" element={<AddCar/>}/>

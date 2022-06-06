@@ -83,6 +83,7 @@ const BookSpot = (props) => {
 
   const {
     _id: spotId,
+    spotName,
     addressLine1,
     addressLine2,
     nearestLandmark,
@@ -91,8 +92,10 @@ const BookSpot = (props) => {
     availability: availabilityList,
     owner: spotOwner,
   } = locationState;
+
   const defaultDate: Date =
     availabilityList.length > 0 ? availabilityList[0].slotDate : new Date();
+
   const address = (
     <>
       <p>{addressLine1}</p>
@@ -293,7 +296,7 @@ const BookSpot = (props) => {
       message: message,
     };
 
-    console.log(bookingData);
+    // console.log(bookingData);
 
     dispatch(bookingRequest(bookingData)).then((response) => {
       navigate("/");
@@ -380,7 +383,7 @@ const BookSpot = (props) => {
     console.log("BookSpot => useEffect()");
     // console.log("Seller Id: ", sellerId)
     dispatch(getUserByRole(sellerId)).then((response) => {
-      console.log(response);
+      // console.log(response);
       sellerInfoHandler(response.user);
     });
   }, [dispatch, sellerId]);
