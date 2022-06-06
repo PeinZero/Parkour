@@ -88,7 +88,7 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
             <MenuItem itemName="My Spots" icon={<RoomIcon />} path="/seller/mySpots" />
           )}
 
-          <MenuItem itemName="Wallet" icon={<AccountBalanceWalletRoundedIcon />} path="#" />
+          <MenuItem itemName="Wallet" icon={<AccountBalanceWalletRoundedIcon />} path="/wallet" />
           <MenuItem
             itemName="Booking Requests"
             icon={<HistoryIcon />}

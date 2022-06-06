@@ -8,6 +8,7 @@ const initialState = {
     gender: null,
     dob: null,
     password: null,
+    credit: null,
     
     // State
     isParker: true,
@@ -43,6 +44,13 @@ const userSlice = createSlice({
             state.parker = action.payload.parker;
             state.seller = action.payload.seller;
         },
+        updateUserInfo(state, action){
+            state.name = action.payload.name;
+            state.phone = action.payload.phone;
+            state.email = action.payload.email;
+            state.gender = action.payload.gender;
+            state.dob = action.payload.dob;
+        },
         switchRole(state){
             state.currentRoleParker = !state.currentRoleParker;
         },
@@ -60,6 +68,9 @@ const userSlice = createSlice({
         },
         set_default_car(state, action){
             state.parker.defaultCar = action.payload.defaultCar;
+        },
+        set_credit(state, action){
+            state.credit = action.payload.credit;
         }
     }  
 })
