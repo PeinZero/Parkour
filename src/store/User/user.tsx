@@ -34,6 +34,7 @@ const userSlice = createSlice({
             state.gender = action.payload.gender;
             state.dob = action.payload.DOB;
             state.password = action.payload.password;
+            state.credit = action.payload.credit;
 
             // State
             state.isParker = action.payload.isParker;

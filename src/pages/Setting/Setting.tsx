@@ -105,16 +105,17 @@ const Setting: React.FC = () => {
         password,
       })
     ).then((res) => {
-      dispatch(userActions.updateUserInfo({
-        phone: phoneNumber,
-        name,
-        email,
-        dob,
-        gender,
-        password,
-      }));
-    })
-
+      dispatch(
+        userActions.updateUserInfo({
+          phone: phoneNumber,
+          name,
+          email,
+          dob,
+          gender,
+          password,
+        })
+      );
+    });
   };
 
   return (
