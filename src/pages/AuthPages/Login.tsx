@@ -1,9 +1,11 @@
 import ReactDOM from 'react-dom';
 
 import { useAppDispatch } from '../../store/hooks';
+import createSocket from '../../helper/createSocket';
 import { sendLoginData } from '../../store/Authentication/authenticationActions';
 import { authActions } from '../../store/Authentication/authentication';
 import { userActions } from '../../store/User/user';
+
 
 import styles from './Login.module.css';
 
@@ -32,8 +34,8 @@ const Login: React.FC = () => {
             userId: response.data.user._id,
           })
         );
-
         dispatch(userActions.createUser(response.data.user));
+        createSocket(response.data.user._id);
         console.log(response.data.message);
       });
     });
