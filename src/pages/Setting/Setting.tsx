@@ -8,7 +8,6 @@ import styles from "./Setting.module.css";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Header from "../../components/UI/Header/Header";
-import Loader from "../../components/UI/Loader/Loader";
 
 import { changeProfileInfo } from "../../store/Setting/settingActions";
 

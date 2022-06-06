@@ -17,6 +17,7 @@ import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceW
 import HistoryIcon from "@mui/icons-material/History";
 import NotListedLocationIcon from "@mui/icons-material/NotListedLocation";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 interface MenuProps {
   clicked: boolean;
@@ -93,7 +94,7 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
             icon={<HistoryIcon />}
             path="/bookingRequest"
           />
-          <MenuItem itemName="Notifications" icon={<ChatBubbleIcon />} path="/notifications" />
+          <MenuItem itemName="Notifications" icon={<NotificationsActiveIcon />} path="/notifications" />
           <MenuItem itemName="Chat" icon={<ChatBubbleIcon />} path="/allChats" />
           <MenuItem itemName="Settings" icon={<SettingsIcon />} path="/setting" />
           <MenuItem itemName="Help" icon={<NotListedLocationIcon />} path="/help" />
