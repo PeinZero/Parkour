@@ -95,7 +95,7 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
           />
           <MenuItem itemName="Notifications" icon={<ChatBubbleIcon />} path="/notifications" />
           <MenuItem itemName="Chat" icon={<ChatBubbleIcon />} path="/allChats" />
-          <MenuItem itemName="Settings" icon={<SettingsIcon />} path="#" />
+          <MenuItem itemName="Settings" icon={<SettingsIcon />} path="/setting" />
           <MenuItem itemName="Help" icon={<NotListedLocationIcon />} path="/help" />
         </div>
       </div>

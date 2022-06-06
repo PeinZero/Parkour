@@ -27,7 +27,9 @@ import AllChats from "./pages/Chat/AllChats";
 import Chat from "./components/ChatUser/ChatUser";
 import Reviews from "./pages/Reviews/Reviews";
 import SubmitReview from './pages/Reviews/SubmitReview/SubmitReview';
+import Help from "./pages/Help/Help";
 import Notifications from "./pages/Notifications/Notifications";
+
 
 // --- Parker
 import ParkerHome from "./pages/Parker/ParkerHome/ParkerHome";
@@ -49,6 +51,7 @@ import { authActions } from "./store/Authentication/authentication";
 import { userActions } from "./store/User/user";
 import createSocket from "./helper/createSocket";
 import firebase from "./firebaseConfig";
+import Setting from "./pages/Setting/Setting";
 
 
 const App: React.FC = (props) => {
@@ -129,6 +132,9 @@ const App: React.FC = (props) => {
 
           <Route path="/allChats" element={<AllChats />} />
           <Route path="/chat/:chatId" element={<Chat />} />
+
+          <Route path="/help" element={<Help />} />
+          <Route path="/setting" element={<Setting />} />
         </Routes>
       </Router>
     </IonApp>
