@@ -81,7 +81,7 @@ const AddSpot = (props) => {
   const location = useLocation();
   const { state } = location;
   const locationState: any = state;
-  // console.log(locationState);
+  console.log(locationState);
 
   let spotInfo = {
     spotName: "",
@@ -379,6 +379,7 @@ const AddSpot = (props) => {
   let availabilityList = sortedSpotList.map((availibility, dateIndex) => {
     const { slotDate, slots } = availibility;
 
+    console.log(slotDate);
     // console.log("DAY", new Date(slotDate).getDay());
     const day =
       WEEKDAYS[new Date(slotDate).getDay()] +

@@ -3,6 +3,7 @@ import { useLocation, useNavigate} from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import { getUserByRole } from '../../../store/User/userActions';
+import { acceptRequest } from '../../../store/Request/requestActions';
 import { convertTimeToString } from '../../../helper/timeFunctions';
 
 import styles from './RequestDetails.module.css';
@@ -26,10 +27,10 @@ const RequestDetails = (props) => {
   const [parker, setParker] = useState(null);
 
   const {state:requestInfo}:any = useLocation();
-  let {bookingRequestor, car, spot, day, slots, message, spotOwner, status} = requestInfo;
-
+  let {_id: bookingRequestId, bookingRequestor, car, spot, day, slots, message, spotOwner, status} = requestInfo;
   const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, location} = spot;
-
+  console.log(requestInfo);
+  
   let reviewedId = bookingRequestor;
   if(userRoleParker){
     reviewedId = spotOwner
@@ -68,6 +69,14 @@ const RequestDetails = (props) => {
       lng: location.coordinates[0]
     } 
     navigate("/parker/intransit", {state: {destination, car}}) 
+  }
+
+  const acceptBookingRequestHandler = () => {
+    dispatch(acceptRequest(bookingRequestId))
+      .then(res => {
+        console.log(res);
+        navigate('/bookingRequest');
+      })
   }
 
   const viewReviewsHandler = () => {
@@ -165,7 +174,7 @@ const RequestDetails = (props) => {
                 <Button type='button' btnClass='negative-outline' size="small" onClick={startBookingHandler}> 
                   Reject
                 </Button>
-                <Button type='button' btnClass='primary' size="small" onClick={startBookingHandler}> 
+                <Button type='button' btnClass='primary' size="small" onClick={acceptBookingRequestHandler}> 
                   Accept
                 </Button>
               </div>
