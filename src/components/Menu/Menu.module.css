@@ -27,16 +27,19 @@ img {
   border-radius: 50%;
   height: 80px;
   width: 80px;
-  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5),
-    -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5), -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
   background-color: var(--card-background);
-  
 }
 
 .header .info {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.info-credit {
+  font-size: 13px;
+  color: var(--example-label);
 }
 
 .header .info h3 {
@@ -53,7 +56,7 @@ img {
   padding: 3px;
 }
 
-.header .info div .nr{
+.header .info div .nr {
   color: var(--example-lable);
   font-size: 12px;
 }
@@ -79,8 +82,7 @@ img {
   margin: 0;
 }
 
-.footer button{
+.footer button {
   border-radius: 0 !important;
   font-size: 13px;
 }
-
