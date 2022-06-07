@@ -52,6 +52,7 @@ import { userActions } from "./store/User/user";
 import createSocket from "./helper/createSocket";
 import firebase from "./firebaseConfig";
 import Setting from "./pages/Setting/Setting";
+import Wallet from "./pages/Wallet/Wallet";
 
 
 const App: React.FC = (props) => {
@@ -135,6 +136,8 @@ const App: React.FC = (props) => {
 
           <Route path="/help" element={<Help />} />
           <Route path="/setting" element={<Setting />} />
+
+          <Route path="/wallet" element={<Wallet />} />
         </Routes>
       </Router>
     </IonApp>
