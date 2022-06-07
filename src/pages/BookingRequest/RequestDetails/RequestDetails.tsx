@@ -68,8 +68,8 @@ const RequestDetails = (props) => {
       lat: location.coordinates[1],
       lng: location.coordinates[0]
     } 
-    // navigate("/parker/intransit", {state: {destination, car}}) 
-    navigate("/submitReview", {state: reviewedId}) 
+    navigate("/parker/intransit", {state: {destination, car}}) 
+    // navigate("/submitReview", {state: reviewedId}) 
   }
 
   const acceptBookingRequestHandler = () => {
