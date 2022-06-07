@@ -3,7 +3,7 @@ import { useLocation, useNavigate} from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import { getUserByRole } from '../../../store/User/userActions';
-import { acceptRequest } from '../../../store/Request/requestActions';
+import { acceptRequest, deleteRequest } from '../../../store/Request/requestActions';
 import { convertTimeToString } from '../../../helper/timeFunctions';
 
 import styles from './RequestDetails.module.css';
@@ -68,13 +68,20 @@ const RequestDetails = (props) => {
       lat: location.coordinates[1],
       lng: location.coordinates[0]
     } 
-    navigate("/parker/intransit", {state: {destination, car}}) 
+    // navigate("/parker/intransit", {state: {destination, car}}) 
+    navigate("/submitReview", {state: reviewedId}) 
   }
 
   const acceptBookingRequestHandler = () => {
     dispatch(acceptRequest(bookingRequestId))
       .then(res => {
-        console.log(res);
+        navigate('/bookingRequest');
+      })
+  }
+
+  const deleteBookingRequestHandler = () => {
+    dispatch(deleteRequest(bookingRequestId))
+      .then(res => {
         navigate('/bookingRequest');
       })
   }
@@ -169,9 +176,9 @@ const RequestDetails = (props) => {
                 Preview Route
               </Button>
             }
-            {!userRoleParker && 
+            { (!userRoleParker && status !== "accepted") && 
               <div className={styles['sellerButtons']}>
-                <Button type='button' btnClass='negative-outline' size="small" onClick={startBookingHandler}> 
+                <Button type='button' btnClass='negative-outline' size="small" onClick={deleteBookingRequestHandler} > 
                   Reject
                 </Button>
                 <Button type='button' btnClass='primary' size="small" onClick={acceptBookingRequestHandler}> 

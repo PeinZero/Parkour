@@ -6,11 +6,10 @@ export const fetchNotifications = (filter) => {
     const token = localStorage.getItem("token");
 
     const sendRequest = async () => {
-      return await axios.get(`${backendLink}/notifications`, {
+      return await axios.get(`${backendLink}/notification`, {
         params: {
           filter: filter
         },
-
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -19,7 +18,7 @@ export const fetchNotifications = (filter) => {
 
     try {
       const response = await sendRequest();
-      return response.data;
+      return response.data.notifications;
     } catch (err) {
       console.log(err.message);
       if (err.response.status === 404) {

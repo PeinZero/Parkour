@@ -33,7 +33,6 @@ const Map = ({currentLocation, spots, isParker, mapZoom}:HomeProps) => {
   const navigate = useNavigate();
 
   const markerClickHandler = useCallback((spot) => {
-    console.log("Clicked", spot);
     navigate(markerNavigation, { state: spot });
   }, [navigate, markerNavigation]);
 
@@ -65,8 +64,7 @@ const Map = ({currentLocation, spots, isParker, mapZoom}:HomeProps) => {
           
           const lng = spot.location.coordinates[0]
           const lat = spot.location.coordinates[1]
-          
-          console.log("Rendered", spot);
+
          return (
            <Marker
              key={spot._id}

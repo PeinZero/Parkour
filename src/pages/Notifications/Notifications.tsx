@@ -50,7 +50,7 @@ const Notifications = () => {
         ReactDOM.unstable_batchedUpdates( () => {
           console.log("Fetching notifications...");
           setLoading(false);
-          setNotifications(fetchedNotifications)
+          setNotifications(fetchedNotifications.reverse())
         });
       })
   },[dispatch])
@@ -85,7 +85,7 @@ const Notifications = () => {
 
   useEffect(() => {
     console.log("Notifications => useEffect() => GetNotifications");
-    // getNotifications(alignment);
+    getNotifications(alignment);
       
   },[alignment, getNotifications]);
 
