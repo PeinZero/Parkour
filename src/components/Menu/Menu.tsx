@@ -17,6 +17,7 @@ import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceW
 import HistoryIcon from "@mui/icons-material/History";
 import NotListedLocationIcon from "@mui/icons-material/NotListedLocation";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 interface MenuProps {
   clicked: boolean;
@@ -27,6 +28,7 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.authentication.token);
   const navigate = useNavigate();
+  const credit = useAppSelector((state) => state.user.credit);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -56,7 +58,8 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
       onClose={toggleMenu}
       classes={{
         paper: styles["menu"],
-      }}>
+      }}
+    >
       <div className={styles["wrapper"]}>
         <div className={styles["header"]}>
           <div className={styles["pic"]}>
@@ -73,6 +76,11 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
                 </>
               )}
             </div>
+            <div className={styles["info-credit"]}>
+
+                <span>PKR</span> {credit}
+      
+            </div>
           </div>
         </div>
         <div className={styles["content"]}>
@@ -84,24 +92,51 @@ const Menu: React.FC<MenuProps> = ({ clicked, toggleMenu }): JSX.Element => {
             />
           )}
           {!isParker && (
-            <MenuItem itemName="My Spots" icon={<RoomIcon />} path="/seller/mySpots" />
+            <MenuItem
+              itemName="My Spots"
+              icon={<RoomIcon />}
+              path="/seller/mySpots"
+            />
           )}
 
-          <MenuItem itemName="Wallet" icon={<AccountBalanceWalletRoundedIcon />} path="#" />
+          <MenuItem
+            itemName="Wallet"
+            icon={<AccountBalanceWalletRoundedIcon />}
+            path="/wallet"
+          />
           <MenuItem
             itemName="Booking Requests"
             icon={<HistoryIcon />}
             path="/bookingRequest"
           />
-          <MenuItem itemName="Notifications" icon={<ChatBubbleIcon />} path="/notifications" />
-          <MenuItem itemName="Chat" icon={<ChatBubbleIcon />} path="/allChats" />
-          <MenuItem itemName="Settings" icon={<SettingsIcon />} path="/setting" />
-          <MenuItem itemName="Help" icon={<NotListedLocationIcon />} path="/help" />
+          <MenuItem
+            itemName="Notifications"
+            icon={<NotificationsActiveIcon />}
+            path="/notifications"
+          />
+          <MenuItem
+            itemName="Chat"
+            icon={<ChatBubbleIcon />}
+            path="/allChats"
+          />
+          <MenuItem
+            itemName="Settings"
+            icon={<SettingsIcon />}
+            path="/setting"
+          />
+          <MenuItem
+            itemName="Help"
+            icon={<NotListedLocationIcon />}
+            path="/help"
+          />
         </div>
       </div>
 
       <div className={styles["footer"]}>
-        <Button style={{ width: "80%", margin: "5px 10%" }} onClick={logoutHandler}>
+        <Button
+          style={{ width: "80%", margin: "5px 10%" }}
+          onClick={logoutHandler}
+        >
           Logout
         </Button>
 

@@ -87,3 +87,35 @@ export const getUserByRole = (userId) => {
     }
   }
 }
+
+export const updateProfileInfo = (newInfo) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+  
+    const sendRequest = async () => {
+      return await axios.patch(
+        `${backendLink}/user`,
+        {newInfo},
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    };
+
+    try {
+      const response = await sendRequest();
+      return response.data;
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
