@@ -304,37 +304,7 @@ const BookSpot = (props) => {
   };
 
   const viewReviewsHandler = () => {
-    const reviews = [
-      {
-        author: {
-          name: "Faizan Shahid",
-        },
-        text: "Such a nice person",
-        providedRating: 5.0,
-      },
-      {
-        author: {
-          name: "Atif Siraiki",
-        },
-        text: "MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki. MY car is satisfied with the parking. P.S:- I'm a Siraiki.",
-        providedRating: 4.5,
-      },
-      {
-        author: {
-          name: "Legend Pizza",
-        },
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, a qui, fugiat explicabo, exercitationem nostrum rerum odio illo inventore excepturi veniam quia quo itaque aut velit doloremque suscipit sapiente. Laudantium recusandae provident non eum autem consequatur modi, corrupti delectus, voluptatum nulla quam debitis hic cum officiis quasi aspernatur repellendus quia?",
-        providedRating: 3.2,
-      },
-      {
-        author: {
-          name: "VIP Guy",
-        },
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, a qui, fugiat explicabo, exercitationem nostrum rerum odio illo inventore excepturi veniam quia quo itaque aut velit doloremque suscipit sapiente. Laudantium recusandae provident non eum autem consequatur modi, corrupti delectus, voluptatum nulla quam debitis hic cum officiis quasi aspernatur repellendus quia?",
-        providedRating: 5.0,
-      },
-    ];
-    navigate("/reviews", { state: { reviews: reviews, spotDetails: locationState } });
+    navigate("/reviews", { state: { details: locationState, reviewedId: spotOwner._id } });
   };
 
   // Dynamically rendering list

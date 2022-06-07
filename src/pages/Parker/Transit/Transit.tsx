@@ -12,12 +12,8 @@ import { useAppSelector } from '../../../store/hooks';
 const Transit = () => {
   console.log("TRANSIT RUNNING");
   const navigate = useNavigate();
-  const {state: destination} = useLocation();
-  const parker = useAppSelector(state => state.user.parker);
-
-  if(!parker){
-    navigate('/login');
-  }
+  const {state}:any = useLocation();
+  const {destination, car} = state;
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [routes, setRoutes] = useState(null);
@@ -25,11 +21,15 @@ const Transit = () => {
   const [duration, setDuration] = useState('NA');
 
   const {geolocation} = navigator;
-  const mileage = Number(parker.cars.mileage);
+  const mileage = car.mileage;
   let fuelConsumption = 'NA';
 
+  const updatedDistance = distance.slice(0, -3);
+  const numberDistance = Number(updatedDistance);
+
   if(distance !== 'NA'){
-    fuelConsumption = String(Number(distance) / mileage);
+    const ltr = (numberDistance/ mileage).toFixed(2);
+    fuelConsumption =  String(ltr);
   }
 
   const findRoute = useCallback(async (origin) => {

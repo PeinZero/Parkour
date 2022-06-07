@@ -89,6 +89,7 @@
 }
 
 .addedSlots .day h3{
+  text-align: left;
   font-size: 14px;
   font-weight: bold;
   margin: 0;

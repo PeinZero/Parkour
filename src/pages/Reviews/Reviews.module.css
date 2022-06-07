@@ -2,3 +2,12 @@
   width: 95%;
   margin: 0 2.5%;
 }
+
+.noReviews{
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 30px;
+  color: var(--example-label); 
+}

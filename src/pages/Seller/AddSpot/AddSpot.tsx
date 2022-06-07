@@ -81,7 +81,7 @@ const AddSpot = (props) => {
   const location = useLocation();
   const { state } = location;
   const locationState: any = state;
-  // console.log(locationState);
+  console.log(locationState);
 
   let spotInfo = {
     spotName: "",
@@ -122,10 +122,6 @@ const AddSpot = (props) => {
   const navigate = useNavigate();
 
   // Extracting Spot Info form field values
-  // console.log(spotInfoState);
-  console.log(startTime);
-  console.log(endTime);
-
   const { spotName, addressLine1, addressLine2, nearestLandmark, pricePerHour } =
     spotInfoState;
 
@@ -218,7 +214,6 @@ const AddSpot = (props) => {
       );
 
       if (!filteredAvalibility) {
-        console.log("Data not found!!!");
         return Result.dateNotFound;
       }
 
@@ -250,7 +245,7 @@ const AddSpot = (props) => {
         }
         // check if new slot completely overlaps an existing slot
         else if (st <= cst && cet <= et) {
-          console.log("3");
+          // console.log("3");
           markedForRemoval.push(i);
         }
         // check if new slot endTime is in between an existing slot.
@@ -267,7 +262,7 @@ const AddSpot = (props) => {
           st = cst;
         }
       }
-      console.log("Out of the Loop!");
+      // console.log("Out of the Loop!");
 
       return Result.updatedTimeSlot;
     }
@@ -300,7 +295,7 @@ const AddSpot = (props) => {
       let updatedTimeSlots = availability.slots;
 
       if (result === Result.updatedTimeSlot) {
-        console.log("markedForRemoval: ", markedForRemoval);
+        // console.log("markedForRemoval: ", markedForRemoval);
         if (markedForRemoval.length > 0) {
           updatedTimeSlots = updatedTimeSlots.filter(
             (slot, index) => !markedForRemoval.includes(index)
@@ -332,7 +327,7 @@ const AddSpot = (props) => {
     ).slots;
 
     updatedTimeSlots = updatedTimeSlots.filter((slot, index) => index !== slotIndex);
-    console.log(updatedTimeSlots);
+    // console.log(updatedTimeSlots);
 
     let availabilityList = [...slotList];
     if (updatedTimeSlots.length === 0) {
@@ -364,7 +359,7 @@ const AddSpot = (props) => {
       availability: slotList,
       location: [currentPosition.lng, currentPosition.lat],
     };
-    console.log(addedSpotData);
+    // console.log(addedSpotData);
 
     if (spotId !== null) {
       console.log("Spot Edited!");
@@ -384,7 +379,8 @@ const AddSpot = (props) => {
   let availabilityList = sortedSpotList.map((availibility, dateIndex) => {
     const { slotDate, slots } = availibility;
 
-    console.log("DAY", new Date(slotDate).getDay());
+    console.log(slotDate);
+    // console.log("DAY", new Date(slotDate).getDay());
     const day =
       WEEKDAYS[new Date(slotDate).getDay()] +
       " " +
@@ -427,7 +423,7 @@ const AddSpot = (props) => {
     setCurrentPosition({ lat, lng });
   }, []);
 
-  console.log(currentPosition);
+  // console.log(currentPosition);
 
   useEffect(() => {
     console.log("ADD SPOT => useEffect()");

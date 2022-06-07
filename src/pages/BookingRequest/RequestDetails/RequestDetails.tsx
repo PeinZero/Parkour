@@ -3,6 +3,7 @@ import { useLocation, useNavigate} from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 
 import { getUserByRole } from '../../../store/User/userActions';
+import { acceptRequest } from '../../../store/Request/requestActions';
 import { convertTimeToString } from '../../../helper/timeFunctions';
 
 import styles from './RequestDetails.module.css';
@@ -13,8 +14,9 @@ import Header from '../../../components/UI/Header/Header';
 import Button from '../../../components/UI/Button/Button';
 import Loader from '../../../components/UI/Loader/Loader';
 
-
 import RoomIcon from '@mui/icons-material/Room';
+
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']
 
 const RequestDetails = (props) => {
   console.log("REQUEST DETAILS RUNNING!");
@@ -25,9 +27,14 @@ const RequestDetails = (props) => {
   const [parker, setParker] = useState(null);
 
   const {state:requestInfo}:any = useLocation();
-  let {bookingRequestor, car, spot, day, slots, message, spotOwner, status} = requestInfo;
-
+  let {_id: bookingRequestId, bookingRequestor, car, spot, day, slots, message, spotOwner, status} = requestInfo;
   const {addressLine1, addressLine2, nearestLandmark, pricePerHour, comment, location} = spot;
+  console.log(requestInfo);
+  
+  let reviewedId = bookingRequestor;
+  if(userRoleParker){
+    reviewedId = spotOwner
+  }
 
   const address = (
     <>
@@ -41,11 +48,9 @@ const RequestDetails = (props) => {
     userId = spotOwner
   }
 
-  let parkerName = null, parkerPhone = null, parkerRating = null, parkerReviews = null;
+  let parkerName = null, parkerRating;
   if(parker){
     parkerName = parker.name;
-    parkerPhone = parker.phone;
-    parkerReviews = parker.reviews;
     parkerRating = parker.rating < 0 ? "Not Rated" : parker.rating;
   }
 
@@ -54,7 +59,7 @@ const RequestDetails = (props) => {
     const endTime = convertTimeToString(new Date(slot.endTime));
 
     return(
-      <li key={slot._id}> {startTime} - {endTime} </li>
+      <p key={slot._id}> {startTime} - {endTime} </p>
     )
   })
 
@@ -62,9 +67,20 @@ const RequestDetails = (props) => {
     const destination = {
       lat: location.coordinates[1],
       lng: location.coordinates[0]
-    }
-    navigate("/submitReview") 
-    // navigate("/parker/intransit", {state: destination}) 
+    } 
+    navigate("/parker/intransit", {state: {destination, car}}) 
+  }
+
+  const acceptBookingRequestHandler = () => {
+    dispatch(acceptRequest(bookingRequestId))
+      .then(res => {
+        console.log(res);
+        navigate('/bookingRequest');
+      })
+  }
+
+  const viewReviewsHandler = () => {
+    navigate("/reviews", { state: { details: requestInfo, reviewedId: reviewedId  } });
   }
 
   useEffect( ()=> {
@@ -72,18 +88,14 @@ const RequestDetails = (props) => {
       .then(fetchedUser => {
         const user = fetchedUser.user;
         let rating = user.parker.cumulativeRating;
-        let reviews = user.parker.reviews;
 
         if(userRoleParker){
           rating = user.seller.cumulativeRating;
-          reviews = user.seller.reviews;
         }
 
         const updatedUser = {
           name: user.name,
-          phone: user.phone,
           rating: rating,
-          reviews: reviews
         }
 
         setParker(updatedUser);
@@ -102,7 +114,8 @@ const RequestDetails = (props) => {
               boxClass='primary'
               name={parkerName}
               rating={parkerRating}
-            ></DetailsBox>
+              viewReviews={viewReviewsHandler}>
+            </DetailsBox>
             <DetailsBox
               title='location'
               icon={<RoomIcon />}
@@ -123,35 +136,48 @@ const RequestDetails = (props) => {
               </ul>
             </DetailsBox>
 
-            <DetailsBox title='Car' className={styles['carSelectBox']}>
-              <h3>{car.make} {car.model}</h3>
-              <p>{car.numberPlate}</p>
-              <p>{car.color}</p>
-              <p>{car.prodYear}</p>
+            <DetailsBox title='Booking Details' className={styles['bookingDetails']}>
+              <div className={styles['car']}>
+                <div className={styles['carName']}>
+                  <h3>{car.make} {car.model}</h3>
+                </div>
+                <div className={styles['carDetails']}>
+                  <p>{car.numberPlate}</p>
+                  &bull;
+                  <p>{car.color}</p>
+                  &bull;
+                  <p>{car.prodYear}</p>
+                </div>
+              </div>
+
+              <div className={styles['timeSlot']}>
+                <div  className={styles['day']} > {`${ DAYS[new Date(day).getDay()]}${","} ${day}`} </div>
+                {renderedSlots}
+              </div>
+
+              <div className={styles['message']}>
+                <h3>Message</h3>
+                <p>{message}</p>  
+              </div>
+
+               
             </DetailsBox>
 
-            <DetailsBox
-              title='Requested Time Slot'
-              className={styles['availibilityBottom']}
-            >
-              <div  className={styles['day']} > {day} </div>
-              <div  className={styles['slots']} >
-                <h3>Slots</h3>
-                <ul>
-                  {renderedSlots}
-                </ul>
-              </div>
-              
-            </DetailsBox>
-            {/* <DetailsBox boxClass="Images"></DetailsBox> */}
-            <DetailsBox title='Message' className={styles['messageBox']}>
-              {message}
-            </DetailsBox>
             {userRoleParker && 
               // status === "pending" ? true : false
               <Button type='button' btnClass='primary' onClick={startBookingHandler} disabled={false}> 
-                Start
+                Preview Route
               </Button>
+            }
+            {!userRoleParker && 
+              <div className={styles['sellerButtons']}>
+                <Button type='button' btnClass='negative-outline' size="small" onClick={startBookingHandler}> 
+                  Reject
+                </Button>
+                <Button type='button' btnClass='primary' size="small" onClick={acceptBookingRequestHandler}> 
+                  Accept
+                </Button>
+              </div>
             }
           </div>
         </div>
