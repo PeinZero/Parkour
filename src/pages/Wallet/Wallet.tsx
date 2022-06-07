@@ -17,13 +17,14 @@ const Wallet = () => {
   const dispatch = useAppDispatch();
 
   const buyCreditHandler = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     let credit = e.target.amount.value;
     credit = Number(credit);
 
     dispatch(addCredit({ credit: credit }))
       .then((res) => {
         console.log(res);
+        dispatch(getCredit());
         handleClose();
       })
       .catch((err) => {
