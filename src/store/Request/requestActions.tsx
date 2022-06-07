@@ -72,4 +72,36 @@ export const acceptRequest = (bookingRequestId) => {
 };
 
 
+export const deleteRequest = (bookingRequestId) => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+  
+    const sendRequest = async () => {
+        return await axios.delete(`${backendLink}/bookingRequest/${bookingRequestId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          }
+        });
+
+    };
+
+    try {
+      const response =  await sendRequest();
+      return response.data;
+
+    } catch (err) {
+      console.log(err.message);
+      if (err.response.status === 404) {
+        console.log("Validation Failed!");
+      }
+
+      if (err.response.status === 401) {
+        console.log("Not Authorized!");
+      }
+    }
+  };
+};
+
+
 
