@@ -1,16 +1,23 @@
-import {Fragment} from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
 
 import Header from '../../components/UI/Header/Header'
 import Review from './Review/Review';
 
+import { fetchReviews } from '../../store/Reviews/reviewsActions';
+
 import styles from './Reviews.module.css'
 
 const Reviews = () => {
+  console.log("REVIEWS RUNNING!");
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  
   const {state}:any = useLocation();
-  const {reviews} = state;
-  const {spotDetails} = state;
+  const {details, reviewedId} = state;
+
+  const [reviews, setReviews] = useState([]);
 
   const renderedReviews = reviews.map( (review, index) => {
     console.log(review);
@@ -20,20 +27,28 @@ const Reviews = () => {
       backGround = true
     }
     return(
-      <Review key={index} details={review} backGround={backGround} /> 
+      <Review key={review._id} details={review} backGround={backGround} /> 
     )
   })
 
   const navigateHandler = () => {
-    navigate('/parker/bookSpot', { state: spotDetails})
+    navigate('/')
   }
+
+  useEffect(() => {
+    console.log("REVIEWS RUNNING! => useState()");
+    dispatch(fetchReviews(reviewedId))
+      .then( (fetchedReviews) => {
+        setReviews(fetchedReviews.reviews);
+      })
+  }, []);
  
   return (
     <Fragment>
       <Header backLink="#" content="Reviews" className="small" navigateHandler={navigateHandler} data/>
       <div className={styles['reviewsList']}>
         {reviews.length > 0  && renderedReviews}
-        {reviews.length <= 0 && <p> No reviews available</p>}
+        {reviews.length <= 0 && <p className={styles['noReviews']}> No reviews available</p>}
         </div>
       
     </Fragment>

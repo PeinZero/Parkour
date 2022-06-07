@@ -97,7 +97,7 @@ const BookingRequest = () => {
   },[filter, getRequests]);
   
   return (
-    <Fragment>
+    <div className={styles["bookingRequestsWrapper"]}>
       <Header backLink="/" content="Booking Requests"/>
       <div  className={styles["filterBox"]}>
         <select name="typeOfRequests" value={filter} onChange={filterChangeHandler}>
@@ -116,7 +116,7 @@ const BookingRequest = () => {
       { (!loading && requests.length === 0) &&
           <p className={styles["noRequests"]}>No Requests available</p>
       }
-    </Fragment>
+    </div>
   );
 };
 

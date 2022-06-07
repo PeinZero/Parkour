@@ -1,3 +1,7 @@
+.bookingRequestsWrapper{
+  height: 100%;
+  overflow: auto;
+}
 .filterBox{
   display: flex;
   justify-content: flex-end;

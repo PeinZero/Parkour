@@ -55,16 +55,16 @@ const Notifications = () => {
       })
   },[dispatch])
 
-  const renderedNotifications = notifications.map( (notificationData, index) => {
-    const time = convertTimeToString(new Date(notificationData.notification.time));
+  const renderedNotifications = notifications.map( (notification, index) => {
+    const time = convertTimeToString(new Date(notification.time));
     return(
       <li key={index} className={styles["notification"]}>
         <div className={styles["notificationLeft"]}>
           <h3> 
-            {notificationData.from} 
-            {alignment === "All" && <span className={styles[notificationData.notification.target]}> {notificationData.notification.target} </span>} 
+            {notification.from} 
+            {alignment === "All" && <span className={styles[notification.target]}> {notification.target} </span>} 
           </h3>
-          <p> {notificationData.notification.text} </p>
+          <p> {notification.text} </p>
         </div>
         <div className={styles["notificationRight"]}>
           <p> {time} </p>
@@ -92,8 +92,8 @@ const Notifications = () => {
   useEffect(() => {
     console.log("Notifications => useEffect() => Socket ON");
     if(socket){
-      socket.on("ReceiveNotification", (data) => {
-        setNotifications( (prevState) => [data, ...prevState])
+      socket.on("ReceiveNotification", (notification) => {
+        setNotifications( (prevState) => [notification, ...prevState])
       })
     }
   }, [socket]);
